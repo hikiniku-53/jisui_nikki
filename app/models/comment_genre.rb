@@ -1,0 +1,2 @@
+class CommentGenre < ApplicationRecord
+end
