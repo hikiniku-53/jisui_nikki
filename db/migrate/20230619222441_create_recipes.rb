@@ -1,6 +1,12 @@
 class CreateRecipes < ActiveRecord::Migration[6.1]
   def change
     create_table :recipes do |t|
+      
+      t.integer :customer_id, null: false
+      t.string :recipe_name, null: false
+      t.text :process
+      t.text :comment
+      t.boolean :is_published, null: false, default: "FALSE"
 
       t.timestamps
     end
