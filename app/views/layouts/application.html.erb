@@ -6,11 +6,110 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+
+    <header>
+      <nav class="navbar navbar-expand-lg bg-dark navbar-dark w-100">
+        <div class="container">
+          <a class="navbar-brand p-5px" href="/">Bookers</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon "></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+
+              <% if admin_signed_in? %>
+                <li class="nav-link p-8px">
+                <%= link_to user_path(current_user.id), class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-home"></i>&nbsp;Home
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to users_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-users"></i>&nbsp;Users
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to books_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-book-open"></i>&nbsp;Books
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to destroy_user_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-sign-out-alt"></i>&nbsp;Log out
+                <% end %>
+              </li>
+
+              <% elsif customer_signed_in? %>
+                <li class="nav-link p-8px">
+                <%= link_to user_path(current_user.id), class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-home"></i>&nbsp;Home
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to users_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-users"></i>&nbsp;Users
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to books_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-book-open"></i>&nbsp;Books
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to destroy_user_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-sign-out-alt"></i>&nbsp;Log out
+                <% end %>
+              </li>
+
+              <% else %>
+
+                <li class="nav-link p-8px">
+                  <%= link_to root_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-home"></i>&nbsp;Home
+                  <% end %>
+                </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to about_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-link"></i>&nbsp;About
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to new_user_registration_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-user-plus"></i>&nbsp;Sign up
+                <% end %>
+              </li>
+
+                <li class="nav-link p-8px">
+                <%= link_to new_user_session_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <i class="fas fa-sign-in-alt"></i>&nbsp;Log in
+                <% end %>
+              </li>
+
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
     <%= yield %>
+
+    <footer>
+
+    </footer>
+
   </body>
 </html>
