@@ -6,97 +6,72 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
+    <script src="https://kit.fontawesome.com/1497b7da49.js" crossorigin="anonymous"></script>
+
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
 
+    <!--header-->
     <header>
       <nav class="navbar navbar-expand-lg bg-dark navbar-dark w-100">
         <div class="container">
-          <a class="navbar-brand p-5px" href="/">Bookers</a>
+
+          <!--アプリロゴ(ホームリンク)-->
+          <a class="navbar-brand p-5px" href="/">みんなの自炊日記</a>
+
+          <!--メニュー(ハンバーガー)-->
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon "></span>
           </button>
+
+          <!--メニュー(コンテンツ) => ログイン状態で変化-->
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav ml-auto">
 
+              <!--管理者ログイン時-->
               <% if admin_signed_in? %>
-                <li class="nav-link p-8px">
-                <%= link_to user_path(current_user.id), class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-home"></i>&nbsp;Home
-                <% end %>
-              </li>
 
-                <li class="nav-link p-8px">
-                <%= link_to users_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-users"></i>&nbsp;Users
-                <% end %>
-              </li>
-
-                <li class="nav-link p-8px">
-                <%= link_to books_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-book-open"></i>&nbsp;Books
-                <% end %>
-              </li>
-
-                <li class="nav-link p-8px">
-                <%= link_to destroy_user_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-sign-out-alt"></i>&nbsp;Log out
-                <% end %>
-              </li>
-
+              <!--ユーザーログイン時-->
               <% elsif customer_signed_in? %>
-                <li class="nav-link p-8px">
-                <%= link_to user_path(current_user.id), class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-home"></i>&nbsp;Home
-                <% end %>
-              </li>
 
-                <li class="nav-link p-8px">
-                <%= link_to users_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-users"></i>&nbsp;Users
-                <% end %>
-              </li>
 
+                <!--ログアウト-->
                 <li class="nav-link p-8px">
-                <%= link_to books_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-book-open"></i>&nbsp;Books
-                <% end %>
-              </li>
-
-                <li class="nav-link p-8px">
-                <%= link_to destroy_user_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-sign-out-alt"></i>&nbsp;Log out
-                <% end %>
-              </li>
-
-              <% else %>
-
-                <li class="nav-link p-8px">
-                  <%= link_to root_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                  <%= link_to destroy_customer_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
                     <i class="fas fa-home"></i>&nbsp;Home
                   <% end %>
                 </li>
 
-                <li class="nav-link p-8px">
-                <%= link_to about_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-link"></i>&nbsp;About
-                <% end %>
-              </li>
 
-                <li class="nav-link p-8px">
-                <%= link_to new_user_registration_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-user-plus"></i>&nbsp;Sign up
-                <% end %>
-              </li>
 
+              <!--非ログイン時-->
+              <% else %>
+
+                <!--ゲストログイン-->
                 <li class="nav-link p-8px">
-                <%= link_to new_user_session_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                  <i class="fas fa-sign-in-alt"></i>&nbsp;Log in
-                <% end %>
-              </li>
+                  <%= link_to guest_sign_in_path, method: :post, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-home"></i>&nbsp;ゲストログイン(閲覧用)
+                  <% end %>
+                </li>
+
+                <!--会員登録-->
+                <li class="nav-link p-8px">
+                  <%= link_to new_customer_registration_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-home"></i>&nbsp;会員登録
+                  <% end %>
+                </li>
+
+                <!--ログイン-->
+                <li class="nav-link p-8px">
+                  <%= link_to new_customer_session_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-home"></i>&nbsp;ログイン
+                  <% end %>
+                </li>
+
+
 
               <% end %>
             </ul>
