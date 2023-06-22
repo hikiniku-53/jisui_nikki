@@ -65,3 +65,5 @@ gem 'pry-byebug', group: :development
 gem 'rails-i18n'
 
 gem 'enum_help'
+
+gem 'seed-fu'
