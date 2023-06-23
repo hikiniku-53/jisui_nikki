@@ -4,6 +4,13 @@ class Customer < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :recipes, dependent: :destroy
+  has_many :diaries, dependent: :destroy
+  has_many :favorites, dependent: :destroy
+  has_many :prices, dependent: :destroy
+  has_many :cutting_boards, dependent: :destroy
+  has_many :comments, dependent: :destroy
+
 
 
   def self.guest
