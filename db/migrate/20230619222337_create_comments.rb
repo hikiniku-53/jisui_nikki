@@ -5,7 +5,7 @@ class CreateComments < ActiveRecord::Migration[6.1]
       t.integer :customer_id, null: false
       t.integer :comment_genre_id, null: false
       t.integer :food_id, null: false
-      t.text :body, null: false
+      t.text :comment, null: false
 
       t.timestamps
     end

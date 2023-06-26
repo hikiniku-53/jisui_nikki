@@ -3,7 +3,7 @@ class CreateFoods < ActiveRecord::Migration[6.1]
     create_table :foods do |t|
 
       t.integer :food_genre_id, null: false
-      t.string :food_name, null: false
+      t.string :name, null: false
       t.integer :energy, null: false
       t.integer :protein
       t.integer :fat

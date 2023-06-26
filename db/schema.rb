@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 2023_06_25_064149) do
   end
 
   create_table "comment_genres", force: :cascade do |t|
-    t.string "comment_genre_name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2023_06_25_064149) do
     t.integer "customer_id", null: false
     t.integer "comment_genre_id", null: false
     t.integer "food_id", null: false
-    t.text "body", null: false
+    t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -96,14 +96,14 @@ ActiveRecord::Schema.define(version: 2023_06_25_064149) do
   end
 
   create_table "food_genres", force: :cascade do |t|
-    t.string "food_genre_name", null: false
+    t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "foods", force: :cascade do |t|
     t.integer "food_genre_id", null: false
-    t.string "food_name", null: false
+    t.string "name", null: false
     t.integer "energy", null: false
     t.integer "protein"
     t.integer "fat"
