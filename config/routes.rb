@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  namespace :public do
+    get 'comments/create'
+  end
   root to: 'public/homes#top'
 
   # 顧客用
@@ -28,6 +31,10 @@ Rails.application.routes.draw do
   scope module: :public do
     get '/' => 'homes#top'
     get '/about' => 'homes#about', as: 'about'
+
+    resources :foods, only: [:index, :genre_search, :new, :create, :show, :edit, :update] do
+      resources :comments, only: [:create]
+    end
 
   end
 

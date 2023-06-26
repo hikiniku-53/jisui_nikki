@@ -1,0 +1,90 @@
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <!--food_image-->
+      <%= image_tag @food.get_image(540,500) %>
+
+      <!--comment_form-->
+      <div class="">
+        <div>この食材について教えてください!!</div>
+
+
+        <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
+          <div>
+            <%= f.label :comment_genre_id, "質問を選んでください" %>
+
+            <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :comment_genre_name) %>
+          </div>
+
+          <div><%= f.text_area :body, placeholder: "答えを教えてください！" %></div>
+
+          <div><%= f.submit '答えを送信する', class: 'btn btn-primary px-3' %></div>
+
+        <% end %>
+      </div>
+
+
+    </div>
+
+    <div class="col-6">
+      <h1>
+        <%= @food.food_name %>
+      </h1>
+
+      <div class="row">
+        <!--栄養素-->
+        <div class="col-6">
+          <table class="table table-bordered border-primary">
+            <tr>
+              <th>エネルギー : kcal</th>
+              <td><%= @food.energy %></td>
+            </tr>
+
+            <tr>
+              <th>たんぱく質</th>
+              <td><%= @food.protein %></td>
+            </tr>
+
+            <tr>
+              <th>脂質</th>
+              <td><%= @food.fat %></td>
+            </tr>
+
+            <tr>
+              <th>炭水化物</th>
+              <td><%= @food.carb %></td>
+            </tr>
+
+            <tr>
+              <th>食塩相当量</th>
+              <td><%= @food.salt_equivalent %></td>
+            </tr>
+          </table>
+        </div>
+
+        <!--コメント一覧-->
+        <div class="col-6">
+          <% @comments.each do |comment| %>
+            <div class="card m-2">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= comment.comment_genre.comment_genre_name %>
+                </h5>
+
+                <p class="card-text">
+                  <%= comment.body %>
+                </p>
+
+                <div class="card-title"></div>
+
+                <div class="card-link"></div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
