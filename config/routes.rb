@@ -36,6 +36,8 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
     end
 
+    resources :cutting_board_foods
+
   end
 
 

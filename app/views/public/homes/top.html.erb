@@ -14,46 +14,41 @@
     <!--food pick up-->
     <div class="col-sm-4 bg-food">
       <div class="p-3 text-center">
-
         <!--headline-->
         <h4>今が旬の食材</h4>
 
+        <!--ピックアップ食材-->
         <% @foods.last(3).each do |food| %>
 
-        <%= link_to food_path(food.id), class: 'text-decoration-none' do %>
+          <%= link_to food_path(food.id), class: 'text-decoration-none' do %>
 
-        <!--foods-->
-        <div class="card m-2">
+            <div class="card m-2">
 
-          <%= image_tag food.get_image(385,290), class: 'card-img-top' %>
+              <%= image_tag food.get_image(385,290), class: 'card-img-top' %>
 
-          <div class="card-body">
-            <h5 class="card-title">
-              <%= food.name %>
-            </h5>
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= food.name %>
+                </h5>
 
-            <p class="card-text"></p>
-
-            <div class="card-title"></div>
-
-            <div class="card-link"></div>
-          </div>
-        </div>
+                <p class="card-text"></p>
+              </div>
+            </div>
+          <% end %>
 
         <% end %>
 
-        <% end %>
+        <%= link_to "もっと食材を見る", foods_path, class: 'btn btn-primary px-3' %>
       </div>
-
-
-
-
     </div>
 
     <!--recipe pick up-->
     <div class="col-sm-4 bg-recipe">
       <div class="p-3 text-center">
+        <!--headline-->
         <h4>人気のレシピ</h4>
+        
+        <!--<%= link_to "もっとレシピを見る", foods_path, class: 'btn btn-primary px-3' %>-->
       </div>
 
     </div>

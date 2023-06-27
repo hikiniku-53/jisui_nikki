@@ -4,6 +4,30 @@
       <!--food_image-->
       <%= image_tag @food.get_image(540,500) %>
 
+      <!--まな板に追加する-->
+      <div>
+        <div>料理に使う</div>
+        <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
+
+          <div>
+            <%= f.hidden_field :food_id, :value => @food.id %>
+          </div>
+
+          <div class="d-inline-flex align-items-center">
+            <h4><%= f.label :amount, "分量" %></h4>
+            <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '1000' %>
+            <h4 class="">g</h4>
+          </div>
+
+          <div>
+            <%= f.submit "まな板に乗せる", class: 'btn btn-success px-3' %>
+          </div>
+
+
+        <% end %>
+      </div>
+
+
       <!--comment_form-->
       <div class="">
         <div>この食材について教えてください!!</div>
@@ -13,10 +37,10 @@
           <div>
             <%= f.label :comment_genre_id, "質問を選んでください" %>
 
-            <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :comment_genre_name) %>
+            <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :name) %>
           </div>
 
-          <div><%= f.text_area :body, placeholder: "答えを教えてください！" %></div>
+          <div><%= f.text_area :comment, placeholder: "答えを教えてください！" %></div>
 
           <div><%= f.submit '答えを送信する', class: 'btn btn-primary px-3' %></div>
 
@@ -28,7 +52,7 @@
 
     <div class="col-6">
       <h1>
-        <%= @food.food_name %>
+        <%= @food.name %>
       </h1>
 
       <div class="row">

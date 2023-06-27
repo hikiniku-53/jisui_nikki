@@ -8,7 +8,7 @@ class Customer < ApplicationRecord
   has_many :diaries, dependent: :destroy
   has_many :favorites, dependent: :destroy
   has_many :prices, dependent: :destroy
-  has_many :cutting_boards, dependent: :destroy
+  has_many :cutting_board_foods, dependent: :destroy
   has_many :comments, dependent: :destroy
 
 
