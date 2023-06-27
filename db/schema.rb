@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 2023_06_27_112340) do
 
   create_table "recipes", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.string "recipe_name", null: false
+    t.string "name", null: false
     t.text "process"
     t.text "comment"
     t.boolean "is_published", default: false, null: false

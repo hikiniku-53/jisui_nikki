@@ -1,1 +1,20 @@
-CuttingBoardFoods
+<div class="container">
+  <!--headline-->
+  <div><h2>まな板</h2></div>
+
+  <!--message-->
+  <div>さあ、あなただけの料理を作りましょう！</div>
+
+  <!--cutting_board-->
+  <div>
+    <% current_customer.cutting_board_foods.each do |cutting_board| %>
+
+      <div>
+        <%= cutting_board.food.name %>
+        <%= cutting_board.food.energy %> * <%= cutting_board.amount %> /100
+      </div>
+
+    <% end %>
+  </div>
+
+</div>
