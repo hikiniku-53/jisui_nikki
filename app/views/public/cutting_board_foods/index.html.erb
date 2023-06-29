@@ -5,16 +5,46 @@
   <!--message-->
   <div>さあ、あなただけの料理を作りましょう！</div>
 
-  <!--cutting_board-->
-  <div>
-    <% current_customer.cutting_board_foods.each do |cutting_board| %>
+  <!--まな板-->
+  <table class="table">
+    <% current_customer.cutting_board_foods.each do |cutting_board_food| %>
+      <!--食材-->
+      <tr>
+        <!--食材名-->
+        <td class="col-2"><%= cutting_board_food.food.name %></td>
 
-      <div>
-        <%= cutting_board.food.name %>
-        <%= cutting_board.food.energy %> * <%= cutting_board.amount %> /100
-      </div>
+        <!--エネルギー量-->
+        <td class="col-2"><%= cutting_board_food.energy %> kcal</td>
 
+        <!--分量変更-->
+        <td class="col-8">
+          <%= form_with model: cutting_board_food, url: cutting_board_food_path(cutting_board_food.id), method: :patch do |f| %>
+            <div class="d-flex">
+              <h4><%= f.label :amount, "分量" %></h4>
+              <%= f.number_field :amount, class: 'form-control border-dark w-25', placeholder: '1000' %>
+              <h5 class="">g</h5>
+
+              <!--変更、削除ボタン-->
+              <div class="">
+                <%= f.submit '変更', class: 'btn px-3 btn-success' %>
+
+                <%= link_to "削除する", cutting_board_food_path(cutting_board_food.id), method: :delete, data: { confirm: "本当に削除しますか？"}, class: 'btn btn-danger px-3' %>
+              </div>
+            </div>
+          <% end %>
+        </td>
+      </tr>
     <% end %>
+  </table>
+
+  <!--まな板全削除-->
+  <div>
+    <%= link_to "削除する", cutting_board_foods_destroy_all_path, method: :delete, data: { confirm: "本当にすべて削除しますか？"}, class: 'btn btn-danger px-3' %>
+  </div>
+
+  <!--確認画面に進む-->
+  <div>
+    <%= link_to "食材を決定する", new_recipe_path, class: 'btn btn-primary px-3' %>
   </div>
 
 </div>

@@ -5,8 +5,8 @@ class CuttingBoardFood < ApplicationRecord
 
   validates :amount, presence: true
 
-  def per_weight
-  
+  def energy
+    food.energy * amount / 100
   end
 
 

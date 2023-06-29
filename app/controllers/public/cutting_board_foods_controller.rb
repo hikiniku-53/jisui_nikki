@@ -33,7 +33,7 @@ class Public::CuttingBoardFoodsController < ApplicationController
   end
 
   def destroy_all
-    currentcustomer.cutting_board_foods.destroy_all
+    current_customer.cutting_board_foods.destroy_all
     redirect_to cutting_board_foods_path
   end
 

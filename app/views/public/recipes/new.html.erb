@@ -1,0 +1,45 @@
+<div class="container">
+  <!--headline-->
+  <div><h2>まな板</h2></div>
+
+  <!--message-->
+  <div>さあ、あなただけの料理を作りましょう！</div>
+  
+  <!--まな板-->
+  <table class="table">
+    <% current_customer.cutting_board_foods.each do |cutting_board_food| %>
+      <!--食材-->
+      <tr>
+        <!--食材名-->
+        <td class="col-2"><%= cutting_board_food.food.name %></td>
+
+        <!--分量-->
+        <td class="col-8"><%= cutting_board_food.amount %> g</td>
+      </tr>
+    <% end %>
+  </table>
+  
+  <!--栄養価-->
+  <table>
+    <tr>
+      <th></th>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th></th>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th></th>
+      <td></td>
+    </tr>
+    
+    <tr>
+      <th></th>
+      <td></td>
+    </tr>
+  </table>
+  
+</div>

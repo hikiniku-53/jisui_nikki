@@ -1,6 +1,13 @@
 Rails.application.routes.draw do
 
   namespace :public do
+    get 'recipes/new'
+    get 'recipes/confirmation'
+    get 'recipes/create'
+    get 'recipes/index'
+    get 'recipes/show'
+  end
+  namespace :public do
     get 'comments/create'
   end
   root to: 'public/homes#top'
@@ -17,7 +24,7 @@ Rails.application.routes.draw do
     post '/guest_sign_in', to: 'public/sessions#new_guest'
   end
 
-  # 顧客用
+  # 管理者用
   # URL /admin/sign_in ...
   devise_for :admins, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
@@ -32,11 +39,23 @@ Rails.application.routes.draw do
     get '/' => 'homes#top'
     get '/about' => 'homes#about', as: 'about'
 
+    get '/customers' => 'customers#show', as: 'customer'
+    get '/customers/edit' => 'customers#edit'
+    patch '/customers' => 'customers#update'
+    get '/customers' => 'customers#show'
+
+
+
     resources :foods, only: [:index, :genre_search, :new, :create, :show, :edit, :update] do
       resources :comments, only: [:create]
     end
 
     resources :cutting_board_foods
+    delete '/cutting_board_foods' => 'cutting_board_foods#destroy_all', as: 'cutting_board_foods_destroy_all'
+
+    resources :recipes, only: [:new, :index, :show, :create]
+    post '/recipe/confirmation' => 'recipes#confirmation'
+
 
   end
 
