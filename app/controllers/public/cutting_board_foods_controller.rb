@@ -1,6 +1,7 @@
 class Public::CuttingBoardFoodsController < ApplicationController
   def index
     @cutting_board_foods = current_customer.cutting_board_foods
+    @total_energy = 0
   end
 
   def create

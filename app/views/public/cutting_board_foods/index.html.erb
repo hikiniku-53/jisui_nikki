@@ -7,14 +7,17 @@
 
   <!--まな板-->
   <table class="table">
-    <% current_customer.cutting_board_foods.each do |cutting_board_food| %>
+    <% @cutting_board_foods.each do |cutting_board_food| %>
       <!--食材-->
       <tr>
         <!--食材名-->
         <td class="col-2"><%= cutting_board_food.food.name %></td>
 
         <!--エネルギー量-->
-        <td class="col-2"><%= cutting_board_food.energy %> kcal</td>
+        <td class="col-2">
+          <%= cutting_board_food.subtotal_energy %> kcal
+          
+          </td>
 
         <!--分量変更-->
         <td class="col-8">
@@ -37,6 +40,9 @@
     <% end %>
   </table>
 
+
+  <%= @total_energy %>
+
   <!--まな板全削除-->
   <div>
     <%= link_to "削除する", cutting_board_foods_destroy_all_path, method: :delete, data: { confirm: "本当にすべて削除しますか？"}, class: 'btn btn-danger px-3' %>
@@ -46,5 +52,7 @@
   <div>
     <%= link_to "食材を決定する", new_recipe_path, class: 'btn btn-primary px-3' %>
   </div>
+
+
 
 </div>

@@ -4,7 +4,7 @@
 
   <!--message-->
   <div>さあ、あなただけの料理を作りましょう！</div>
-  
+
   <!--まな板-->
   <table class="table">
     <% current_customer.cutting_board_foods.each do |cutting_board_food| %>
@@ -16,30 +16,44 @@
         <!--分量-->
         <td class="col-8"><%= cutting_board_food.amount %> g</td>
       </tr>
+
+      <!--栄養価計算-->
+      <div>
+        <% @total_energy += cutting_board_food.subtotal_energy %>
+        <% @total_protein += cutting_board_food.subtotal_protein %>
+        <% @total_fat += cutting_board_food.subtotal_fat %>
+        <% @total_carb += cutting_board_food.subtotal_carb %>
+        <% @total_salt_equivalent += cutting_board_food.subtotal_salt_equivalent %>
+      </div>
     <% end %>
   </table>
-  
+
   <!--栄養価-->
   <table>
     <tr>
-      <th></th>
-      <td></td>
+      <th>カロリー</th>
+      <td><%= @total_energy %></td>
     </tr>
-    
+
     <tr>
-      <th></th>
-      <td></td>
+      <th>たんぱく質</th>
+      <td><%= @total_protein %></td>
     </tr>
-    
+
     <tr>
-      <th></th>
-      <td></td>
+      <th>脂質</th>
+      <td><%= @total_fat %></td>
     </tr>
-    
+
     <tr>
-      <th></th>
-      <td></td>
+      <th>炭水化物</th>
+      <td><%= @total_carb %></td>
+    </tr>
+
+    <tr>
+      <th>塩分相当量</th>
+      <td><%= @total_salt_equivalent %></td>
     </tr>
   </table>
-  
+
 </div>
