@@ -1,12 +1,12 @@
 class CreateRecipeTags < ActiveRecord::Migration[6.1]
   def change
     create_table :recipe_tags do |t|
-      
-      t.integer :recipe_id, null: false
-      t.integer :tag_id, null: false
-      
-
+      t.references :recipe, foreign_key: true
+      t.references :tag, foreign_key: true
       t.timestamps
     end
+
+    # 同一タグを二回保存できなくする
+    add_index :recipe_tags, [:recipe_id, :tag_id], unique: true
   end
 end

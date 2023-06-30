@@ -24,17 +24,23 @@ class Public::RecipesController < ApplicationController
       @recipe_detail.recipe_id = @recipe.id
       @recipe_detail.food_id = cutting_board_food.food_id
       @recipe_detail.amount = cutting_board_food.amount
-
       # 異常発生時にロールバックする
       @recipe_detail.save!
+    end
+
+
+    tag_list = params[:recipe][:tag_name].split(',')
+
+    if @recipe.save
+      @recipe.save_tag(tag_list)
 
       # まな板の食材を削除する
       current_customer.cutting_board_foods.destroy_all
 
+      # マイページへ飛ぶ
       redirect_to customer_path
+      flash[:notice] = "レシピを投稿しました！"
     end
-
-
 
   end
 
