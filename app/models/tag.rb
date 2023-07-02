@@ -4,7 +4,7 @@ class Tag < ApplicationRecord
   has_many :recipes, through: :recipe_tags
   validates :tag_name, uniqueness: true, presence: true
   
-end
+
   
   
 

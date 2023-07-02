@@ -1,14 +1,7 @@
 Rails.application.routes.draw do
 
   namespace :public do
-    get 'recipes/new'
-    get 'recipes/confirmation'
-    get 'recipes/create'
-    get 'recipes/index'
-    get 'recipes/show'
-  end
-  namespace :public do
-    get 'comments/create'
+
   end
   root to: 'public/homes#top'
 
@@ -36,7 +29,7 @@ Rails.application.routes.draw do
 
   ##public_action
   scope module: :public do
-    get '/' => 'homes#top'
+
     get '/about' => 'homes#about', as: 'about'
 
     get '/customers' => 'customers#show', as: 'customer'
@@ -49,6 +42,8 @@ Rails.application.routes.draw do
     resources :foods, only: [:index, :genre_search, :new, :create, :show, :edit, :update] do
       resources :comments, only: [:create]
     end
+
+    # get 'comments/create'
 
     resources :cutting_board_foods
     delete '/cutting_board_foods' => 'cutting_board_foods#destroy_all', as: 'cutting_board_foods_destroy_all'

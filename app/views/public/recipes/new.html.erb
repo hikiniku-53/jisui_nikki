@@ -56,4 +56,48 @@
     </tr>
   </table>
 
+  <!--レシピ情報入力-->
+
+  <%= form_with model: @recipe, url: recipe_confirmation_path do |f| %>
+    <div>
+      <!--レシピ名-->
+      <div>
+        <%= f.label :name, "レシピ名" %>
+        <%= f.text_field :name, class: '' %>
+      </div>
+
+      <!--調理手順-->
+      <div>
+        <%= f.label :process, "調理手順" %>
+        <%= f.text_area :process, class: '' %>
+      </div>
+
+      <!--コメント-->
+      <div>
+        <%= f.label :comment, "コメント" %>
+        <%= f.text_area :comment, class: '' %>
+      </div>
+
+      <!--タグ入力-->
+      <div>
+        <%= f.label :tag_name, "タグ" %>
+        <%= f.text_field :tag_name, class: '' %>
+      </div>
+
+      <!--公開or非公開-->
+      <div>
+          <%= f.radio_button :is_published, :true %>
+          <%= f.label :is_published, "非開" %>
+
+          <%= f.radio_button :is_published, :false, checked: true %>
+          <%= f.label :is_published, "非公開" %>
+      </div>
+
+      <!--送信-->
+      <div>
+        <%= f.submit '変更', class: 'btn px-3 btn-success' %>
+      </div>
+    </div>
+  <% end %>
+
 </div>

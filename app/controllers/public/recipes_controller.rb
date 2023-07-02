@@ -29,7 +29,7 @@ class Public::RecipesController < ApplicationController
     end
 
 
-    tag_list = params[:recipe][:tag_name].split(',')
+    tag_list = params[:recipe][:tag_name].split('、')
 
     if @recipe.save
       @recipe.save_tag(tag_list)
@@ -53,7 +53,7 @@ class Public::RecipesController < ApplicationController
   private
 
   def recipe_params
-    prams.require(:recipe).permit(:name, :process, :comment, :is_published)
+    params.require(:recipe).permit(:name, :process, :comment, :is_published)
   end
 
 end
