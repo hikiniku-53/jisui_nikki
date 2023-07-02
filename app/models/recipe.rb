@@ -37,12 +37,12 @@ class Recipe < ApplicationRecord
 
     # 古いタグを消す
     old_tags.each do |old|
-      self.tags.delete　Tag.find_by(name: old)
+      self.tags.delete　Tag.find_by(tag_name: old)
     end
 
     # 新しいタグを保存
     new_tags.each do |new|
-      new_recipe_tag = Tag.find_or_create_by(name: new)
+      new_recipe_tag = Tag.find_or_create_by(tag_name: new)
       self.tags << new_recipe_tag
     end
   end

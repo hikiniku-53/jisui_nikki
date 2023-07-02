@@ -1,2 +1,105 @@
-<h1>Public::Recipes#confirmation</h1>
-<p>Find me in app/views/public/recipes/confirmation.html.erb</p>
+<div class="container">
+
+  <!--入力情報-->
+  <div>
+
+    <!--レシピ名-->
+    <div><%= @recipe.name %></div>
+
+    <!--食材-->
+    <table class="table">
+    <% current_customer.cutting_board_foods.each do |cutting_board_food| %>
+      <!--食材-->
+      <tr>
+        <!--食材名-->
+        <td class="col-2"><%= cutting_board_food.food.name %></td>
+
+        <!--分量-->
+        <td class="col-8"><%= cutting_board_food.amount %> g</td>
+      </tr>
+
+      <!--栄養価計算-->
+      <div>
+        <% @total_energy += cutting_board_food.subtotal_energy %>
+        <% @total_protein += cutting_board_food.subtotal_protein %>
+        <% @total_fat += cutting_board_food.subtotal_fat %>
+        <% @total_carb += cutting_board_food.subtotal_carb %>
+        <% @total_salt_equivalent += cutting_board_food.subtotal_salt_equivalent %>
+      </div>
+    <% end %>
+  </table>
+
+    <!--栄養価-->
+    <table>
+    <tr>
+      <th>カロリー</th>
+      <td><%= @total_energy %> kcal</td>
+    </tr>
+
+    <tr>
+      <th>たんぱく質</th>
+      <td><%= @total_protein %> g</td>
+    </tr>
+
+    <tr>
+      <th>脂質</th>
+      <td><%= @total_fat %> g</td>
+    </tr>
+
+    <tr>
+      <th>炭水化物</th>
+      <td><%= @total_carb %> g</td>
+    </tr>
+
+    <tr>
+      <th>塩分相当量</th>
+      <td><%= @total_salt_equivalent %> g</td>
+    </tr>
+  </table>
+
+    <!--調理手順-->
+    <div><%= @recipe.process %></div>
+
+    <!--コメント-->
+    <div><%= @recipe.comment %></div>
+  </div>
+
+
+
+
+    <%= form_with model: @recipe, url: recipes_path do |f| %>
+
+    <!--レシピ送信情報-->
+    <div>
+      <%= f.hidden_field :name, :value => @recipe.name %>
+      <%= f.hidden_field :process, :value => @recipe.process %>
+      <%= f.hidden_field :comment, :value => @recipe.comment %>
+      <%= f.hidden_field :is_published, :value =>  @recipe.is_published %>
+
+    </div>
+
+      <!--公開or非公開-->
+      <div>
+          <%= f.radio_button :is_published, :true %>
+          <%= f.label :is_published, "非開" %>
+
+          <%= f.radio_button :is_published, :false, checked: true %>
+          <%= f.label :is_published, "非公開" %>
+      </div>
+
+
+
+
+        <!--タグ情報入力-->
+      <div>
+        <%= f.label :tag_name, "タグ" %>
+        <%= f.text_field :tag_name, class: '' %>
+      </div>
+
+      <div class="my-3 text-center">
+      <%= f.submit 'レシピをを登録する' , class: 'btn  btn-success px-3' %>
+      </div>
+
+    <% end %>
+
+</div>
