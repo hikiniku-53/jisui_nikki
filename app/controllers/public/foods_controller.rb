@@ -1,9 +1,13 @@
 class Public::FoodsController < ApplicationController
   def index
     @foods = Food.all
+    @food_genres = FoodGenre.all
   end
 
-  def genre_search
+  def genre
+    @food_genre = FoodGenre.find(params[:genre_id])
+    @foods = @food_genre.foods
+    @food_genres = FoodGenre.all
   end
 
   def new
