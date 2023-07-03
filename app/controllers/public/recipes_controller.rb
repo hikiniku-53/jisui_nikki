@@ -61,4 +61,8 @@ class Public::RecipesController < ApplicationController
     params.require(:recipe).permit(:name, :process, :comment, :is_published)
   end
 
+  def tags_params
+    params.require(:tag).permit(:tag_name)
+  end
+
 end

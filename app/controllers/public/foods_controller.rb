@@ -1,5 +1,6 @@
 class Public::FoodsController < ApplicationController
   def index
+    @foods = Food.all
   end
 
   def genre_search

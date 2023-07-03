@@ -1,0 +1,21 @@
+        <% recipes.each do |recipe| %>
+
+          <%= link_to recipe_path(recipe.id), class: 'text-decoration-none' do %>
+
+            <div class="card m-2">
+
+              <%= image_tag recipe.get_image(385,290), class: 'card-img-top' %>
+
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%= recipe.name %>
+                </h5>
+
+                <p class="card-text">
+                  <%= recipe.tags.map(&:tag_name).join(',') %>
+
+                </p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>

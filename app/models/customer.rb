@@ -11,8 +11,6 @@ class Customer < ApplicationRecord
   has_many :cutting_board_foods, dependent: :destroy
   has_many :comments, dependent: :destroy
 
-
-
   def self.guest
     # ゲストユーザーの取り出しor作成
     find_or_create_by!(email: 'aaa@aaa.com') do |customer|
