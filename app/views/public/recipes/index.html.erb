@@ -1,2 +1,27 @@
-<h1>Public::Recipes#index</h1>
-<p>Find me in app/views/public/recipes/index.html.erb</p>
+<div class="row">
+
+  <div class="d-flex">
+  <!--キーワード検索-->
+  <div><%= render "search", recipe: @recipe %></div>
+
+
+  <!--タグリスト-->
+  <div>
+    <% @tag_list.each do |list| %>
+      <%= list.tag_name %>
+      <%= "(#{list.recipes.count})" %>
+    <% end %>
+  </div>
+
+  投稿一覧画面で投稿に紐づくタグを表示
+  <% @recipes.each do |recipe| %>
+  <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i>
+  <% end %>
+
+
+
+  <!--レシピ一覧-->
+  <div class="col-sm-6">
+    <%= render 'recipes', recipes: @recipes %>
+  </div>
+</div>

@@ -56,4 +56,9 @@ class Recipe < ApplicationRecord
     end
   end
 
+  def self.search(keyword)
+
+    where("name LIKE?","%#{keyword}%")
+  end
+
 end

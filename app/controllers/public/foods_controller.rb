@@ -2,6 +2,12 @@ class Public::FoodsController < ApplicationController
   def index
     @foods = Food.all
     @food_genres = FoodGenre.all
+    if params[:keyword]
+      @foods = @foods.search(params[:keyword])
+    end
+    
+    @keyword= params[:keyword]
+      
   end
 
   def genre

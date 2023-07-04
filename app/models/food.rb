@@ -16,4 +16,9 @@ class Food < ApplicationRecord
     image.variant(resize_to_limit: [width, height]).processed
   end
 
+  def self.search(keyword)
+
+    where("name LIKE?","%#{keyword}%")
+  end
+
 end
