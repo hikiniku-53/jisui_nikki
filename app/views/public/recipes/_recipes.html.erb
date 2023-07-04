@@ -12,8 +12,7 @@
                 </h5>
 
                 <p class="card-text">
-                  <%= recipe.tags.map(&:tag_name).join(',') %>
-
+                  <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i>
                 </p>
               </div>
             </div>

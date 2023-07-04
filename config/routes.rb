@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   # devise関連
   devise_for :customers,skip: [:passwords], controllers: {
-    registrations: "public/registrations",
+    registrations: 'public/registrations',
     sessions: 'public/sessions'
   }
   #ゲストログイン用のルーティング
@@ -39,8 +39,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
     end
     get '/foods/genre/:genre_id' => 'foods#genre', as: 'foods_genre'
-    get 'foods/search' => 'foods#search'
-
+    # get 'foods/search' => 'foods#search'
 
     # cutting_board_foods_action
     resources :cutting_board_foods
@@ -50,13 +49,15 @@ Rails.application.routes.draw do
     # recipes_action
     resources :recipes, only: [:new, :index, :show, :create]
     post '/recipe/confirmation' => 'recipes#confirmation'
+    get '/search_tag' => 'recipes#search_tag'
+
   end
 
 
   # admin_action
   # URL /admin/sign_in ...
   devise_for :admins, skip: [:registrations, :passwords], controllers: {
-    sessions: "admin/sessions"
+    sessions: 'admin/sessions'
   }
 
   ##admin_action

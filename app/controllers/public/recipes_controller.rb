@@ -33,7 +33,6 @@ class Public::RecipesController < ApplicationController
       @recipe_detail.save!
     end
 
-
     tag_list = params[:recipe][:tag_name].split('、')
 
     if @recipe.save
@@ -46,19 +45,24 @@ class Public::RecipesController < ApplicationController
       redirect_to customer_path
       flash[:notice] = "レシピを投稿しました！"
     end
-
   end
 
   def index
     @recipes = Recipe.all.where(is_published: 'true')
     @tag_list = Tag.all
-    
+
     # キーワード検索時に@recipes更新
     if params[:keyword]
       @recipes = @recipes.search(params[:keyword])
     end
 
     @keyword= params[:keyword]
+  end
+
+  def search_tag
+    @tag_list = Tag.all
+    @tag = Tag.find(params[:tag_id])
+    @recipes = @tag.recipes.where(is_published: 'true')
   end
 
   def show
