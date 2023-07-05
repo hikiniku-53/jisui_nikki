@@ -57,8 +57,11 @@ class Recipe < ApplicationRecord
   end
 
   def self.search(keyword)
-
     where("name LIKE?","%#{keyword}%")
+  end
+
+  def favorited?(customer)
+    favorites.where(customer_id: customer.id).exists?
   end
 
 end

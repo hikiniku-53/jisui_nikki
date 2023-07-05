@@ -1,6 +1,6 @@
 Customer.seed do |s|
   s.id    = 1
-  s.email = 'KING@example.com'
+  s.email = 'king@example.com'
   s.name = 'cooKING'
   s.password = '3214-5678'
   s.password_confirmation = '1111-2222'

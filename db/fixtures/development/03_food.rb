@@ -64,3 +64,36 @@ Food.seed do |s|
   s.salt_equivalent = 99.5
 end
 
+Food.seed do |s|
+  s.id = 7
+  s.food_genre_id = 12
+  s.name = '鶏卵'
+  s.energy = 142
+  s.protein = 12.2
+  s.fat = 10.2
+  s.carb = 0.4
+  s.salt_equivalent = 0.4
+end
+
+Food.seed do |s|
+  s.id = 8
+  s.food_genre_id = 7
+  s.name = 'キャベツ'
+  s.energy = 21
+  s.protein = 1.3
+  s.fat = 0.2
+  s.carb = 5.2
+  s.salt_equivalent = 0
+end
+
+Food.seed do |s|
+  s.id = 9
+  s.food_genre_id = 4
+  s.name = '油揚げ'
+  s.energy = 377
+  s.protein = 23.4
+  s.fat = 34.4
+  s.carb = 0.4
+  s.salt_equivalent = 0
+end
+
