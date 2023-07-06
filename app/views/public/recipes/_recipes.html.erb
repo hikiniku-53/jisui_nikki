@@ -13,17 +13,18 @@
 
                 <p class="card-text">
                   <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i>
-                  <% if recipe.favorited?(current_customer) %>
-                    <!--一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ-->
-                    <%= link_to recipe_favorites_path(recipe.id), method: :delete do %>
-                      <span style="color:red;">❤︎</span>
-                    <% end %>
-                  <% else %>
-                    <!--一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ-->
-                    <%= link_to recipe_favorites_path(recipe.id), method: :post do %>
-                      <span>❤︎</span>
-                    <% end %>
-<% end %>
+                  
+                    <!--<% if recipe.favorited?(current_customer) %>-->
+                      <!--一致するレコードが存在する＝すでにいいね済みの場合はdestroyアクションへ-->
+                    <!--  <%= link_to recipe_favorites_path(recipe.id), method: :delete do %>-->
+                    <!--    <span style="color:red;">❤︎</span>-->
+                    <!--  <% end %>-->
+                    <!--<% else %>-->
+                      <!--一致するレコードが存在しない＝まだいいねしていない場合はcreateアクションへ-->
+                    <!--  <%= link_to recipe_favorites_path(recipe.id), method: :post do %>-->
+                    <!--    <span>❤︎</span>-->
+                    <!--  <% end %>-->
+                    <!--<% end %>-->
                 </p>
               </div>
             </div>

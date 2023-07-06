@@ -37,6 +37,9 @@ Rails.application.routes.draw do
     # foods_action
     resources :foods, only: [:index, :genre_search, :new, :create, :show, :edit, :update] do
       resources :comments, only: [:create]
+      # resources :prices, only: [:create, :update]
+      post '/price' => 'prices#create'
+      patch '/price/:id' => 'prices#update'
     end
     get '/foods/genre/:genre_id' => 'foods#genre', as: 'foods_genre'
     # get 'foods/search' => 'foods#search'

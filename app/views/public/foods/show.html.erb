@@ -7,6 +7,32 @@
       <!--まな板に追加する-->
       <div>
         <div>料理に使う</div>
+
+          <!--値段の登録・更新-->
+          <div>
+            <h5>最近の<%= @food.name %>の値段を教えてください</h5>
+
+            <% if @food.prices.where(customer_id: current_customer.id).exists? %>
+              <%= form_with model: @price, url: food_price_path(params[:id], @food.price(current_customer.id).id), method: :patch do |f| %>
+                <h4><%= f.label :price, "値段(100gあたり)" %></h4>
+                <%= f.number_field :price, class: 'form-control border-dark w-75' %>
+                <h4 class="">円</h4>
+                <%= f.submit "値段を更新する", class: 'btn btn-success px-3' %>
+              <% end %>
+
+            <% else %>
+
+              <%= form_with model: @price, url: food_price_path(params[:id]) do |f| %>
+                <h4><%= f.label :price, "値段(100gあたり)" %></h4>
+                <%= f.number_field :price, class: 'form-control border-dark w-75' %>
+                <h4 class="">円</h4>
+                <%= f.submit "値段を登録する", class: 'btn btn-success px-3' %>
+              <% end %>
+            <% end %>
+
+          </div>
+
+
         <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
 
           <div>
