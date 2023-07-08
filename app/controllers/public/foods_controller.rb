@@ -24,6 +24,7 @@ class Public::FoodsController < ApplicationController
 
   def show
     @food = Food.find(params[:id])
+    @price = @food.prices.where(customer_id: current_customer.id)
     @comment = Comment.new
     @comments = Comment.all
   end
