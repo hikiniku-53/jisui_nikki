@@ -7,7 +7,7 @@ class Public::FavoritesController < ApplicationController
   end
 
   def destroy
-    @recipe_favorite = Favorite.find(customer_id: current_customer.id, recipe_id: params[:recipe_id])
+    @recipe_favorite = Favorite.find_by(customer_id: current_customer.id, recipe_id: params[:recipe_id])
     @recipe_favorite.destroy
     redirect_to recipe_path(params[:recipe_id])
   end

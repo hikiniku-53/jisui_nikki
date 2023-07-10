@@ -1,2 +1,120 @@
-<h1>Public::Recipes#show</h1>
-<p>Find me in app/views/public/recipes/show.html.erb</p>
+<div class="row">
+  <div class="col-sm-3">
+    <!--キーワード検索-->
+    <div><%= render "search" %></div>
+    <!--タグリスト-->
+    <div>
+      <% @tag_list.each do |list| %>
+        <%= link_to list.tag_name, search_tag_path(tag_id: list.id) %>
+        <%= "(#{list.recipes.count})" %>
+        <br>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="col-4">
+      <!--recipe_image-->
+      <%= image_tag @recipe.get_image(540,500) %>
+
+      <!--いいね機能-->
+      <div>
+        <!--いいね数の表示-->
+        <div>
+          <%= @recipe.favorites.count %>
+          <span style="color:red;">❤︎</span>
+        </div>
+
+        <!--いいねをつける・けす-->
+        <div>
+          <!--自分の投稿かどうか(自分の投稿にはいいね数のみを表示)-->
+          <%unless @recipe.customer_id == current_customer.id %>
+            <!--自分がいいねをしているかどうか-->
+            <% if @recipe.favorited?(current_customer) %>
+              <!--いいねをしている-->
+              <%= link_to recipe_favorites_path(@recipe.id), method: :delete do %>
+                <span style="color:red;">❤︎</span>
+              <% end %>
+
+            <% else %>
+              <!--いいねをしていない-->
+              <%= link_to recipe_favorites_path(@recipe.id), method: :post do %>
+                <span>❤︎</span>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+
+
+      <h1>
+        <%= @recipe.name %>
+      </h1>
+
+      <!--レシピデータ-->
+      <div class="d-flex">
+        <!--食材・分量-->
+        <div class="col-6">
+          <table>
+            <tbody>
+              <tr></tr>
+              <% @recipe.recipe_details.each do |recipe_detail| %>
+                <tr>
+                  <td>
+                    <%= recipe_detail.food.name %>
+                  </td>
+
+                  <td>
+                    <%= recipe_detail.amount %> g
+                  </td>
+                </tr>
+                <% @total_energy += recipe_detail.subtotal_energy %>
+                <% @total_protein += recipe_detail.subtotal_protein %>
+                <% @total_fat += recipe_detail.subtotal_fat %>
+                <% @total_carb += recipe_detail.subtotal_carb %>
+                <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <!--栄養素-->
+        <div class="col-6">
+          <table class="">
+            <tr>
+              <th>エネルギー : kcal</th>
+              <td><%= @total_energy %></td>
+            </tr>
+
+            <tr>
+              <th>たんぱく質</th>
+              <td><%= @total_protein %></td>
+            </tr>
+
+            <tr>
+              <th>脂質</th>
+              <td><%= @total_fat %></td>
+            </tr>
+
+            <tr>
+              <th>炭水化物</th>
+              <td><%= @total_carb %></td>
+            </tr>
+
+            <tr>
+              <th>食塩相当量</th>
+              <td><%= @total_salt_equivalent %></td>
+            </tr>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+      <!--コメント一覧-->
+
+
+
+    </div>
+
+  </div>

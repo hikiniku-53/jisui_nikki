@@ -66,6 +66,13 @@ class Public::RecipesController < ApplicationController
   end
 
   def show
+    @recipe = Recipe.find(params[:id])
+    @tag_list = Tag.all
+    @total_energy = 0
+    @total_protein = 0
+    @total_fat = 0
+    @total_carb = 0
+    @total_salt_equivalent = 0
   end
 
   private

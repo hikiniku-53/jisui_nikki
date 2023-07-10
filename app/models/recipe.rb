@@ -16,26 +16,7 @@ class Recipe < ApplicationRecord
   end
 
 
-  def subtotal_energy
-    recipe_details.sum(recipe_detail.subtotal_energy)
-  end
-
-  def subtotal_protein
-    recipe_details.sum(recipe_detail.subtotal_protein)
-  end
-
-  def subtotal_fat
-    recipe_details.sum(recipe_detail.subtotal_fat)
-  end
-
-  def subtotal_carb
-    recipe_details.sum(recipe_detail.subtotal_carb)
-  end
-
-  def subtotal_salt_equivalent
-    recipe_details.sum(recipe_detail.subtotal_salt_equivalent)
-  end
-
+ 
   def save_tag(sent_tags)
     # タグが存在していれば、タグの名前を配列として全て取得
     current_tags = self.tags.pluck(:tag_name) unless self.tags.nil?

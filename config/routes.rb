@@ -49,7 +49,9 @@ Rails.application.routes.draw do
 
     # recipes_action
     resources :recipes, only: [:new, :index, :show, :create] do
-      resources :favorites, only: [:create, :destroy]
+      # resources :favorites, only: [:create, :destroy]
+      post '/favorites' => 'favorites#create'
+      delete '/favorites' => 'favorites#destroy'
     end
     post '/recipe/confirmation' => 'recipes#confirmation'
     get '/search_tag' => 'recipes#search_tag'
