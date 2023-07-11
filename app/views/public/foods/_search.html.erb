@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-end">
-  <%= form_with url: foods_path, method: :get, local: true, class: 'boards__searchForm' do |f|%>
+  <%= form_with url: foods_path, method: :get, local: true, class: 'boards_searchForm' do |f|%>
     <div class="input-group">
       <%= f.text_field :keyword, value: @keyword, class: "form-control search-control", placeholder: "キーワードを入力" %>
         <span class="input-group-btn input-group-append">

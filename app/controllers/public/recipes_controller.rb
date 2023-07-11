@@ -75,6 +75,12 @@ class Public::RecipesController < ApplicationController
     @total_salt_equivalent = 0
   end
 
+  def search_favorite
+    @tag_list = Tag.all
+
+    @recipes = current_customer.favorites.recipes
+  end
+
   private
 
   def recipe_params

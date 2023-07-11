@@ -3,56 +3,24 @@
     <!--キーワード検索-->
     <div><%= render "search" %></div>
     <!--タグリスト-->
-    <div>
-      <% @tag_list.each do |list| %>
-        <%= link_to list.tag_name, search_tag_path(tag_id: list.id) %>
-        <%= "(#{list.recipes.count})" %>
-        <br>
-      <% end %>
-    </div>
   </div>
 
   <div class="col-4">
-      <!--recipe_image-->
-      <%= image_tag @recipe.get_image(540,500) %>
+    <!--recipe_image-->
+    <%= image_tag @recipe.get_image(540,500) %>
 
-      <!--いいね機能-->
-      <div>
-        <!--いいね数の表示-->
-        <div>
-          <%= @recipe.favorites.count %>
-          <span style="color:red;">❤︎</span>
-        </div>
-
-        <!--いいねをつける・けす-->
-        <div>
-          <!--自分の投稿かどうか(自分の投稿にはいいね数のみを表示)-->
-          <%unless @recipe.customer_id == current_customer.id %>
-            <!--自分がいいねをしているかどうか-->
-            <% if @recipe.favorited?(current_customer) %>
-              <!--いいねをしている-->
-              <%= link_to recipe_favorites_path(@recipe.id), method: :delete do %>
-                <span style="color:red;">❤︎</span>
-              <% end %>
-
-            <% else %>
-              <!--いいねをしていない-->
-              <%= link_to recipe_favorites_path(@recipe.id), method: :post do %>
-                <span>❤︎</span>
-              <% end %>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
+    <!--いいね機能-->
+    <div id = "favorite_<%= @recipe.id %>">
+      <%= render "favorite", recipe: @recipe %>
+    </div>
 
 
-
-      <h1>
-        <%= @recipe.name %>
-      </h1>
+    <h1>
+      <%= @recipe.name %>
+    </h1>
 
       <!--レシピデータ-->
-      <div class="d-flex">
+    <div class="d-flex">
         <!--食材・分量-->
         <div class="col-6">
           <table>
@@ -109,12 +77,7 @@
         </div>
 
       </div>
-    </div>
-
-      <!--コメント一覧-->
-
-
-
-    </div>
-
   </div>
+
+  <!--コメント一覧-->
+</div>
