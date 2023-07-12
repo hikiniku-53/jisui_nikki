@@ -31,8 +31,9 @@
         <h4>人気のレシピ</h4>
 
         <!--ピックアップ食材-->
-        <%= render '/public/recipes/recipes', recipes: @recipes %>
-
+        <% @recipes.each do |recipe| %>
+          <%= render '/public/recipes/recipe', recipe: recipe %>
+        <% end %>
         <%= link_to "もっとレシピを見る", recipes_path, class: 'btn btn-primary px-3' %>
       </div>
 

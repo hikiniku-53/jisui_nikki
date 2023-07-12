@@ -7,4 +7,6 @@ class Public::CustomersController < ApplicationController
 
   def update
   end
+
+  
 end

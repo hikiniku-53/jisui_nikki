@@ -41,8 +41,6 @@ class Recipe < ApplicationRecord
     where("name LIKE?","%#{keyword}%")
   end
 
-  def favorited?(customer)
-    favorites.where(customer_id: customer.id).exists?
-  end
+
 
 end

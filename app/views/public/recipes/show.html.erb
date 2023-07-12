@@ -10,7 +10,7 @@
     <%= image_tag @recipe.get_image(540,500) %>
 
     <!--いいね機能-->
-    <div id = "favorite_<%= @recipe.id %>">
+    <div id="favorite_<%= @recipe.id %>">
       <%= render "favorite", recipe: @recipe %>
     </div>
 
