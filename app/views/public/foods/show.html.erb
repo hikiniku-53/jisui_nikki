@@ -23,7 +23,6 @@
             <% else %>
 
               <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
-
                 <div>
                   <%= f.hidden_field :food_id, :value => @food.id %>
                 </div>

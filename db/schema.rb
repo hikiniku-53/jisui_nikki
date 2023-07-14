@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_27_112340) do
+ActiveRecord::Schema.define(version: 2023_07_13_220119) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -96,6 +96,17 @@ ActiveRecord::Schema.define(version: 2023_06_27_112340) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "diaries", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.date "date", null: false
+    t.integer "body_weight"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id", "date"], name: "index_diaries_on_customer_id_and_date"
+    t.index ["customer_id"], name: "index_diaries_on_customer_id"
+  end
+
   create_table "favorites", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "recipe_id", null: false
@@ -121,6 +132,25 @@ ActiveRecord::Schema.define(version: 2023_06_27_112340) do
     t.integer "salt_equivalent"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "meal_details", force: :cascade do |t|
+    t.integer "meal_id", null: false
+    t.integer "food_id"
+    t.integer "recipe_id"
+    t.float "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "meals", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.date "date", null: false
+    t.integer "time", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id", "date", "time"], name: "index_meals_on_customer_id_and_date_and_time"
+    t.index ["customer_id"], name: "index_meals_on_customer_id"
   end
 
   create_table "prices", force: :cascade do |t|
@@ -169,8 +199,10 @@ ActiveRecord::Schema.define(version: 2023_06_27_112340) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "diaries", "customers"
   add_foreign_key "favorites", "customers"
   add_foreign_key "favorites", "recipes"
+  add_foreign_key "meals", "customers"
   add_foreign_key "prices", "customers"
   add_foreign_key "prices", "foods"
   add_foreign_key "recipe_tags", "recipes"

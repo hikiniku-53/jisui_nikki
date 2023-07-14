@@ -23,5 +23,9 @@ class RecipeDetail < ApplicationRecord
     food.salt_equivalent * amount / 100
   end
 
+  # def subtotal_price
+  #   food.price * amount / 100
+  # end
+
 
 end

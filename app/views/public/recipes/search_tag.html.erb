@@ -6,6 +6,10 @@
 </div>
   <!--レシピ一覧-->
   <div class="col-sm-6">
-    <%= render 'recipes', recipes: @recipes, recipe_favorit: @recipe_favorite %>
-  </div>
+    <% @recipes.each do |recipe| %>
+      <%= render 'recipe', recipe: recipe %>
+      <div id="favorite_<%= recipe.id %>">
+        <%= render "favorite", recipe: recipe %>
+      </div>
+    <% end %>
 </div>

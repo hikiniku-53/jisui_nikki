@@ -73,6 +73,7 @@ class Public::RecipesController < ApplicationController
     @total_fat = 0
     @total_carb = 0
     @total_salt_equivalent = 0
+    @total_price = 0
   end
 
   def search_favorite
@@ -89,6 +90,10 @@ class Public::RecipesController < ApplicationController
 
   def tags_params
     params.require(:tag).permit(:tag_name)
+  end
+
+  def price_params
+    params.require(:price).permit(:food_price)
   end
 
 end

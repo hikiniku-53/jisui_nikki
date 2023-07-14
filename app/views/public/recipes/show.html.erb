@@ -35,12 +35,15 @@
                   <td>
                     <%= recipe_detail.amount %> g
                   </td>
+
                 </tr>
                 <% @total_energy += recipe_detail.subtotal_energy %>
                 <% @total_protein += recipe_detail.subtotal_protein %>
                 <% @total_fat += recipe_detail.subtotal_fat %>
                 <% @total_carb += recipe_detail.subtotal_carb %>
                 <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+                <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+                <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
               <% end %>
             </tbody>
           </table>
@@ -78,6 +81,12 @@
 
       </div>
   </div>
+
+    <!--値段-->
+    <div>
+      <%= @total_price %>
+    </div>
+
 
   <!--コメント一覧-->
 </div>
