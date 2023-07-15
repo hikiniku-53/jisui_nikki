@@ -1,0 +1,2 @@
+class PlateFood < ApplicationRecord
+end

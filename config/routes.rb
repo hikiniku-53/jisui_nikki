@@ -55,6 +55,17 @@ Rails.application.routes.draw do
     get 'recipe/search_tag' => 'recipes#search_tag'
     get '/recipe/search_favorite' => 'recipes#search_favorite'
 
+    # plate_foods_action
+    resources :plate_foods, only: [:index, :update, :destroy]
+    post '/plate_foods/foods' => 'plate_foods#create_plate_food', as: 'add_plate_food'
+    post '/plate_foods/recipes' => 'plate_foods#create_plate_recipe', as: 'add_plate_recipe'
+    delete '/plate_foods' => 'cutting_board_foods#destroy_all', as: 'plate_foods_destroy_all'
+
+    # meal_action
+    resources :meal, only: [:index, :show, :create, :update, :destroy]
+
+    # diary_action
+    resources :diary, only: [:index, :show, :create, :update, :destroy]
 
 
   end

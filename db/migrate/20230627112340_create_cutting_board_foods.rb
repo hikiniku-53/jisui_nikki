@@ -6,7 +6,6 @@ class CreateCuttingBoardFoods < ActiveRecord::Migration[6.1]
       t.integer :food_id, null: false
       t.integer :amount, null: false
 
-
       t.timestamps
     end
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_13_220119) do
+ActiveRecord::Schema.define(version: 2023_07_15_010940) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -88,14 +88,6 @@ ActiveRecord::Schema.define(version: 2023_07_13_220119) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "cutting_boards", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "food_id", null: false
-    t.integer "amount", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "diaries", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.date "date", null: false
@@ -138,6 +130,7 @@ ActiveRecord::Schema.define(version: 2023_07_13_220119) do
     t.integer "meal_id", null: false
     t.integer "food_id"
     t.integer "recipe_id"
+    t.integer "price"
     t.float "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -151,6 +144,24 @@ ActiveRecord::Schema.define(version: 2023_07_13_220119) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id", "date", "time"], name: "index_meals_on_customer_id_and_date_and_time"
     t.index ["customer_id"], name: "index_meals_on_customer_id"
+  end
+
+  create_table "plate_foods", force: :cascade do |t|
+    t.integer "customer_id", null: false
+    t.integer "food_id_id"
+    t.integer "recipe_id_id"
+    t.integer "price"
+    t.integer "energy", null: false
+    t.integer "protein"
+    t.integer "fat"
+    t.integer "carb"
+    t.integer "salt_equivalent"
+    t.float "amount", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id"], name: "index_plate_foods_on_customer_id"
+    t.index ["food_id_id"], name: "index_plate_foods_on_food_id_id"
+    t.index ["recipe_id_id"], name: "index_plate_foods_on_recipe_id_id"
   end
 
   create_table "prices", force: :cascade do |t|
@@ -203,6 +214,9 @@ ActiveRecord::Schema.define(version: 2023_07_13_220119) do
   add_foreign_key "favorites", "customers"
   add_foreign_key "favorites", "recipes"
   add_foreign_key "meals", "customers"
+  add_foreign_key "plate_foods", "customers"
+  add_foreign_key "plate_foods", "food_ids"
+  add_foreign_key "plate_foods", "recipe_ids"
   add_foreign_key "prices", "customers"
   add_foreign_key "prices", "foods"
   add_foreign_key "recipe_tags", "recipes"
