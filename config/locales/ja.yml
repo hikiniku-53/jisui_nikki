@@ -1,0 +1,8 @@
+ja:
+  enums:
+    meal:
+      time:
+        breakfast: "朝食"
+        lunch: "昼食"
+        dinner: "夕食"
+        others: "間食"
