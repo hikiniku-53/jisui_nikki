@@ -6,61 +6,70 @@
 
       <!--まな板に追加する-->
       <div>
-        <div>料理に使う</div>
+        <!--値段の登録・更新-->
+        <div>
+          <h5>最近の<%= @food.name %>の値段を教えてください</h5>
 
-          <!--値段の登録・更新-->
-          <div>
-            <h5>最近の<%= @food.name %>の値段を教えてください</h5>
-
-            <% if @food.prices.where(customer_id: current_customer.id).exists? %>
-              <%= form_with model: @price, url: food_prices_path(params[:id]), method: :patch do |f| %>
-                <h4><%= f.label :food_price, "値段(100gあたり)" %></h4>
-                <%= f.number_field :food_price, class: 'form-control border-dark w-75' %>
-                <h4 class="">円</h4>
-                <%= f.submit "値段を更新する", class: 'btn btn-success px-3' %>
-              <% end %>
-
-            <% else %>
-
-              <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
-                <div>
-                  <%= f.hidden_field :food_id, :value => @food.id %>
-                </div>
-                <h4><%= f.label :food_price, "値段(100gあたり)" %></h4>
-                <%= f.number_field :food_price, class: 'form-control border-dark w-75', :placeholder => "値段を入力してください" %>
-                <h4 class="">円</h4>
-                <%= f.submit "値段を登録する", class: 'btn btn-success px-3' %>
-              <% end %>
+          <% if @food.prices.where(customer_id: current_customer.id).exists? %>
+            <%= form_with model: @price, url: food_prices_path(params[:id]), method: :patch do |f| %>
+              <h4><%= f.label :food_price, "値段(100gあたり)" %></h4>
+              <%= f.number_field :food_price, class: 'form-control border-dark w-75' %>
+              <h4 class="">円</h4>
+              <%= f.submit "値段を更新する", class: 'btn btn-success px-3' %>
             <% end %>
 
-          </div>
+          <% else %>
 
+            <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
+              <div>
+                <%= f.hidden_field :food_id, :value => @food.id %>
+              </div>
+              <h4><%= f.label :food_price, "値段(100gあたり)" %></h4>
+              <%= f.number_field :food_price, class: 'form-control border-dark w-75', :placeholder => "値段を入力してください" %>
+              <h4 class="">円</h4>
+              <%= f.submit "値段を登録する", class: 'btn btn-success px-3' %>
+            <% end %>
+          <% end %>
+        </div>
 
-        <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
+        <div>
+          <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
 
-          <div>
             <%= f.hidden_field :food_id, :value => @food.id %>
-          </div>
+          
+            <div class="d-inline-flex align-items-center">
+              <h4><%= f.label :amount, "分量" %></h4>
+              <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
+              <h4 class="">g</h4>
+            </div>
 
-          <div class="d-inline-flex align-items-center">
-            <h4><%= f.label :amount, "分量" %></h4>
-            <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
-            <h4 class="">g</h4>
-          </div>
+            <div>
+              <%= f.submit "まな板に乗せる", class: 'btn btn-success px-3' %>
+            </div>
+          <% end %>
+        </div>
+        
+        <div>
+          <%= form_with model: Meal.new, url: meal_index_path do |f| %>
 
-          <div>
-            <%= f.submit "まな板に乗せる", class: 'btn btn-success px-3' %>
-          </div>
+            <%= f.hidden_field :food_id, :value => @food.id %>
+          
+            <div class="d-inline-flex align-items-center">
+              <h4><%= f.label :amount, "分量" %></h4>
+              <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
+              <h4 class="">g</h4>
+            </div>
 
-
-        <% end %>
-      </div>
+            <div>
+              <%= f.submit "まな板に乗せる", class: 'btn btn-success px-3' %>
+            </div>
+          <% end %>
+        </div>
 
 
       <!--comment_form-->
       <div class="">
         <div>この食材について教えてください!!</div>
-
 
         <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
           <div>

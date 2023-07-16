@@ -1,2 +1,0 @@
-class PlateFood < ApplicationRecord
-end
