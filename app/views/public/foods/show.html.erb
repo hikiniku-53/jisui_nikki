@@ -52,7 +52,7 @@
           <% end %>
         </div>
 
-        <%= form_with model: Meal.new, url: meal_index_path do |f| %>
+        <%= form_with model: Meal.new, url: meals_path do |f| %>
           <%= f.hidden_field :food_id, :value => @food.id %>
 
           <%= f.hidden_field :protein, :value => @food.protein %>
@@ -66,7 +66,7 @@
 
           <div>
             <%= f.label :time %>
-            <%= f.number_field :time, Meal.times_i18n.keys.map {|k| [Meal.times_i18n[k], k]} %>
+            <%= f.select :time, Meal.times_i18n.keys.map {|k| [t("meals.times_i18n.#{k}"), k] },class: "mb-3 sm:mb-0 mr-9 border border-line-200 rounded-[3px] rounded-[3px] py-3 pl-6 w-52 h-12 font-bold" %>
           </div>
 
           <div class="d-inline-flex align-items-center">

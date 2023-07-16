@@ -56,10 +56,10 @@ Rails.application.routes.draw do
     get '/recipe/search_favorite' => 'recipes#search_favorite'
 
     # meal_action
-    resources :meal, only: [:index, :show, :create, :update, :destroy]
+    resources :meals, only: [:show, :create, :update, :destroy]
 
     # diary_action
-    resources :diary, only: [:index, :show, :create, :update, :destroy]
+    resources :diaries, only: [:index, :show, :create, :update, :destroy]
 
 
   end
