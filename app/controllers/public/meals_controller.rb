@@ -1,17 +1,10 @@
 class Public::MealsController < ApplicationController
 
   def create
-    # paramsの外部キーを確認して食材、レシピを判別
-    if params.has_key(:food_id)?
-      meal = current_customer.meals.find_by(food_id: meal_params[:food_id])
-    elsif params.has_key(:recipe_id)?
-      meal = current_customer.meals.find_by(food_id: meal_params[:recipe_id])
-    else
-      # flash[:notice] = ""
-    end
-
+    meal_food = current_customer.meals.find_by(food_id: meal_params[:food_id])
+    meal_recipe = current_customer.meals.find_by(recipe_id: meal_params[:recipe_id])
     # 既に記録されていないか確認
-    if meal
+    if meal_food || meal_recipe
       # 記録されている => 送信した分量を追加する
       amount = meal_params[:amount].to_f
       meal.amount = amount += meal.amount
