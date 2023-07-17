@@ -1,6 +1,6 @@
 class Recipe < ApplicationRecord
   has_one_attached :image
-
+  has_many :meals
   has_many :recipe_details, dependent: :destroy
   has_many :recipe_tags, dependent: :destroy
   has_many :tags, through: :recipe_tags
@@ -16,7 +16,7 @@ class Recipe < ApplicationRecord
   end
 
 
- 
+
   def save_tag(sent_tags)
     # タグが存在していれば、タグの名前を配列として全て取得
     current_tags = self.tags.pluck(:tag_name) unless self.tags.nil?

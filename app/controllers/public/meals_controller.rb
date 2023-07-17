@@ -1,48 +1,30 @@
 class Public::MealsController < ApplicationController
 
   def create
-    # 食材を追加した場合
-    if params[:food_id]
+    # paramsの外部キーを確認して食材、レシピを判別
+    if params.has_key(:food_id)?
       meal = current_customer.meals.find_by(food_id: meal_params[:food_id])
-      # 既に記録されていた場合
-      if meal
-        # 送信した分量を追加する
-        amount = meal_params[:amount].to_i
-        meal.amount = amount += meal.amount
-        meal.update(amount: meal.amount)
-      # 記録されていなかった場合
-      else
-        # レシピを追加する
-        @meal = Meal.new(meal_params)
-        @meal.customer_id = current_customer.id
-        @meal.save
-      end
-      
-    # レシピを追加した場合
-    elsif params[:recipe_id]
+    elsif params.has_key(:recipe_id)?
       meal = current_customer.meals.find_by(food_id: meal_params[:recipe_id])
-      # 既に記録されていた場合
-      if meal
-        # 送信した分量を追加する
-        amount = meal_params[:amount].to_f
-        meal.amount = amount += meal.amount
-        meal.update(amount: meal.amount)
-      # 記録されていなかった場合
-      else
-        # レシピを追加する
-        @meal = Meal.new(meal_params)
-        @meal.customer_id = current_customer.id
-        @meal.save
-      end
-      
-    # 食材、レシピ以外が贈られた場合
     else
-      flash[:notice] = ""
+      # flash[:notice] = ""
     end
-    
+
+    # 既に記録されていないか確認
+    if meal
+      # 記録されている => 送信した分量を追加する
+      amount = meal_params[:amount].to_f
+      meal.amount = amount += meal.amount
+      meal.update(amount: meal.amount)
+    else
+      ## 記録されている => 食事を追加する
+      @meal = Meal.new(meal_params)
+      @meal.customer_id = current_customer.id
+      @meal.save!
+    end
     # 追加した日の日記に飛ぶ
     flash[:notice] = ""
-    redirect_to meals_path
+    redirect_to customer_path
   end
 
   private

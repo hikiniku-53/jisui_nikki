@@ -128,8 +128,8 @@ ActiveRecord::Schema.define(version: 2023_07_13_220003) do
 
   create_table "meals", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.integer "food_id_id"
-    t.integer "recipe_id_id"
+    t.integer "food_id"
+    t.integer "recipe_id"
     t.date "date", null: false
     t.integer "time", null: false
     t.integer "price"
@@ -143,8 +143,8 @@ ActiveRecord::Schema.define(version: 2023_07_13_220003) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id", "date", "time"], name: "index_meals_on_customer_id_and_date_and_time"
     t.index ["customer_id"], name: "index_meals_on_customer_id"
-    t.index ["food_id_id"], name: "index_meals_on_food_id_id"
-    t.index ["recipe_id_id"], name: "index_meals_on_recipe_id_id"
+    t.index ["food_id"], name: "index_meals_on_food_id"
+    t.index ["recipe_id"], name: "index_meals_on_recipe_id"
   end
 
   create_table "prices", force: :cascade do |t|
@@ -197,8 +197,8 @@ ActiveRecord::Schema.define(version: 2023_07_13_220003) do
   add_foreign_key "favorites", "customers"
   add_foreign_key "favorites", "recipes"
   add_foreign_key "meals", "customers"
-  add_foreign_key "meals", "food_ids"
-  add_foreign_key "meals", "recipe_ids"
+  add_foreign_key "meals", "foods"
+  add_foreign_key "meals", "recipes"
   add_foreign_key "prices", "customers"
   add_foreign_key "prices", "foods"
   add_foreign_key "recipe_tags", "recipes"

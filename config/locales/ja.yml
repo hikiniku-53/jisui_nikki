@@ -6,3 +6,6 @@ ja:
         lunch: "昼食"
         dinner: "夕食"
         others: "間食"
+      unit:
+        portion: "人前"
+        weight: "g"
