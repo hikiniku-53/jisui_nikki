@@ -1,2 +1,53 @@
-<h1>Public::Customer#show</h1>
-<p>Find me in app/views/public/customer/show.html.erb</p>
+<div class="container">
+  <!--日記-->
+  <div class="col-sm-4"></div>
+
+
+  <div class="col-sm-4"></div>
+
+  <!--自身の投稿一覧-->
+  <div class="col-sm-4">
+
+    <div>
+      <table class="table">
+        <tbody>
+          <% @recipes.each do |recipe| %>
+          <!--栄養素、値段の計算-->
+          <div>
+            <% recipe.recipe_details.each do |recipe_detail| %>
+              <% @total_energy += recipe_detail.subtotal_energy %>
+              <% @total_protein += recipe_detail.subtotal_protein %>
+              <% @total_fat += recipe_detail.subtotal_fat %>
+              <% @total_carb += recipe_detail.subtotal_carb %>
+              <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+              <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+              <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+            <% end %>
+          </div>
+
+          <!--1列目=>レシピ名、エネルギー量-->
+          <tr>
+            <td><%= recipe.name %><br>
+              E:<%= @total_energy %>
+              P:<%= @total_protein %>
+              F:<%= @total_fat %>
+              C:<%= @total_carb %>
+            </td>
+            <td><%= @total_price %>円</td>
+          </tr>
+
+          <tr>
+            <td colspan="2">
+
+            </td>
+          </tr>
+
+
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>

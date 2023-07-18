@@ -15,7 +15,6 @@ class CreateMeals < ActiveRecord::Migration[6.1]
       t.float      :amount, null: false
       t.timestamps
     end
-    add_index :meals, [:customer_id, :date, :time]
   end
 end
 

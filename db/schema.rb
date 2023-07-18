@@ -141,7 +141,6 @@ ActiveRecord::Schema.define(version: 2023_07_13_220003) do
     t.float "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["customer_id", "date", "time"], name: "index_meals_on_customer_id_and_date_and_time"
     t.index ["customer_id"], name: "index_meals_on_customer_id"
     t.index ["food_id"], name: "index_meals_on_food_id"
     t.index ["recipe_id"], name: "index_meals_on_recipe_id"

@@ -1,14 +1,18 @@
 class Public::MealsController < ApplicationController
 
   def create
-    meal_food = current_customer.meals.find_by(food_id: meal_params[:food_id])
-    meal_recipe = current_customer.meals.find_by(recipe_id: meal_params[:recipe_id])
+    meal_food = current_customer.meals.find_by(food_id: meal_params[:food_id], date: meal_params[:date], time: meal_params[:time])
+    meal_recipe = current_customer.meals.find_by(recipe_id: meal_params[:recipe_id], date: meal_params[:date], time: meal_params[:time])
     # 既に記録されていないか確認
-    if meal_food || meal_recipe
+    if meal_food
       # 記録されている => 送信した分量を追加する
       amount = meal_params[:amount].to_f
-      meal.amount = amount += meal.amount
-      meal.update(amount: meal.amount)
+      meal_food.amount = amount += meal_food.amount
+      meal_food.update(amount: meal_food.amount)
+    elsif meal_recipe
+      amount = meal_params[:amount].to_f
+      meal_recipe.amount = amount += meal_recipe.amount
+      meal_recipe.update(amount: meal_recipe.amount)
     else
       ## 記録されている => 食事を追加する
       @meal = Meal.new(meal_params)
