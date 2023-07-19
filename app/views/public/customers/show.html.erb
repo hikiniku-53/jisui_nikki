@@ -1,53 +1,80 @@
 <div class="container">
+  <%= notice %>
+  <div class="row">
   <!--日記-->
-  <div class="col-sm-4"></div>
+  <div class="col-sm-4">
+    <!--日記-->
+    <div>
+      <%= @date %>
+    </div>
+
+    <!--朝食-->
+    <div>
+      <%= render "public/diaries/meals", meals: @breakfasts %>
+    </div>
+
+    <!--昼食-->
+    <div>
+      <%= render "public/diaries/meals", meals: @lunches %>
+    </div>
+
+    <!--夕食-->
+    <div>
+      <%= render "public/diaries/meals", meals: @dinners %>
+    </div>
+
+    <!--間食・その他-->
+    <div>
+      <%= render "public/diaries/meals", meals: @others %>
+    </div>
+
+
+  </div>
 
 
   <div class="col-sm-4"></div>
 
   <!--自身の投稿一覧-->
   <div class="col-sm-4">
-
     <div>
       <table class="table">
         <tbody>
           <% @recipes.each do |recipe| %>
-          <!--栄養素、値段の計算-->
-          <div>
-            <% recipe.recipe_details.each do |recipe_detail| %>
-              <% @total_energy += recipe_detail.subtotal_energy %>
-              <% @total_protein += recipe_detail.subtotal_protein %>
-              <% @total_fat += recipe_detail.subtotal_fat %>
-              <% @total_carb += recipe_detail.subtotal_carb %>
-              <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
-              <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
-              <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
-            <% end %>
-          </div>
+            <!--栄養素、値段の計算-->
+            <div>
+              <% recipe.recipe_details.each do |recipe_detail| %>
+                <% @total_energy += recipe_detail.subtotal_energy %>
+                <% @total_protein += recipe_detail.subtotal_protein %>
+                <% @total_fat += recipe_detail.subtotal_fat %>
+                <% @total_carb += recipe_detail.subtotal_carb %>
+                <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+                <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+                <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+              <% end %>
+            </div>
 
-          <!--1列目=>レシピ名、エネルギー量-->
-          <tr>
-            <td><%= recipe.name %><br>
-              E:<%= @total_energy %>
-              P:<%= @total_protein %>
-              F:<%= @total_fat %>
-              C:<%= @total_carb %>
-            </td>
-            <td><%= @total_price %>円</td>
-          </tr>
+            <!--1列目=>レシピ名、エネルギー量-->
+            <tr>
+              <td><%= recipe.name %><br>
+                E:<%= @total_energy %>
+                P:<%= @total_protein %>
+                F:<%= @total_fat %>
+                C:<%= @total_carb %>
+              </td>
+              <td><%= @total_price %>円</td>
+            </tr>
 
-          <tr>
-            <td colspan="2">
+            <tr>
+              <td colspan="2">
 
-            </td>
-          </tr>
-
-
+              </td>
+            </tr>
           <% end %>
         </tbody>
       </table>
     </div>
 
 
+  </div>
   </div>
 </div>

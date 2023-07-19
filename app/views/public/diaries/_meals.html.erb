@@ -1,0 +1,15 @@
+<table>
+  <tbody>
+    <% meals.each do |meal| %>
+      <tr>
+        <td>
+          <% if meal.food_id %>
+            <%= meal.food.name %>
+          <% else %>
+            <%= meal.recipe.name %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
