@@ -1,10 +1,10 @@
 class Public::CustomersController < ApplicationController
   def show
     @date = Date.today
-    @breakfasts = current_customer.meals.where(date: Date.today, time: 0)
-    @lunches = current_customer.meals.where(date: Date.today, time: 1)
-    @dinners = current_customer.meals.where(date: Date.today, time: 2)
-    @others = current_customer.meals.where(date: Date.today, time: 3)
+    @breakfasts = current_customer.meals.where(date: @date, time: 0)
+    @lunches = current_customer.meals.where(date: @date, time: 1)
+    @dinners = current_customer.meals.where(date: @date, time: 2)
+    @others = current_customer.meals.where(date: @date, time: 3)
     @recipes = current_customer.recipes
     @total_energy = 0
     @total_protein = 0

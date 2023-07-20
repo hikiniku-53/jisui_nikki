@@ -1,15 +1,19 @@
-<table>
+<table class="table">
   <tbody>
-    <% meals.each do |meal| %>
-      <tr>
-        <td>
+    <% if meals == [] %>
+      <tr><td>まだ記録されていません</td></tr>
+    <% else %>
+      <% meals.each do |meal| %>
+        <tr>
           <% if meal.food_id %>
-            <%= meal.food.name %>
+            <td><%= meal.food.name %></td>
+            <td><%= meal.amount %>g</td>
           <% else %>
-            <%= meal.recipe.name %>
+            <td><%= meal.recipe.name %></td>
+            <td><%= meal.amount %>人前</td>
           <% end %>
-        </td>
-      </tr>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

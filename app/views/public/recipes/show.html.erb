@@ -37,11 +37,11 @@
                   </td>
 
                 </tr>
-                <% @total_energy += recipe_detail.subtotal_energy %>
-                <% @total_protein += recipe_detail.subtotal_protein %>
-                <% @total_fat += recipe_detail.subtotal_fat %>
-                <% @total_carb += recipe_detail.subtotal_carb %>
-                <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+                <% @total_energy += recipe_detail.food.subtotal_energy %>
+                <% @total_protein += recipe_detail.food.subtotal_protein %>
+                <% @total_fat += recipe_detail.food.subtotal_fat %>
+                <% @total_carb += recipe_detail.food.subtotal_carb %>
+                <% @total_salt_equivalent += recipe_detail.food.subtotal_salt_equivalent %>
                 <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
                 <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
               <% end %>
@@ -76,16 +76,46 @@
               <th>食塩相当量</th>
               <td><%= @total_salt_equivalent %></td>
             </tr>
+
+            <tr>
+              <th>値段</th>
+              <td><%= @total_price %></td>
+            </tr>
           </table>
         </div>
-
       </div>
   </div>
 
-    <!--値段-->
-    <div>
-      <%= @total_price %>
-    </div>
+
+<div>
+        <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
+          <%= f.hidden_field :recipe_id, :value => @recipe.id %>
+          <%= f.hidden_field :energy, :value => @total_energy %>
+          <%= f.hidden_field :protein, :value => @total_protein %>
+          <%= f.hidden_field :fat, :value => @total_fat %>
+          <%= f.hidden_field :carb, :value => @total_carb %>
+          <%= f.hidden_field :salt_equivalent, :value => @total_salt_equivalent %>
+
+          <div>
+            <%= f.date_field :date, class: '' %>
+          </div>
+
+          <div>
+            <%= f.label :time %>
+            <%= f.select :time, Meal.times_i18n.keys.map {|k| [t("meals.times_i18n.#{k}"), k] },class: "mb-3 sm:mb-0 mr-9 border border-line-200 rounded-[3px] rounded-[3px] py-3 pl-6 w-52 h-12 font-bold" %>
+          </div>
+
+          <div class="d-inline-flex align-items-center">
+            <h4><%= f.label :amount, "分量" %></h4>
+            <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
+            <h4 class="">人前</h4>
+          </div>
+
+          <div>
+            <%= f.submit "食事記録をつける", class: 'btn btn-success px-3' %>
+          </div>
+        <% end %>
+      </div>
 
 
   <!--コメント一覧-->

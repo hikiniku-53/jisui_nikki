@@ -5,26 +5,30 @@
   <div class="col-sm-4">
     <!--日記-->
     <div>
-      <%= @date %>
+      <%= Date.current %>
     </div>
 
     <!--朝食-->
     <div>
+      今日の朝食
       <%= render "public/diaries/meals", meals: @breakfasts %>
     </div>
 
     <!--昼食-->
     <div>
+      今日の昼食
       <%= render "public/diaries/meals", meals: @lunches %>
     </div>
 
     <!--夕食-->
     <div>
+      今日の夕食
       <%= render "public/diaries/meals", meals: @dinners %>
     </div>
 
     <!--間食・その他-->
     <div>
+      間食・その他
       <%= render "public/diaries/meals", meals: @others %>
     </div>
 

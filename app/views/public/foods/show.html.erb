@@ -51,7 +51,8 @@
           </div>
         <% end %>
       </div>
-
+      
+      <!--日記に記録する-->
       <div>
         <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
           <%= f.hidden_field :food_id, :value => @food.id %>

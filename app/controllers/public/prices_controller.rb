@@ -9,7 +9,7 @@ class Public::PricesController < ApplicationController
   end
 
   def update
-     @price = Price.where(customer_id: current_customer.id)
+     @price = current_customer.prices.where(food_id: params[:food_id])
      @price.update(price_params)
      flash[:notice] = "値段を更新しました"
     redirect_to food_path(params[:food_id])
