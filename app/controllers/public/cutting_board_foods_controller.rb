@@ -1,4 +1,6 @@
 class Public::CuttingBoardFoodsController < ApplicationController
+  before_action :authenticate_customer!
+  
   def index
     @cutting_board_foods = current_customer.cutting_board_foods
     @total_energy = 0

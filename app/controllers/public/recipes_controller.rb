@@ -1,4 +1,5 @@
 class Public::RecipesController < ApplicationController
+    before_action :authenticate_customer!
   def new
     @recipe = Recipe.new
     @total_energy = 0

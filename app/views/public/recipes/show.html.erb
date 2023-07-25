@@ -37,13 +37,16 @@
                   </td>
 
                 </tr>
-                <% @total_energy += recipe_detail.food.subtotal_energy %>
-                <% @total_protein += recipe_detail.food.subtotal_protein %>
-                <% @total_fat += recipe_detail.food.subtotal_fat %>
-                <% @total_carb += recipe_detail.food.subtotal_carb %>
-                <% @total_salt_equivalent += recipe_detail.food.subtotal_salt_equivalent %>
+                <% @total_energy += recipe_detail.subtotal_energy %>
+                <% @total_protein += recipe_detail.subtotal_protein %>
+                <% @total_fat += recipe_detail.subtotal_fat %>
+                <% @total_carb += recipe_detail.subtotal_carb %>
+                <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
                 <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
-                <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+
+                <% if @price %>
+                  <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+                <% end %>
               <% end %>
             </tbody>
           </table>
@@ -79,7 +82,12 @@
 
             <tr>
               <th>値段</th>
-              <td><%= @total_price %></td>
+              <% if @price %>
+                <td><%= @total_price %></td>
+              <% else %>
+                <td>食材の値段を登録してください</td>
+              <% end %>
+
             </tr>
           </table>
         </div>

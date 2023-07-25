@@ -7,10 +7,10 @@
     <div>
       <%= Date.current %>
     </div>
-
     <!--朝食-->
     <div>
       今日の朝食
+      <!--<%= Settings.customer[:required_energy] %>-->
       <%= render "public/diaries/meals", meals: @breakfasts %>
     </div>
 
@@ -31,8 +31,11 @@
       間食・その他
       <%= render "public/diaries/meals", meals: @others %>
     </div>
-
-
+    
+    <!--栄養グラフ-->
+    <div>
+      
+    </div>
   </div>
 
 

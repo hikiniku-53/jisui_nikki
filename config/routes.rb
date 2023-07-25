@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
 
-  # namespace :public do
-  #   get 'customer/show'
-  #   get 'customer/edit'
-  #   get 'customer/update'
-  # end
-
   # root_path
   root to: 'public/homes#top'
 
@@ -73,6 +67,10 @@ Rails.application.routes.draw do
 
   ##admin_action
   namespace :admin do
+
+    # foods
+    resources :foods, only: [:index, :show, :edit, :update, :destroy]
+
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

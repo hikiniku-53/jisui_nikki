@@ -1,4 +1,6 @@
 class Public::PricesController < ApplicationController
+  before_action :authenticate_customer!, except: [:top]
+
   def create
     @price = Price.new(price_params)
         # binding.pry

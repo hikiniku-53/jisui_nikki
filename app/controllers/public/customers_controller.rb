@@ -1,4 +1,6 @@
 class Public::CustomersController < ApplicationController
+  before_action :authenticate_customer!
+  
   def show
     @date = Date.today
     @breakfasts = current_customer.meals.where(date: @date, time: 0)

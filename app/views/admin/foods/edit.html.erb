@@ -1,7 +1,6 @@
-<h2>食材新規登録</h2>
-<h4>新しい食材について教えてください</h4>
+<h2>食材情報更新</h2>
 
-<%= form_with model: @food do |f| %>
+<%= form_with model: @food, url: admin_food_path, method: :patch do |f| %>
 
   <div class="field">
     <%= f.label :name, "名前(必須)" %><br/>
@@ -45,8 +44,6 @@
 
 
   <div class="actions">
-    <%= f.submit "登録" %>
+    <%= f.submit "更新" %>
   </div>
 <% end %>
-
-

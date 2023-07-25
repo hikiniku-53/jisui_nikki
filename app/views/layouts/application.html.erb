@@ -34,6 +34,20 @@
               <!--管理者ログイン時-->
               <% if admin_signed_in? %>
 
+                <!--食材一覧-->
+                <li class="nav-link px-4">
+                  <%= link_to admin_foods_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-search"></i>&nbsp;食材一覧&nbsp;<i class="far fa-lightbulb"></i>
+                  <% end %>
+                </li>
+                
+                <!--ログアウト-->
+                <li class="nav-link px-4">
+                  <%= link_to destroy_admin_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-sign-out-alt"></i>&nbsp;Log Out
+                  <% end %>
+                </li>
+
               <!--ユーザーログイン時-->
               <% elsif customer_signed_in? %>
 
@@ -113,7 +127,12 @@
                   <% end %>
                 </li>
 
-
+                <!--管理者ログイン-->
+                <li class="nav-link p-8px">
+                  <%= link_to new_admin_session_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-home"></i>&nbsp;管理者ログイン
+                  <% end %>
+                </li>
 
               <% end %>
             </ul>

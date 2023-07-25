@@ -1,4 +1,5 @@
 class Public::MealsController < ApplicationController
+  before_action :authenticate_customer!
 
   def create
     meal_food = current_customer.meals.where(food_id: meal_params[:food_id], date: meal_params[:date], time: meal_params[:time])

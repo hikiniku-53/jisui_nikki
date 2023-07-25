@@ -1,4 +1,6 @@
 class Public::CommentsController < ApplicationController
+  before_action :authenticate_customer!
+
   def create
     food = Food.find(params[:food_id])
     comment = current_customer.comments.new(comment_params)
