@@ -73,7 +73,10 @@ Rails.application.routes.draw do
     resources :foods, only: [:index, :show, :edit, :update, :destroy]
 
     # comments
-    resources :comments, only: [:destroy]
+    resources :comments, only: [:index, :destroy]
+
+    # customer
+    resources :customers, only: [:index, :show, :destroy]
   end
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

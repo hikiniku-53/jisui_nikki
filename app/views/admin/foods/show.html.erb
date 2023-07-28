@@ -8,7 +8,7 @@
       <%= image_tag @food.get_image(540,500) %>
     </div>
 
-    <!--コメント一覧-->
+
     <div class="col-6">
       <table class="table table-bordered border-primary">
         <tr>
@@ -36,8 +36,15 @@
           <td><%= @food.salt_equivalent %></td>
         </tr>
       </table>
+      <div>
+          <%= link_to "更新", edit_admin_food_path(params[:id]), class: 'btn btn-success px-3' %>
+      </div>
     </div>
   </div>
+
+
+
+  <!--コメント一覧-->
   <div>
     <table>
       <tbody>

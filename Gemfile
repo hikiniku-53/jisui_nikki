@@ -69,3 +69,5 @@ gem 'enum_help'
 gem 'seed-fu'
 
 gem 'config'
+
+gem 'chartkick'

@@ -1,6 +1,6 @@
 class Public::CustomersController < ApplicationController
   before_action :authenticate_customer!
-  
+
   def show
     @date = Date.today
     @breakfasts = current_customer.meals.where(date: @date, time: 0)
@@ -14,6 +14,9 @@ class Public::CustomersController < ApplicationController
     @total_carb = 0
     @total_salt_equivalent = 0
     @total_price = 0
+
+    favorites = Favorite.where(customer_id: current_customer.id).pluck(:recipe_id)
+    @favorite_recipes = Recipe.find(favorites)
   end
 
   def edit

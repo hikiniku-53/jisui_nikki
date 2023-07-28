@@ -7,7 +7,13 @@
         <%= recipe.name %>
       </h5>
       <p class="card-text">
-        <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i>
+        <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i><br>
+        <% if recipe.customer.is_published == true %>
+          <%= recipe.customer.name %>
+        <% else %>
+          名無し
+        <% end %>
+        さんの投稿
       </p>
     </div>
   </div>

@@ -1,0 +1,32 @@
+<div class="row">
+
+  <div class="col-sm">
+    <h3>ユーザー一覧</h3>
+    <table>
+      <tbody>
+        <tr>
+          <th>ユーザー</th>
+          <th>レシピ投稿数</th>
+          <th>コメント数</th>
+        </tr>
+
+        <% @customers.each do |customer| %>
+          <tr>
+            <td>
+              <%= link_to admin_customer_path(customer.id) do %>
+                <%= customer.name %>
+              <% end %>
+            </td>
+            <td><%= customer.recipes.count %></td>
+            <td><%= customer.comments.count %></td>
+            <td>
+              <%= link_to "削除", admin_customer_path(customer.id), method: :delete, class: 'btn btn-danger px-3' %>
+            </td>
+          </tr>
+
+        <% end %>
+      </tbody>
+    </table>
+
+  </div>
+</div>

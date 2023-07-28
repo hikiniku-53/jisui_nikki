@@ -95,7 +95,7 @@
   </div>
 
 
-<div>
+<div class="col-sm-3">
         <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
           <%= f.hidden_field :recipe_id, :value => @recipe.id %>
           <%= f.hidden_field :energy, :value => @total_energy %>

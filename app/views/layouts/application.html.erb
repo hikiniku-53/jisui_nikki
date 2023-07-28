@@ -40,7 +40,21 @@
                     <i class="fas fa-search"></i>&nbsp;食材一覧&nbsp;<i class="far fa-lightbulb"></i>
                   <% end %>
                 </li>
-                
+
+                <!--コメント一覧-->
+                <li class="nav-link px-4">
+                  <%= link_to admin_comments_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-search"></i>&nbsp;コメント一覧&nbsp;<i class="far fa-lightbulb"></i>
+                  <% end %>
+                </li>
+
+                <!--ユーザー一覧-->
+                <li class="nav-link px-4">
+                  <%= link_to admin_customers_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
+                    <i class="fas fa-search"></i>&nbsp;ユーザー一覧&nbsp;<i class="far fa-lightbulb"></i>
+                  <% end %>
+                </li>
+
                 <!--ログアウト-->
                 <li class="nav-link px-4">
                   <%= link_to destroy_admin_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>

@@ -1,11 +1,39 @@
 <div class="container">
-  <%= notice %>
+  <%= flash[:notice] %>
   <div class="row">
+
   <!--日記-->
   <div class="col-sm-4">
+
+  <!--ユーザーデータ-->
+  <div>
+    <div class="d-flex">
+      <div>登録情報</div>
+      <%= link_to "変更", customers_edit_path %>
+    </div>
+
+    <table class="table table-bordered">
+      <tbody>
+        <tr>
+          <th>名前</th>
+          <td><%= current_customer.name %></td>
+        </tr>
+        <tr>
+          <th>メールアドレス</th>
+          <td><%= current_customer.email %></td>
+        </tr><tr>
+          <th>公開ステータス</th>
+          <td><%= current_customer.is_published ? '公開' : '非公開' %></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+
+  </div>
     <!--日記-->
     <div>
-      <%= Date.current %>
+      <%= @date %>
     </div>
     <!--朝食-->
     <div>
@@ -31,22 +59,64 @@
       間食・その他
       <%= render "public/diaries/meals", meals: @others %>
     </div>
-    
+
     <!--栄養グラフ-->
     <div>
-      
+
+
+
     </div>
   </div>
 
 
   <div class="col-sm-4"></div>
 
-  <!--自身の投稿一覧-->
+
   <div class="col-sm-4">
     <div>
+      <!--自身の投稿一覧-->
       <table class="table">
         <tbody>
           <% @recipes.each do |recipe| %>
+            <!--栄養素、値段の計算-->
+            <div>
+              <% recipe.recipe_details.each do |recipe_detail| %>
+                <% @total_energy += recipe_detail.subtotal_energy %>
+                <% @total_protein += recipe_detail.subtotal_protein %>
+                <% @total_fat += recipe_detail.subtotal_fat %>
+                <% @total_carb += recipe_detail.subtotal_carb %>
+                <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+                <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+                <% if @price %>
+                  <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+                <% end %>
+              <% end %>
+            </div>
+
+            <!--1列目=>レシピ名、エネルギー量-->
+            <tr>
+              <td><%= recipe.name %><br>
+                E:<%= @total_energy %>
+                P:<%= @total_protein %>
+                F:<%= @total_fat %>
+                C:<%= @total_carb %>
+              </td>
+              <td><%= @total_price %>円</td>
+            </tr>
+
+            <tr>
+              <td colspan="2">
+
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <!--お気に入りのレシピ-->
+      <table class="table">
+        <tbody>
+          <% @favorite_recipes.each do |recipe| %>
             <!--栄養素、値段の計算-->
             <div>
               <% recipe.recipe_details.each do |recipe_detail| %>
@@ -79,6 +149,8 @@
           <% end %>
         </tbody>
       </table>
+
+
     </div>
 
 
