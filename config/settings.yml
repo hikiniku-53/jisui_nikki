@@ -1,2 +1,6 @@
 customer:
-  required_energy: 2200
+  required_energy: 2650
+  required_protein: 65
+  required_fat: 25
+  required_carb: 60
+  required_salt_equivalent: 7.5

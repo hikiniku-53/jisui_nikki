@@ -35,6 +35,14 @@
     <div>
       <%= @date %>
     </div>
+
+      <%= @total_energy %><br>
+      <%= @total_protein %><br>
+      <%= @total_fat %><br>
+      <%= @total_carb %><br>
+      <%= @total_salt_equivalent %><br>
+
+
     <!--朝食-->
     <div>
       今日の朝食
@@ -42,17 +50,38 @@
       <%= render "public/diaries/meals", meals: @breakfasts %>
     </div>
 
+      <%= @total_energy %><br>
+      <%= @total_protein %><br>
+      <%= @total_fat %><br>
+      <%= @total_carb %><br>
+      <%= @total_salt_equivalent %><br>
+
+
     <!--昼食-->
     <div>
       今日の昼食
       <%= render "public/diaries/meals", meals: @lunches %>
     </div>
 
+      <%= @total_energy %><br>
+      <%= @total_protein %><br>
+      <%= @total_fat %><br>
+      <%= @total_carb %><br>
+      <%= @total_salt_equivalent %><br>
+
+
     <!--夕食-->
     <div>
       今日の夕食
       <%= render "public/diaries/meals", meals: @dinners %>
     </div>
+
+      <%= @total_energy %><br>
+      <%= @total_protein %><br>
+      <%= @total_fat %><br>
+      <%= @total_carb %><br>
+      <%= @total_salt_equivalent %><br>
+
 
     <!--間食・その他-->
     <div>
@@ -62,6 +91,62 @@
 
     <!--栄養グラフ-->
     <div>
+
+      <%= @total_energy %><br>
+      <%= @total_protein %><br>
+      <%= @total_fat %><br>
+      <%= @total_carb %><br>
+      <%= @total_salt_equivalent %><br>
+
+
+      <%= @chart_energy = @total_energy / Settings.customer[:required_energy] %><br>
+      <%= @chart_protein = @total_protein / Settings.customer[:required_protein] %><br>
+      <%= @chart_fat = @total_fat / Settings.customer[:required_fat] %><br>
+      <%= @chart_carb = @total_carb / Settings.customer[:required_carb] %><br>
+      <%= @chart_salt_equivalent = @total_salt_equivalent / Settings.customer[:required_salt_equivalent] %><br>
+
+
+
+
+
+<canvas id="myChart"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['カロリー', 'たんぱく質', '脂質', '炭水化物', '塩分'],
+        datasets: [{
+            label: '# of Votes',
+            data: [<%= @chart_energy %>, <%= @chart_protein %>, <%= @chart_fat %>, <%= @chart_carb %>, <%= @chart_salt_equivalent %>],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+
 
 
 

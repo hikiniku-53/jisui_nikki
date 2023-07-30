@@ -1,16 +1,15 @@
 <div class="row">
-  
+
+  <!--検索フォーム-->
   <div class="col-sm-3">
-    
     <!--キーワード検索-->
     <%= render "search", food: @food %>
-    
     <!--ジャンル検索-->
     <%= render 'genre', food_genres: @food_genres %>
-
   </div>
+
   <!--食材一覧-->
   <div class="col-sm-6">
-    <%= render 'foods', foods: @foods %>
+    <%= render "foods", foods: @foods %>
   </div>
 </div>

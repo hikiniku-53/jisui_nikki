@@ -1,0 +1,35 @@
+<h3>食材一覧</h3>
+<table class="table">
+  <tbody class="text-truncate">
+    <tr>
+      <th>食材名</th>
+      <th>分類</th>
+      <th>エネルギー</th>
+      <th>たんぱく質</th>
+      <th>脂質</th>
+      <th>炭水化物</th>
+      <th>塩分</th>
+    </tr>
+
+    <% foods.each do |food| %>
+
+      <tr>
+        <td>
+          <%= link_to food_path(food.id) do %>
+            <%= food.name %>
+          <% end %>
+        </td>
+        <td>
+          <div class="text-truncate d-inline-block", style="max-width: 90px;">
+            <%= food.food_genre.name %>
+          </div>
+        </td>
+        <td><%= food.energy %> kcal</td>
+        <td><%= food.protein %> g</td>
+        <td><%= food.fat %> g</td>
+        <td><%= food.carb %> g</td>
+        <td><%= food.salt_equivalent %> g</td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

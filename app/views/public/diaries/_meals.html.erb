@@ -8,11 +8,35 @@
           <% if meal.food_id %>
             <td><%= meal.food.name %></td>
             <td><%= meal.amount %>g</td>
+
+            <% @total_energy += meal.subtotal_energy / 100 %>
+            <% @total_protein += meal.subtotal_protein / 100 %>
+            <% @total_fat += meal.subtotal_fat / 100 %>
+            <% @total_carb += meal.subtotal_carb / 100 %>
+            <% @total_salt_equivalent += meal.subtotal_salt_equivalent / 100 %>
+            <% if @price %>
+              <% @price += meal.subtotal_price / 100%>
+            <% end %>
+
           <% else %>
             <td><%= meal.recipe.name %></td>
             <td><%= meal.amount %>人前</td>
+
+            <% @total_energy += meal.subtotal_energy %>
+            <% @total_protein += meal.subtotal_protein %>
+            <% @total_fat += meal.subtotal_fat %>
+            <% @total_carb += meal.subtotal_carb %>
+            <% @total_salt_equivalent += meal.subtotal_salt_equivalent %>
+            <% if @price %>
+              <% @price += meal.subtotal_price%>
+            <% end %>
+
           <% end %>
         </tr>
+
+        <div>
+
+        </div>
       <% end %>
     <% end %>
   </tbody>

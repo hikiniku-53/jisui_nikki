@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_28_125632) do
+ActiveRecord::Schema.define(version: 2023_07_29_140154) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 2023_07_28_125632) do
   create_table "cutting_board_foods", force: :cascade do |t|
     t.integer "customer_id", null: false
     t.integer "food_id", null: false
-    t.integer "amount", null: false
+    t.float "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -118,11 +118,11 @@ ActiveRecord::Schema.define(version: 2023_07_28_125632) do
   create_table "foods", force: :cascade do |t|
     t.integer "food_genre_id", null: false
     t.string "name", null: false
-    t.integer "energy", null: false
-    t.integer "protein"
-    t.integer "fat"
-    t.integer "carb"
-    t.integer "salt_equivalent"
+    t.float "energy", null: false
+    t.float "protein"
+    t.float "fat"
+    t.float "carb"
+    t.float "salt_equivalent"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -134,11 +134,11 @@ ActiveRecord::Schema.define(version: 2023_07_28_125632) do
     t.date "date", null: false
     t.integer "time", null: false
     t.integer "price"
-    t.integer "energy", null: false
-    t.integer "protein"
-    t.integer "fat"
-    t.integer "carb"
-    t.integer "salt_equivalent"
+    t.float "energy", null: false
+    t.float "protein"
+    t.float "fat"
+    t.float "carb"
+    t.float "salt_equivalent"
     t.float "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(version: 2023_07_28_125632) do
   create_table "recipe_details", force: :cascade do |t|
     t.integer "recipe_id", null: false
     t.integer "food_id", null: false
-    t.integer "amount", null: false
+    t.float "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

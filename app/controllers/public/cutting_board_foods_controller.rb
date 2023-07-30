@@ -1,7 +1,10 @@
 class Public::CuttingBoardFoodsController < ApplicationController
   before_action :authenticate_customer!
-  
+
   def index
+    @foods = Food.all
+    @food_genres = FoodGenre.all
+    @keyword= params[:keyword]
     @cutting_board_foods = current_customer.cutting_board_foods
     @total_energy = 0
   end
