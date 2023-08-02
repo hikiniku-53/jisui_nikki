@@ -36,13 +36,6 @@
       <%= @date %>
     </div>
 
-      <%= @total_energy %><br>
-      <%= @total_protein %><br>
-      <%= @total_fat %><br>
-      <%= @total_carb %><br>
-      <%= @total_salt_equivalent %><br>
-
-
     <!--朝食-->
     <div>
       今日の朝食
@@ -50,38 +43,17 @@
       <%= render "public/diaries/meals", meals: @breakfasts %>
     </div>
 
-      <%= @total_energy %><br>
-      <%= @total_protein %><br>
-      <%= @total_fat %><br>
-      <%= @total_carb %><br>
-      <%= @total_salt_equivalent %><br>
-
-
     <!--昼食-->
     <div>
       今日の昼食
       <%= render "public/diaries/meals", meals: @lunches %>
     </div>
 
-      <%= @total_energy %><br>
-      <%= @total_protein %><br>
-      <%= @total_fat %><br>
-      <%= @total_carb %><br>
-      <%= @total_salt_equivalent %><br>
-
-
     <!--夕食-->
     <div>
       今日の夕食
       <%= render "public/diaries/meals", meals: @dinners %>
     </div>
-
-      <%= @total_energy %><br>
-      <%= @total_protein %><br>
-      <%= @total_fat %><br>
-      <%= @total_carb %><br>
-      <%= @total_salt_equivalent %><br>
-
 
     <!--間食・その他-->
     <div>

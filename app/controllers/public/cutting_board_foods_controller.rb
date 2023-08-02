@@ -5,8 +5,20 @@ class Public::CuttingBoardFoodsController < ApplicationController
     @foods = Food.all
     @food_genres = FoodGenre.all
     @keyword= params[:keyword]
+    if params[:keyword]
+      @foods = @foods.search(params[:keyword])
+    end
     @cutting_board_foods = current_customer.cutting_board_foods
     @total_energy = 0
+  end
+
+  def genre
+    @food_genre = FoodGenre.find(params[:genre_id])
+    @food_genres = FoodGenre.all
+    @foods = @food_genre.foods
+    @keyword= params[:keyword]
+    @cutting_board_foods = current_customer.cutting_board_foods
+    @foods = @food_genre.foods
   end
 
   def create

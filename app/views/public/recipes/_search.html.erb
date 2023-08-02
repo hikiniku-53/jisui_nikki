@@ -15,9 +15,11 @@
 <!--タグ検索-->
 <div>
   <% @tag_list.each do |list| %>
-    <%= link_to list.tag_name, recipe_search_tag_path(tag_id: list.id) %>
-    <%= "(#{list.recipes.count})" %>
-    <br>
+    <% if list.recipes.find_by(is_published: "true") %>
+      <%= link_to list.tag_name, recipe_search_tag_path(tag_id: list.id) %>
+      <%= "(#{list.recipes.where(is_published: "true").count})" %>
+      <br>
+    <% end %>
   <% end %>
 </div>
 

@@ -40,6 +40,7 @@ Rails.application.routes.draw do
     # cutting_board_foods_action
     resources :cutting_board_foods
     delete '/cutting_board_foods' => 'cutting_board_foods#destroy_all', as: 'cutting_board_foods_destroy_all'
+    get '/cutting_board_foods/genre/:genre_id' => 'cutting_board_foods#genre', as: 'cutting_board_foods_genre'
 
 
     # recipes_action

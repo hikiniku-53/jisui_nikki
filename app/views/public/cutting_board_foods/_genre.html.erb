@@ -1,0 +1,17 @@
+    <div>
+      <div>ジャンル検索</div>
+
+      <table class="table table-sm">
+        <tbody>
+          <% food_genres.each do |food_genre|%>
+            <tr>
+              <td>
+                <%= link_to cutting_board_foods_genre_path(food_genre.id) do %>
+                  <%= food_genre.name %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>

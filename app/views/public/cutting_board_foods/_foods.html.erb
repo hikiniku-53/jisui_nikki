@@ -15,8 +15,21 @@
 
       <tr>
         <td>
+          <!--詳細-->
           <%= link_to food_path(food.id) do %>
             <%= food.name %>
+          <% end %>
+          <!--まな板に乗せる-->
+          <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
+            <%= f.hidden_field :food_id, :value => food.id %>
+            <div class="d-inline-flex align-items-center">
+              <h4><%= f.label :amount, "分量" %></h4>
+              <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
+              <h4 class="">g</h4>
+            </div>
+            <div>
+              <%= f.submit "まな板に乗せる", class: 'btn btn-success px-3' %>
+            </div>
           <% end %>
         </td>
         <td>
