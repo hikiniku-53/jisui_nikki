@@ -1,14 +1,19 @@
 <% foods.each do |food| %>
   <!--カード一面を一覧画面へのリンクに-->
   <%= link_to food_path(food.id), class: 'text-decoration-none' do %>
-    
-    <div class="card m-2" style="width: 16rem;">
-      <%= image_tag food.get_image(385,290), class: 'card-img-top' %>
-      <div class="card-body">
-        <h5 class="card-title">
-          <%= food.name %>
+
+    <div class="card p-1 m-2 bg-food" style="width: 16rem;, height: 80rem;">
+      <%= image_tag food.get_image(385,290), class: 'card-img-top ' %>
+      <div class="card-body text-dark">
+        <h5 class="card-title h-2rem">
+          <b><%= food.name %></b>
         </h5>
-        <p class="card-text"></p>
+        <p class="card-text">
+          E: <%= food.energy %>kcal<br>
+          P: <%= food.protein %>g
+          F: <%= food.fat %>g
+          C: <%= food.carb %>g
+        </p>
       </div>
     </div>
   <% end %>

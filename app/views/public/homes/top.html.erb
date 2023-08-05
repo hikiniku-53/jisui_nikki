@@ -1,8 +1,8 @@
-
+<div class="container">
   <div class="row">
 
     <!--Greeting-->
-    <div class="col-sm-8 bg-light">
+    <div class="col-sm-4 bg-light">
       <div class="p-3 text-center">
         <h4>みんなの自炊日記へようこそ！</h4>
 
@@ -11,26 +11,24 @@
       <div class="row"></div>
     </div>
 
-    <!--food pick up-->
-    <div class="col-sm-2 bg-food">
-      <div class="p-3 text-center">
-        <!--headline-->
-        <h4>今が旬の食材</h4>
+    <!--ピックアップ食材-->
+    <div class=" col-sm-4 bg-food d-flex justify-content-center flex-wrap">
 
-        <!--ピックアップ食材-->
-        <%= render '/public/foods/foods', foods: @foods %>
+
+          <h4 class="p-3">今が旬の食材</h4>
+          <%= render '/public/foods/foods', foods: @foods %>
+
 
         <%= link_to "もっと食材を見る", foods_path, class: 'btn btn-primary px-3' %>
-      </div>
+
     </div>
 
     <!--recipe pick up-->
-    <div class="col-sm-2 bg-recipe">
+    <div class="col-sm-4 bg-recipe">
       <div class="p-3 text-center">
-        <!--headline-->
+
         <h4>人気のレシピ</h4>
 
-        <!--ピックアップ食材-->
         <% @recipes.each do |recipe| %>
           <%= render '/public/recipes/recipe', recipe: recipe %>
         <% end %>
@@ -39,3 +37,4 @@
 
     </div>
   </div>
+</div>

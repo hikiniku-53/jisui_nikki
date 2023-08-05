@@ -5,7 +5,7 @@
     <div class="col-sm-3">
       <!--キーワード検索-->
       <%= form_with url: foods_path, method: :get, local: true, class: 'boards_searchForm' do |f|%>
-        <%= render "layouts/search", food: @food %>
+        <%= render "layouts/search", f: f, keyword: @keyword %>
       <% end %>
       <!--ジャンル検索-->
       <%= render 'genre', food_genres: @food_genres %>

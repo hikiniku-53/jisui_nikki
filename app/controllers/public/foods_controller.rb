@@ -9,6 +9,9 @@ class Public::FoodsController < ApplicationController
       @foods = @foods.search(params[:keyword])
     end
 
+
+
+
     @keyword= params[:keyword]
 
   end
