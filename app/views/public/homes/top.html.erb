@@ -1,40 +1,82 @@
 <div class="container">
-  <div class="row">
-
+  <div class="row d-flex">
     <!--Greeting-->
     <div class="col-sm-4 bg-light">
       <div class="p-3 text-center">
-        <h4>みんなの自炊日記へようこそ！</h4>
+        <h4>
+          <strong>みんなの自炊日記</strong><br>へようこそ！
+        </h4>
+        <% if customer_signed_in? %>
+          <!--朝食-->
+          <div>
+            今日の朝食
+            <%= render "public/diaries/meals", meals: @breakfasts %>
+          </div>
+          <!--昼食-->
+          <div>
+            今日の昼食
+            <%= render "public/diaries/meals", meals: @lunches %>
+          </div>
+          <!--夕食-->
+          <div>
+            今日の夕食
+            <%= render "public/diaries/meals", meals: @dinners %>
+          </div>
+          <!--間食・その他-->
+          <div>
+            間食・その他
+            <%= render "public/diaries/meals", meals: @others %>
+          </div>
+        <% else %>
+          <div class="my-2">
+            <div class="my-2">
+              <%= link_to "自炊日記って？", about_path, class: "btn btn-info" %>
+            </div>
 
+            <div class="border border-dark rounded p-2">
+              <div class="text-center my-2">
+                <strong>
+                  ・食材の情報共有　<br>
+                  ・自作レシピの投稿<br>
+                  ・日々の食事記録　<br>
+                </strong>
+              </div>
+
+              <div class="">
+                を通してダイエットや節約のための<br>
+                自炊を楽しく続けられるサービスです。
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <%= link_to "新規登録", new_customer_registration_path, class: "btn btn-primary" %>
+            して、<br>楽しい自炊ライフを始めましょう！
+          </div>
+        <% end %>
       </div>
-
-      <div class="row"></div>
     </div>
 
     <!--ピックアップ食材-->
-    <div class=" col-sm-4 bg-food d-flex justify-content-center flex-wrap">
-
-
-          <h4 class="p-3">今が旬の食材</h4>
+    <div class="col-sm-4">
+      <h4 class="text-center m-3">新しい食材</h4>
+      <div class="d-flex justify-content-center flex-wrap">
           <%= render '/public/foods/foods', foods: @foods %>
-
-
-        <%= link_to "もっと食材を見る", foods_path, class: 'btn btn-primary px-3' %>
-
+      </div>
+      <div class="mx-auto text-center", style="width: 200px;">
+        <%= link_to "もっと食材を見る", foods_path, class: 'btn btn-primary px-3 text-center'%>
+      </div>
     </div>
 
     <!--recipe pick up-->
-    <div class="col-sm-4 bg-recipe">
-      <div class="p-3 text-center">
-
-        <h4>人気のレシピ</h4>
-
-        <% @recipes.each do |recipe| %>
-          <%= render '/public/recipes/recipe', recipe: recipe %>
-        <% end %>
+    <div class="col-sm-4">
+      <h4 class="text-center m-3">人気のレシピ</h4>
+      <div class="d-flex justify-content-center flex-wrap">
+        <%= render '/public/recipes/recipe', recipes: @recipes %>
+      </div>
+      <div class="mx-auto text-center", style="width: 200px;">
         <%= link_to "もっとレシピを見る", recipes_path, class: 'btn btn-primary px-3' %>
       </div>
-
     </div>
   </div>
 </div>

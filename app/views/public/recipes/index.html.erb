@@ -1,16 +1,13 @@
-<div class="row">
-
-  <div class="col-sm-3">
-    <!--キーワード検索-->
-    <div><%= render "search", recipe: @recipe %></div>
-  </div>
-  <!--レシピ一覧-->
-  <div class="col-sm-6">
-    <% @recipes.each do |recipe| %>
-      <%= render 'recipe', recipe: recipe %>
-      <div id="favorite_<%= recipe.id %>">
-        <%= render "favorite", recipe: recipe %>
+<div class="container my-3">
+  <div class="row">
+    <div class="col-sm-3">
+      <%= render "search", tag_list: @tag_list, keyword: @keyword %>
+    </div>
+    <!--レシピ一覧-->
+    <div class="col-sm-9">
+      <div class="d-flex justify-content-center flex-wrap">
+        <%= render 'recipe', recipes: @recipes %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>

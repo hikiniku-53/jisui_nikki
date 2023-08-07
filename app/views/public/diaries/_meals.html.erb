@@ -1,10 +1,10 @@
-<table class="table">
+<table class="table table-bordered">
   <tbody>
     <% if meals == [] %>
       <tr><td>まだ記録されていません</td></tr>
     <% else %>
       <% meals.each do |meal| %>
-        <tr>
+        <tr class="">
           <% if meal.food_id %>
             <td><%= meal.food.name %></td>
             <td><%= meal.amount %>g</td>

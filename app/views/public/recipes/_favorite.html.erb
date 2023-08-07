@@ -1,26 +1,23 @@
-    <div>
-      <!--いいね数の表示-->
-      <div>
-        <%= recipe.favorites.count %>
-        <span style="color:red;">❤︎</span>
-      </div>
+<div>
+  <!--いいね数の表示-->
+  <%= recipe.favorites.count %>
 
-      <!--いいねをつける・けす-->
-      <div>
-        <!--自分の投稿かどうか(自分の投稿にはいいね数のみを表示)-->
-        <%unless recipe.customer_id == current_customer.id %>
-          <!--自分がいいねをしているかどうか-->
-          <% if current_customer.favorited?(recipe.id) %>
-            <!--いいねをしている-->
-            <%= link_to recipe_favorites_path(recipe.id), method: :delete, remote: true do %>
-              <span style="color:red;">❤︎</span>
-            <% end %>
-          <% else %>
-            <!--いいねをしていない-->
-            <%= link_to recipe_favorites_path(recipe.id), method: :post, remote: true do %>
-              <span>❤︎</span>
-            <% end %>
-          <% end %>
-        <% end %>
-      </div>
-    </div>
+  <!--自分の投稿かどうか(自分の投稿にはいいね数のみを表示)-->
+  <%unless recipe.customer_id == current_customer.id %>
+    <!--自分がいいねをしているかどうか-->
+    <% if current_customer.favorited?(recipe.id) %>
+      <!--いいねをしている-->
+      <%= link_to recipe_favorites_path(recipe.id), method: :delete, remote: true do %>
+        <span style="color:red;">❤︎</span>
+      <% end %>
+    <% else %>
+      <!--いいねをしていない-->
+      <%= link_to recipe_favorites_path(recipe.id), method: :post, remote: true do %>
+        <span>❤︎</span>
+      <% end %>
+    <% end %>
+  <% else %>
+    <span style="color:green;">❤︎</span>
+  <% end %>
+</div>
+

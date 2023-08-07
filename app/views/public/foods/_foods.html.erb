@@ -1,7 +1,5 @@
 <% foods.each do |food| %>
-  <!--カード一面を一覧画面へのリンクに-->
   <%= link_to food_path(food.id), class: 'text-decoration-none' do %>
-
     <div class="card p-1 m-2 bg-food" style="width: 16rem;, height: 80rem;">
       <%= image_tag food.get_image(385,290), class: 'card-img-top ' %>
       <div class="card-body text-dark">

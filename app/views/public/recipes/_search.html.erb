@@ -1,8 +1,8 @@
 <!--ワード検索-->
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center my-2">
   <%= form_with url: recipes_path, method: :get, local: true, class: 'boards_searchForm' do |f|%>
     <div class="input-group">
-      <%= f.text_field :keyword, value: @keyword, class: "form-control search-control", placeholder: "キーワードを入力" %>
+      <%= f.text_field :keyword, value: keyword, class: "form-control search-control", placeholder: "キーワードを入力" %>
         <span class="input-group-btn input-group-append">
           <%= button_tag type: "submit", class: "btn btn-secondary search-btn" do %>
             <i class="fas fa-search"></i> 検索</submit>
@@ -14,7 +14,7 @@
 
 <!--タグ検索-->
 <div>
-  <% @tag_list.each do |list| %>
+  <% tag_list.each do |list| %>
     <% if list.recipes.find_by(is_published: "true") %>
       <%= link_to list.tag_name, recipe_search_tag_path(tag_id: list.id) %>
       <%= "(#{list.recipes.where(is_published: "true").count})" %>
