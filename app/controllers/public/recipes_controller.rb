@@ -64,6 +64,7 @@ class Public::RecipesController < ApplicationController
     @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @recipes = @tag.recipes.where(is_published: 'true')
+    @keyword= params[:keyword]
   end
 
   def show

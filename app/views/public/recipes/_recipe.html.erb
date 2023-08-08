@@ -20,11 +20,11 @@
       <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i>
         <!--いいね表示-->
         <div id="favorite_<%= recipe.id %>">
-          <%= render "favorite", recipe: recipe %>
+          <%= render "public/recipes/favorite", recipe: recipe %>
         </div>
         <!--レシピ本文-->
         <p class="card-text">
-          
+
         </p>
       </div>
     </div>

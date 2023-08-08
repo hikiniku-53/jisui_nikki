@@ -1,4 +1,5 @@
-<div class="row">
+<div class="container">
+  <div class="row">
   <div class="col-sm-3">
     <!--検索-->
     <%= render "search", tag_list: @tag_list, keyword: @keyword %>
@@ -55,58 +56,63 @@
         <div class="d-flex">
           <!--食材・分量-->
           <div class="col-6">
-          <table class="table table-bordered">
-            <tbody>
-              <tr>
-                <th class="col-6">食材</th>
-                <th class="col-6">分量</th>
-              </tr>
-
-              <% @recipe.recipe_details.each do |recipe_detail| %>
+            <table class="table table-bordered table-sm">
+              <tbody>
                 <tr>
-                  <th> <%= recipe_detail.food.name %></th>
-                  <td><%= recipe_detail.amount %> g</td>
+                  <th class="col-6">食材</th>
+                  <th class="col-6">分量</th>
                 </tr>
 
-                <% @total_energy += recipe_detail.subtotal_energy %>
-                <% @total_protein += recipe_detail.subtotal_protein %>
-                <% @total_fat += recipe_detail.subtotal_fat %>
-                <% @total_carb += recipe_detail.subtotal_carb %>
-                <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
-                <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
-                <% if @price %>
-                  <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+                <% @recipe.recipe_details.each do |recipe_detail| %>
+                  <tr>
+                    <th> <%= recipe_detail.food.name %></th>
+                    <td><%= recipe_detail.amount.round(1) %> g</td>
+                  </tr>
+
+                  <% @total_energy += recipe_detail.subtotal_energy %>
+                  <% @total_protein += recipe_detail.subtotal_protein %>
+                  <% @total_fat += recipe_detail.subtotal_fat %>
+                  <% @total_carb += recipe_detail.subtotal_carb %>
+                  <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+                  <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+                  <% if @price %>
+                    <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+                  <% end %>
                 <% end %>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+              </tbody>
+            </table>
+
+            <div>
+              <h5>調理手順</h5>
+              <div class="border border-radius"><%= @recipe.process%></div>
+            </div>
+          </div>
           <!--栄養素-->
           <div class="col-6">
-          <table class="table table-bordered">
+          <table class="table table-bordered table-sm">
             <tr>
               <th class="col-6">エネルギー</th>
-              <td class="col-6"><%= @total_energy %></td>
+              <td class="col-6"><%= @total_energy.round(1) %></td>
             </tr>
 
             <tr>
               <th>たんぱく質</th>
-              <td><%= @total_protein %></td>
+              <td><%= @total_protein.round(1) %></td>
             </tr>
 
             <tr>
               <th>脂質</th>
-              <td><%= @total_fat %></td>
+              <td><%= @total_fat.round(1) %></td>
             </tr>
 
             <tr>
               <th>炭水化物</th>
-              <td><%= @total_carb %></td>
+              <td><%= @total_carb.round(1) %></td>
             </tr>
 
             <tr>
               <th>食塩相当量</th>
-              <td><%= @total_salt_equivalent %></td>
+              <td><%= @total_salt_equivalent.round(1) %></td>
             </tr>
 
             <tr>

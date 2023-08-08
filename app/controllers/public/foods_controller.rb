@@ -8,12 +8,7 @@ class Public::FoodsController < ApplicationController
     if params[:keyword]
       @foods = @foods.search(params[:keyword])
     end
-
-
-
-
     @keyword= params[:keyword]
-
   end
 
   def genre
@@ -35,9 +30,10 @@ class Public::FoodsController < ApplicationController
 
   def show
     @food = Food.find(params[:id])
-    @price = current_customer.prices.where(food_id: @food.id)
+    @price = current_customer.prices.find_by(food_id: @food.id)
     @comment = Comment.new
     @comments = @food.comments
+    @food_genres = FoodGenre.all
   end
 
   def edit
