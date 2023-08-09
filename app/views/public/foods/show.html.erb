@@ -23,72 +23,83 @@
 
         </div>
         <div class="col-sm-4">
-          <table class="table table-sm border-bottom border-dark">
-            <tr>
-              <td class="text-center border-bottom border-dark", colspan="3">食材情報(100gあたり)</td>
-            </tr>
+          <!--食材情報-->
+          <table class="table table-sm border border-3 border-success">
+            <thead>
+              <tr>
+                <th class="text-center border-bottom border-success", colspan="3">食材情報(100gあたり)</th>
+              </tr>
+            </thead>
 
-            <tr>
-              <th>エネルギー</th>
-              <td><%= @food.energy %></td>
-              <td><i>kcal</i></td>
-            </tr>
+            <tbody>
+              <tr>
+                <td class="border border-success">エネルギー</td>
+                <td class="border-bottom border-success text-right"><%= @food.energy %></td>
+                <td class="border-bottom border-success"><i>kcal</i></td>
+              </tr>
 
-            <tr>
-              <th>たんぱく質</th>
-              <td><%= @food.protein %></td>
-              <td><i>g</i></td>
-            </tr>
+              <tr>
+                <td class="border border-success">たんぱく質</td>
+                <td class="border-bottom border-success text-right"><%= @food.protein %></td>
+                <td class="border-bottom border-success"><i>g</i></td>
+              </tr>
 
-            <tr>
-              <th>脂質</th>
-              <td><%= @food.fat %></td>
-              <td><i>g</i></td>
-            </tr>
+              <tr>
+                <td class="border border-success">脂質</td>
+                <td class="border-bottom border-success text-right"><%= @food.fat %></td>
+                <td class="border-bottom border-success"><i>g</i></td>
+              </tr>
 
-            <tr>
-              <th>炭水化物</th>
-              <td><%= @food.carb %></td>
-              <td><i>g</i></td>
-            </tr>
+              <tr>
+                <td class="border border-success">炭水化物</td>
+                <td class="border-bottom border-success text-right"><%= @food.carb %></td>
+                <td class="border-bottom border-success"><i>g</i></td>
+              </tr>
 
-            <tr>
-              <th>食塩相当量</th>
-              <td><%= @food.salt_equivalent %></td>
-              <td><i>g</i></td>
-            </tr>
+              <tr>
+                <td class="border border-success">食塩相当量</td>
+                <td class="border-bottom border-success text-right"><%= @food.salt_equivalent %></td>
+                <td class="border-bottom border-success"><i>g</i></td>
+              </tr>
 
-            <tr>
-              <th>値段</th>
-              <% if @price %>
-                <td><%= @price.food_price %></td>
-                <td>円</td>
-              <% else %>
-                <td class="text-center" colspan="2">登録されていません</td>
-              <% end %>
-            </tr>
+              <tr>
+                <td class="border border-success">値段</td>
+                <% if @price %>
+                  <td class="text-right"><%= @price.food_price %></td>
+                  <td>円</td>
+                <% else %>
+                  <td class="text-center" colspan="2">登録されていません</td>
+                <% end %>
+              </tr>
+            </tbody>
           </table>
-          
-          <h5>値段を登録・更新する</h5>
-          <div>
-            <% if @price %>
-              <%= form_with model: @price, url: food_prices_path(params[:id]), method: :patch do |f| %>
-                <h4><%= f.label :food_price, "値段(100gあたり)" %></h4>
-                <%= f.number_field :food_price, class: 'form-control border-dark w-75' %>
-                <h4 class="">円</h4>
-                <%= f.submit "値段を更新する", class: 'btn btn-success px-3' %>
+
+          <!--値段の登録-->
+          <div class="border border-success rounded-lg">
+            <div class="text-center border-bottom border-success">
+              <strong>値段を登録・更新する</strong>
+            </div>
+            <!--値段登録フォーム：未登録→登録、登録済→更新フォームを表示-->
+            <div class="text-center my-3">
+              <% if @price %>
+                <%= form_with model: @price, url: food_prices_path(params[:id]), method: :patch do |f| %>
+                  <div class="d-flex align-items-center">
+                    <%= f.number_field :food_price, class: 'form-control form-control-sm mx-2 w-50' %>
+                    <div>円/100g</div>
+                    <%= f.submit "更新", class: 'btn btn-success btn-sm m-2 px-2' %>
+                  </div>
+                <% end %>
+              <% else %>
+                <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
+                  <div class="d-flex align-items-center">
+                    <%= f.hidden_field :food_id, :value => @food.id %>
+                    <%= f.number_field :food_price, class: 'form-control form-control-sm mx-2 w-50', :placeholder => "値段を入力" %>
+                    <div>円/100g</div>
+                    <%= f.submit "登録", class: 'btn btn-success btn-sm mx-2 px-2' %>
+                  </div>
+                <% end %>
               <% end %>
-            <% else %>
-              <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
-                <div>
-                  <%= f.hidden_field :food_id, :value => @food.id %>
-                </div>
-                <h4><%= f.label :food_price, "値段(100gあたり)" %></h4>
-                <%= f.number_field :food_price, class: 'form-control border-dark w-75', :placeholder => "値段を入力してください" %>
-                <h4 class="">円</h4>
-                <%= f.submit "値段を登録する", class: 'btn btn-success px-3' %>
-              <% end %>
-            <% end %>
+            </div>
           </div>
         </div>
       </div>

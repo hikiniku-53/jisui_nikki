@@ -1,47 +1,40 @@
-<h3>食材一覧</h3>
-<table class="table">
-  <tbody class="text-truncate">
+<table class="table table-sm text-center">
+  <thead class="border-top border-bottom border-dark">
     <tr>
-      <th>食材名</th>
-      <th>分類</th>
-      <th>エネルギー</th>
-      <th>たんぱく質</th>
-      <th>脂質</th>
-      <th>炭水化物</th>
-      <th>塩分</th>
+      <th class="">食材名</th>
+      <th class="">エネルギー</th>
+      <th class="">たんぱく質</th>
+      <th class="">脂質</th>
+      <th class="">炭水化物</th>
+      <th class="">塩分</th>
+      <th class="col-2"></th>
     </tr>
+  </thead>
 
+  <tbody class="text-truncate">
     <% foods.each do |food| %>
-
-      <tr>
-        <td>
-          <!--詳細-->
+      <tr class="border-top">
+        <td class="align-middle">
           <%= link_to food_path(food.id) do %>
             <%= food.name %>
           <% end %>
-          <!--まな板に乗せる-->
+        </td>
+        <td class="align-middle"><%= food.energy %> kcal</td>
+        <td class="align-middle"><%= food.protein %> g</td>
+        <td class="align-middle"><%= food.fat %> g</td>
+        <td class="align-middle"><%= food.carb %> g</td>
+        <td class="align-middle"><%= food.salt_equivalent %> g</td>
+        <td class="text-center">
           <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
             <%= f.hidden_field :food_id, :value => food.id %>
             <div class="d-inline-flex align-items-center">
-              <h4><%= f.label :amount, "分量" %></h4>
-              <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
-              <h4 class="">g</h4>
+              <%= f.number_field :amount, class: 'form-control form-control-sm text-center m-1 w-50', placeholder: '分量' %> g
             </div>
             <div>
-              <%= f.submit "まな板に乗せる", class: 'btn btn-success px-3' %>
+            <%= f.submit "まな板に乗せる", class: 'btn btn-success btn-sm m-1' %>
             </div>
           <% end %>
         </td>
-        <td>
-          <div class="text-truncate d-inline-block", style="max-width: 90px;">
-            <%= food.food_genre.name %>
-          </div>
-        </td>
-        <td><%= food.energy %> kcal</td>
-        <td><%= food.protein %> g</td>
-        <td><%= food.fat %> g</td>
-        <td><%= food.carb %> g</td>
-        <td><%= food.salt_equivalent %> g</td>
       </tr>
     <% end %>
   </tbody>
