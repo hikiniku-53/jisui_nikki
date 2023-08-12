@@ -5,7 +5,7 @@ end
 
 CommentGenre.seed do |s|
   s.id    = 2
-  s.name = 'どうやって保存する？どれくらいの期間保存できる？'
+  s.name = '保存法・期間は？'
 end
 
 CommentGenre.seed do |s|
@@ -15,13 +15,13 @@ end
 
 CommentGenre.seed do |s|
   s.id    = 4
-  s.name = '味や食感について教えて？'
+  s.name = '味や食感は？'
 end
 
-# CommentGenre.seed do |s|
-#   s.id    = 5
-#   s.name = ''
-# end
+CommentGenre.seed do |s|
+  s.id    = 5
+  s.name = 'その他・感想等'
+end
 
 # CommentGenre.seed do |s|
 #   s.id    = 6
