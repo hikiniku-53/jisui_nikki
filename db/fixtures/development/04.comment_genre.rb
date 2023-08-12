@@ -20,7 +20,7 @@ end
 
 CommentGenre.seed do |s|
   s.id    = 5
-  s.name = 'その他・感想等'
+  s.name = 'その他'
 end
 
 # CommentGenre.seed do |s|
