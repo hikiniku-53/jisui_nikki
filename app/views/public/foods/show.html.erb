@@ -1,13 +1,16 @@
-<div class="container">
+<div class="container my-3">
   <div class="row">
+
     <!--検索フォーム-->
-    <div class="col-3  d-none d-xl-block">
+    <div class="col-3 d-none d-xl-block">
+
       <!--キーワード検索-->
       <div class="m-2">
         <%= form_with url: foods_path, method: :get, local: true do |f|%>
           <%= render "layouts/search", f: f, keyword: @keyword %>
         <% end %>
       </div>
+
       <!--ジャンル検索-->
       <div class="my-3">
         <%= render 'genre', food_genres: @food_genres %>
@@ -16,15 +19,16 @@
 
     <!--食材詳細-->
     <div class="col-xl-9">
+
+      <!--食材名-->
       <h1 class="text-center my-3"><%= @food.name %></h1>
+
       <div class="row">
         <div class="col-lg-5">
-          <!--食材情報-->
+          <!--食材データ-->
           <table class="table table-sm border border-3 border-success my-3 mx-auto" style="width: 270px">
             <thead>
-              <tr>
-                <th class="text-center border-bottom border-success", colspan="3">食材情報(100gあたり)</th>
-              </tr>
+              <tr><th class="text-center border-bottom border-success", colspan="3">食材情報(100gあたり)</th></tr>
             </thead>
 
             <tbody>
@@ -59,6 +63,7 @@
               </tr>
 
               <tr>
+                <!--値段登録済→値を表示：値段未登録→未登録表示-->
                 <td class="border border-success">値段</td>
                 <% if @price %>
                   <td class="text-right"><%= @price.food_price %></td>
@@ -69,116 +74,133 @@
               </tr>
             </tbody>
           </table>
+
+          <!--フォーム-->
           <div class="row justify-content-center">
+
             <!--値段の登録-->
-            <div class="border border-success rounded-lg mb-3 mx-auto" style="width: 220px">
-            <div class="text-center border-bottom border-success my-1">
-              <strong>値段を登録・更新する</strong>
-            </div>
-            <!--値段登録フォーム：未登録→登録、登録済→更新フォームを表示-->
-            <div class="text-center my-3">
-              <% if @price %>
-                <%= form_with model: @price, url: food_prices_path(params[:id]), method: :patch do |f| %>
-                  <div class="d-flex align-items-center">
-                    <%= f.number_field :food_price, class: 'form-control form-control-sm mx-2 w-50' %>
-                    <div>円/100g</div>
-                    <%= f.submit "更新", class: 'btn btn-success btn-sm mx-2 px-2' %>
-                  </div>
+            <div class="border border-success rounded-lg mb-3 mx-auto" style="width: 230px">
+              <div class="text-center border-bottom border-success my-1">
+                <strong>値段を登録・更新する</strong>
+              </div>
+              <!--値段登録：ユーザー固有の値段を登録-->
+              <div class="text-center my-3">
+                <% if @price %>
+                  <!--値段登録済→値段の更新-->
+                  <%= form_with model: @price, url: food_prices_path(params[:id]), method: :patch do |f| %>
+                    <div class="d-flex align-items-center">
+                      <%= f.number_field :food_price, class: 'form-control form-control-sm mx-2 w-50' %>
+                      <div>円/100g</div>
+                      <%= f.submit "更新", class: 'btn btn-success btn-sm mx-2 px-2' %>
+                    </div>
+                  <% end %>
+
+                <% else %>
+                  <!--値段未登録→値段の新規登録-->
+                  <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
+                    <div class="d-flex align-items-center">
+                      <%= f.hidden_field :food_id, :value => @food.id %>
+                      <%= f.number_field :food_price, class: 'form-control form-control-sm mx-2 w-50', :placeholder => "値段を入力" %>
+                      <div>円/100g</div>
+                      <%= f.submit "登録", class: 'btn btn-success btn-sm mx-2 px-2' %>
+                    </div>
+                  <% end %>
                 <% end %>
-              <% else %>
-                <%= form_with model: Price.new, url: food_prices_path(params[:id]) do |f| %>
+              </div>
+            </div>
+
+            <!--レシピ作成：まな板に食材を追加-->
+            <div class="border border-warning rounded-lg mb-3 mx-auto" style="width: 230px">
+              <div class="text-center border-bottom border-warning my-1">
+                <strong>料理に使う</strong>
+              </div>
+              <div class="text-center my-3">
+                <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
                   <div class="d-flex align-items-center">
                     <%= f.hidden_field :food_id, :value => @food.id %>
-                    <%= f.number_field :food_price, class: 'form-control form-control-sm mx-2 w-50', :placeholder => "値段を入力" %>
-                    <div>円/100g</div>
-                    <%= f.submit "登録", class: 'btn btn-success btn-sm mx-2 px-2' %>
+                    <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '使用量' %>
+                    <div>g</div>
+                    <%= f.submit "使う", class: 'btn btn-warning btn-sm mx-2 px-2 ml-auto' %>
                   </div>
                 <% end %>
-              <% end %>
+              </div>
             </div>
-          </div>
-            <!--まな板に乗せる-->
-            <div class="border border-warning rounded-lg mb-3 mx-auto" style="width: 220px">
-            <div class="text-center border-bottom border-warning my-1">
-              <strong>料理に使う</strong>
-            </div>
-            <div class="text-center my-3">
-              <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
-                <div class="d-flex align-items-center">
-                  <%= f.hidden_field :food_id, :value => @food.id %>
-                  <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '使用量' %>
-                  <div>g</div>
-                  <%= f.submit "使う", class: 'btn btn-warning btn-sm mx-2 px-2 ml-auto' %>
-                </div>
-              <% end %>
-            </div>
-          </div>
-            <!--食事記録をつける-->
-            <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 220px">
-            <div class="text-center border-bottom border-danger my-1">
-              <strong>食事を記録する</strong>
-            </div>
-            <div class="my-3">
-              <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
-                <%= f.hidden_field :food_id, :value => @food.id %>
-                <%= f.hidden_field :energy, :value => @food.energy %>
-                <%= f.hidden_field :protein, :value => @food.protein %>
-                <%= f.hidden_field :fat, :value => @food.fat %>
-                <%= f.hidden_field :carb, :value => @food.carb %>
-                <%= f.hidden_field :salt_equivalent, :value => @food.salt_equivalent %>
 
-                <div class="d-flex align-items-center text-middle mx-2 mb-2">
-                  <%= f.date_field :date, value: Date.today, class: 'form-control form-control-sm mr-2' %>
-                  <%= f.select :time, options_for_select([Meal.times_i18n[:breakfast], Meal.times_i18n[:lunch], Meal.times_i18n[:dinner], Meal.times_i18n[:others]], selected: ""), {}, class: 'form-control form-control-sm ml-auto' %>
-                </div>
+            <!--食事記録：日記に食事記録を追加-->
+            <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 230px">
+              <div class="text-center border-bottom border-danger my-1">
+                <strong>食事を記録する</strong>
+              </div>
+              <div class="my-3">
+                <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
+                  <!--自動送信項目-->
+                  <div>
+                    <%= f.hidden_field :food_id, :value => @food.id %>
+                    <%= f.hidden_field :energy, :value => @food.energy %>
+                    <%= f.hidden_field :protein, :value => @food.protein %>
+                    <%= f.hidden_field :fat, :value => @food.fat %>
+                    <%= f.hidden_field :carb, :value => @food.carb %>
+                    <%= f.hidden_field :salt_equivalent, :value => @food.salt_equivalent %>
+                  </div>
 
-                <div class="d-inline-flex align-items-center">
-                  <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '食事量' %>
-                  <div class="">g</div>
-                  <%= f.submit "記録する", class: 'btn btn-danger btn-sm mx-2 px-2 ml-auto' %>
-                </div>
+                  <!--入力・送信-->
+                  <div>
+                    <!--日時入力-->
+                    <div class="d-flex align-items-center text-middle mx-2 mb-2">
+                      <!--日付初期値＝当日-->
+                      <%= f.date_field :date, value: Date.today, class: 'form-control form-control-sm mr-2' %>
+                      <%= f.select :time, options_for_select([[Meal.times_i18n[:breakfast], "breakfast"], [Meal.times_i18n[:lunch], "lunch"], [Meal.times_i18n[:dinner], "dinner"], [Meal.times_i18n[:others], "others"]], selected: ""), {}, class: 'form-control form-control-sm ml-auto' %>
+                    </div>
 
-                <div>
-
-                </div>
-              <% end %>
+                    <!--食事量入力・送信-->
+                    <div class="d-inline-flex align-items-center">
+                      <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '食事量' %>
+                      <div class="">g</div>
+                      <%= f.submit "記録する", class: 'btn btn-danger btn-sm mx-2 px-2 ml-auto' %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
             </div>
-          </div>
           </div>
         </div>
+
         <div class="col-lg-7">
+
           <!--食材画像-->
           <div class="mx-auto" style="width: 380px;"><%= image_tag @food.get_image(380,380) %></div>
 
-      <div class="row justify-content-center">
-        <!--コメント一覧-->
-        <div class="d-flex flex-wrap justify-content-center">
-          <% @comments.each do |comment| %>
-            <div class="card m-2" style="width: 14rem;">
-              <div class="card-body">
-                <h5 class="card-title">
-                  <strong><%= comment.comment_genre.name %></strong>
-                </h5>
+          <!--コメント一覧-->
+          <div class="row justify-content-center">
+            <div class="d-flex flex-wrap justify-content-center">
+              <% @comments.each do |comment| %>
 
-                <h6 class="card-subtitle mb-2 text-muted">
-                  by <%= comment.customer.name%>
-                </h6>
+                <div class="card m-2" style="width: 14rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">
+                      <strong><%= comment.comment_genre.name %></strong>
+                    </h5>
 
-                <p class="card-text">
-                  <%= comment.comment %>
-                </p>
-              </div>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                      by <%= comment.customer.name%>
+                    </h6>
+
+                    <p class="card-text">
+                      <%= comment.comment %>
+                    </p>
+                  </div>
+                </div>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-      </div>
-          <!--コメント・情報を共有する-->
+          </div>
+
+          <!--コメント追加-->
           <div class="border border-primary rounded-lg mb-3 mx-auto" style="max-width: 300px">
             <div class="text-center border-bottom border-primary my-1">
-              <div>
-                <strong>食材の情報を共有する</strong>
-              </div>
+              <div><strong>食材の情報を共有する</strong></div>
             </div>
+
+            <!--コメントジャンル選択・本文入力・送信-->
             <div class="text-center my-3 mx-2">
               <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
                 <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :name), {}, class: 'form-control form-control-sm my-2' %>

@@ -1,21 +1,24 @@
-    <div>
-      <div>ジャンル検索</div>
-
-      <table class="table table-sm">
-        <tbody>
-          <% @food_genres.each do |food_genre|%>
-            <tr>
-              <td>
-                <%= link_to foods_genre_path(food_genre.id), class: "text-dark" do %>
-                  <% if params[:id] ==  food_genre.id %>
-                    <strong><%= food_genre.name %></strong>
-                  <% else %>
-                    <%= food_genre.name %>
-                  <% end %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-    </div>
+<div>
+  <table class="table table-sm">
+    <thead>
+      <tr><td><strong>ジャンル検索</strong></td></tr>
+    </thead>
+    <tbody>
+      <% @food_genres.each do |food_genre|%>
+        <tr>
+          <td>
+            <%= link_to foods_genre_path(food_genre.id), class: "text-dark" do %>
+              <% if params[:food_genreid] ==  food_genre.id %>
+                <div>
+                <strong><%= food_genre.name %></strong>
+                </div>
+              <% else %>
+                <%= food_genre.name %>
+              <% end %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
