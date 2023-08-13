@@ -11,8 +11,8 @@
         <% end %>
       </div>
 
-      <!--ジャンル検索-->
-      <div class="my-3">
+      <!--ジャンル検索：ブレークポイントxl以上-->
+      <div class="my-3 d-none d-xl-block">
         <%= render 'genre', food_genres: @food_genres %>
       </div>
     </div>
@@ -25,6 +25,7 @@
 
       <div class="row">
         <div class="col-lg-5">
+
           <!--食材データ-->
           <table class="table table-sm border border-3 border-success my-3 mx-auto" style="width: 270px">
             <thead>
@@ -76,10 +77,10 @@
           </table>
 
           <!--フォーム-->
-          <div class="row justify-content-center">
+          <div class="justify-content-center">
 
             <!--値段の登録-->
-            <div class="border border-success rounded-lg mb-3 mx-auto" style="width: 230px">
+            <div class="border border-success rounded-lg mb-3 mx-auto" style="width: 250px">
               <div class="text-center border-bottom border-success my-1">
                 <strong>値段を登録・更新する</strong>
               </div>
@@ -110,7 +111,7 @@
             </div>
 
             <!--レシピ作成：まな板に食材を追加-->
-            <div class="border border-warning rounded-lg mb-3 mx-auto" style="width: 230px">
+            <div class="border border-warning rounded-lg mb-3 mx-auto" style="width: 250px">
               <div class="text-center border-bottom border-warning my-1">
                 <strong>料理に使う</strong>
               </div>
@@ -127,7 +128,7 @@
             </div>
 
             <!--食事記録：日記に食事記録を追加-->
-            <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 230px">
+            <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 250px">
               <div class="text-center border-bottom border-danger my-1">
                 <strong>食事を記録する</strong>
               </div>
@@ -162,6 +163,22 @@
                 <% end %>
               </div>
             </div>
+
+            <!--コメント追加-->
+            <div class="border border-primary rounded-lg mb-3 mx-auto" style="width: 250px">
+              <div class="text-center border-bottom border-primary my-1">
+                <div><strong>食材の情報を共有する</strong></div>
+              </div>
+
+              <!--コメントジャンル選択・本文入力・送信-->
+              <div class="text-center my-3 mx-2">
+                <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
+                  <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :name), {}, class: 'form-control form-control-sm my-2' %>
+                  <div><%= f.text_area :comment, placeholder: "コメント", class: 'form-control form-control-sm my-2' %></div>
+                  <div><%= f.submit 'コメントする', class: 'btn btn-primary px-3' %></div>
+                <% end %>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -193,23 +210,12 @@
               <% end %>
             </div>
           </div>
-
-          <!--コメント追加-->
-          <div class="border border-primary rounded-lg mb-3 mx-auto" style="max-width: 300px">
-            <div class="text-center border-bottom border-primary my-1">
-              <div><strong>食材の情報を共有する</strong></div>
-            </div>
-
-            <!--コメントジャンル選択・本文入力・送信-->
-            <div class="text-center my-3 mx-2">
-              <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
-                <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :name), {}, class: 'form-control form-control-sm my-2' %>
-                <div><%= f.text_area :comment, placeholder: "コメント", class: 'form-control form-control-sm my-2' %></div>
-                <div><%= f.submit 'コメントする', class: 'btn btn-primary px-3' %></div>
-              <% end %>
-            </div>
-          </div>
         </div>
+      </div>
+
+      <!--ジャンル検索：ブレークポイントxl以下-->
+      <div class="my-3 w-75 mx-auto d-xl-none ">
+        <%= render 'genre', food_genres: @food_genres %>
       </div>
     </div>
   </div>
