@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <script src="https://kit.fontawesome.com/1497b7da49.js" crossorigin="anonymous"></script>
-
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -35,30 +33,30 @@
               <% if admin_signed_in? %>
 
                 <!--食材一覧-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to admin_foods_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
                     <i class="fas fa-search"></i>&nbsp;食材一覧&nbsp;<i class="far fa-lightbulb"></i>
                   <% end %>
                 </li>
 
                 <!--コメント一覧-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to admin_comments_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
                     <i class="fas fa-search"></i>&nbsp;コメント一覧&nbsp;<i class="far fa-lightbulb"></i>
                   <% end %>
                 </li>
 
                 <!--ユーザー一覧-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to admin_customers_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
                     <i class="fas fa-search"></i>&nbsp;ユーザー一覧&nbsp;<i class="far fa-lightbulb"></i>
                   <% end %>
                 </li>
 
                 <!--ログアウト-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to destroy_admin_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                    <i class="fas fa-sign-out-alt"></i>&nbsp;Log Out
+                    <i class="fas fa-sign-out-alt"></i>&nbsp;ログアウト
                   <% end %>
                 </li>
 
@@ -66,52 +64,47 @@
               <% elsif customer_signed_in? %>
 
                 <!--マイページ-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to customer_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                    <i class="fas fa-calendar-alt"></i>&nbsp;My Page
+                    <i class="fas fa-calendar-alt"></i>&nbsp;マイページ
                   <% end %>
                 </li>
 
                 <!--食材一覧-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to foods_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
 
                     <i class="fas fa-drumstick-bite"></i>
-                    <i class="fas fa-fish"></i>
-                    &nbsp;Foods&nbsp;
-                    <i class="fas fa-egg"></i>
-                    <i class="fas fa-carrot"></i>
+                    &nbsp;食材&nbsp;
 
                   <% end %>
                 </li>
 
                 <!--食材登録-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to new_food_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-
-                    <i class="fas fa-search"></i>&nbsp;Food Resistration&nbsp;<i class="far fa-lightbulb"></i>
-
+                    <i class="fas fa-search"></i>&nbsp;食材登録&nbsp;
                   <% end %>
                 </li>
 
                 <!--レシピ一覧-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to recipes_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                    <i class="fas fa-utensils"></i>&nbsp;Recipes
+                    <i class="fas fa-utensils"></i>&nbsp;レシピ
                   <% end %>
                 </li>
 
                 <!--まな板へ-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to cutting_board_foods_path, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                    <i class="fas fa-utensils"></i>&nbsp;Make Recipes
+                    <i class="fas fa-utensils"></i>&nbsp;レシピ作成
                   <% end %>
                 </li>
 
                 <!--ログアウト-->
-                <li class="nav-link px-4">
+                <li class="nav-link px-3">
                   <%= link_to destroy_customer_session_path, method: :delete, class: 'd-flex align-items-center text-light text-decoration-none' do %>
-                    <i class="fas fa-sign-out-alt"></i>&nbsp;Log Out
+                    <i class="fas fa-sign-out-alt"></i>&nbsp;ログアウト
                   <% end %>
                 </li>
 
@@ -155,11 +148,10 @@
       </nav>
     </header>
 
-    <%= yield %>
+    <div class="container py-3">
+      <%= yield %>
+    </div>
 
-    <footer>
-
-    </footer>
-
+    <footer></footer>
   </body>
 </html>

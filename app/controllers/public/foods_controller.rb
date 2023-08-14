@@ -12,20 +12,24 @@ class Public::FoodsController < ApplicationController
   end
 
   def genre
-    @food_genre = FoodGenre.find(params[:genre_id])
+    @food_genre = FoodGenre.find(params[:food_genre_id])
     @foods = @food_genre.foods
     @food_genres = FoodGenre.all
   end
 
   def new
     @food = Food.new
-    @genres = FoodGenre.all
+    @food_genres = FoodGenre.all
   end
 
   def create
     @food = Food.new(food_params)
-    @food.save
-    redirect_to foods_path
+    @food_genres = FoodGenre.all
+    if @food.save
+      redirect_to foods_path
+    else
+      render :new
+    end
   end
 
   def show
@@ -37,9 +41,18 @@ class Public::FoodsController < ApplicationController
   end
 
   def edit
+    @food = Food.find(params[:id])
+     @food_genres = FoodGenre.all
   end
 
   def update
+    @food = Food.find(params[:id])
+    @food_genres = FoodGenre.all
+    if @food.update(food_params)
+      redirect_to food_path(params[:id])
+    else
+      render :edit
+    end
   end
 
   private

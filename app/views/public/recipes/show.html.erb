@@ -1,12 +1,24 @@
-<div class="container">
-  <div class="row">
-  <div class="col-sm-3">
-    <!--検索-->
-    <%= render "search", tag_list: @tag_list, keyword: @keyword %>
+<div class="row">
+
+  <!--検索フォーム-->
+  <div class="col-xl-3">
+
+    <!--キーワード検索-->
+    <div class="m-2">
+      <%= form_with url: recipes_path, method: :get, local: true do |f|%>
+        <%= render "layouts/search", f: f, keyword: @keyword %>
+      <% end %>
+    </div>
+
+    <!--タグ検索：ブレークポイントxl以上-->
+    <div class="my-3 d-none d-xl-block">
+      <%= render "tag", tag_list: @tag_list, keyword: @keyword %>
+    </div>
   </div>
 
-  <div class="col-sm-9">
-    <h1>
+  <!--レシピ詳細-->
+  <div class="col-xl-9">
+    <h1 class="text-center my-3">
       <%= @recipe.name %>
     </h1>
 

@@ -7,6 +7,10 @@ ja:
         dinner: "夕食"
         others: "間食"
   activerecord:
+    attributes:
+      food:
+        name: 名前
+        energy: カロリー
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'

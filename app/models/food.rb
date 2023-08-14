@@ -8,6 +8,10 @@ class Food < ApplicationRecord
   belongs_to :food_genre
 
 
+  validates :name, presence: true
+  validates :energy, presence: true
+
+
   def get_image(width, height)
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -17,7 +21,6 @@ class Food < ApplicationRecord
   end
 
   def self.search(keyword)
-
     where("name LIKE?","%#{keyword}%")
   end
 

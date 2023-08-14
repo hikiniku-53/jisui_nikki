@@ -1,34 +1,33 @@
-<div class="container my-3">
-  <div class="row">
+ <div class="row">
 
-    <!--検索フォーム-->
-    <div class="col-xl-3">
-      <!--キーワード検索-->
-      <div class="m-2">
-        <%= form_with url: foods_path, method: :get, local: true do |f|%>
-          <%= render "layouts/search", f: f, keyword: @keyword %>
-        <% end %>
-      </div>
+  <!--検索フォーム-->
+  <div class="col-xl-3">
 
-      <!--ジャンル検索：ブレークポイントxl以上-->
-      <div class="my-3 d-none d-xl-block">
-        <%= render 'genre', food_genres: @food_genres %>
-      </div>
+    <!--キーワード検索-->
+    <div class="m-2">
+      <%= form_with url: foods_path, method: :get, local: true do |f|%>
+        <%= render "layouts/search", f: f, keyword: @keyword %>
+      <% end %>
     </div>
 
-    <!--食材一覧-->
-    <div class="col-xl-9">
-      <div class="text-center m-2">
-        <h2><%= @food_genre.name %>の食材一覧</h2>
-      </div>
-      <div class="d-flex justify-content-center flex-wrap">
-        <%= render "foods", foods: @foods %>
-      </div>
-    </div>
-
-    <!--ジャンル検索：ブレークポイントxl以下-->
-    <div class="my-3w-7 w-75 mx-auto d-xl-none ">
+    <!--ジャンル検索：ブレークポイントxl以上-->
+    <div class="my-3 d-none d-xl-block">
       <%= render 'genre', food_genres: @food_genres %>
     </div>
+  </div>
+
+  <!--食材一覧-->
+  <div class="col-xl-9">
+    <div class="text-center m-2">
+      <h2><%= @food_genre.name %>の食材一覧</h2>
+    </div>
+    <div class="d-flex justify-content-center flex-wrap">
+      <%= render "foods", foods: @foods %>
+    </div>
+  </div>
+
+  <!--ジャンル検索：ブレークポイントxl以下-->
+  <div class="my-3w-7 w-75 mx-auto d-xl-none ">
+    <%= render 'genre', food_genres: @food_genres %>
   </div>
 </div>

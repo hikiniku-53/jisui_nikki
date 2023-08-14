@@ -1,49 +1,55 @@
-<h2>食材情報更新</h2>
+<h2 class="text-center">食材情報更新</h2>
+
+<div>
+  <% if@food.errors.any? %>
+    <ul class="mx-auto">
+      <%@food.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
 
 <%= form_with model: @food, url: admin_food_path, method: :patch do |f| %>
+  <table class="table-sm mx-auto">
+    <tbody>
+      <tr>
+        <td style="width: 120px"><%= f.label :name, "名前(必須)" %></td>
+        <td class=""><%= f.text_field :name, autofocus: true, autocomplete: "name", class: 'form-control-sm mx-2' %></td>
+      </tr>
 
-  <div class="field">
-    <%= f.label :name, "名前(必須)" %><br/>
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
+      <tr>
+        <td><%= f.label :food_genre_id, "ジャンル(必須)" %></td>
+        <td><%= f.collection_select(:food_genre_id, @genres, :id, :name, {}, {class: 'form-control-sm mx-2'}) %></td>
+      </tr>
 
-  <div class="field">
-    <%= f.label :food_genre_id, "ジャンル" %><br/>
-    <%= f.collection_select(:food_genre_id, @genres, :id, :name ) %>
-  </div>
-
-  <div class="field">
-    <%= f.label :energy, "カロリー(必須)" %><br/>
-    <%= f.text_field :energy, autofocus: true, autocomplete: "energy" %>kcal
-  </div>
-
-  <div class="field">
-    <%= f.label :protein, "たんぱく質" %><br/>
-    <%= f.text_field :protein, autofocus: true, autocomplete: "protein" %>g
-  </div>
-
-  <div class="field">
-    <%= f.label :fat, "脂質" %><br/>
-    <%= f.text_field :fat, autofocus: true, autocomplete: "fat" %>g
-  </div>
-
-  <div class="field">
-    <%= f.label :carb, "炭水化物" %><br/>
-    <%= f.text_field :carb, autofocus: true, autocomplete: "carb" %>g
-  </div>
-
-  <div class="field">
-    <%= f.label :salt_equivalent, "塩分" %><br/>
-    <%= f.text_field :salt_equivalent, autofocus: true, autocomplete: "salt_equivalent" %>g
-  </div>
-
-  <div class="field">
-    <%= f.label :image, "写真" %><br/>
-    <%= f.file_field :image, accept: "image/*", class:"w-100"  %>
-  </div>
-
-
-  <div class="actions">
-    <%= f.submit "更新" %>
-  </div>
+      <tr>
+        <td><%= f.label :energy, "カロリー(必須)" %></td>
+        <td><%= f.text_field :energy, autofocus: true, autocomplete: "energy", class: 'form-control-sm mx-2' %>kcal</td>
+      </tr>
+      <tr>
+        <td><%= f.label :protein, "たんぱく質" %></td>
+        <td><%= f.text_field :protein, autofocus: true, autocomplete: "protein", class: 'form-control-sm mx-2' %>g</td>
+      </tr>
+      <tr>
+        <td><%= f.label :fat, "脂質" %></td>
+        <td><%= f.text_field :fat, autofocus: true, autocomplete: "fat", class: 'form-control-sm mx-2' %>g</td>
+      </tr>
+      <tr>
+        <td><%= f.label :carb, "炭水化物" %></td>
+        <td><%= f.text_field :carb, autofocus: true, autocomplete: "carb", class: 'form-control-sm mx-2' %>g</td>
+      </tr>
+      <tr>
+        <td><%= f.label :salt_equivalent, "塩分" %></td>
+        <td><%= f.text_field :salt_equivalent, autofocus: true, autocomplete: "salt_equivalent", class: 'form-control-sm mx-2' %>g</td>
+      </tr>
+      <tr>
+        <td><%= f.label :image, "写真" %></td>
+        <td><%= f.file_field :image, accept: "image/*", class:"w-100"  %></td>
+      </tr>
+      <tr>
+        <td class="text-center" colspan="2"><%= f.submit "登録", class: "btn btn-success" %></td>
+      </tr>
+    </tbody>
+  </table>
 <% end %>

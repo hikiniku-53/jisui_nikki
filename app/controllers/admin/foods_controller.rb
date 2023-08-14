@@ -15,8 +15,9 @@ class Admin::FoodsController < ApplicationController
   end
 
   def update
+    @food = Food.find(params[:id])
     @food.update(food_params)
-    redirect_to admin_foods_path
+    redirect_to admin_food_path(params[:id])
   end
 
   def destroy

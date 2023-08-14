@@ -1,86 +1,91 @@
-<div class="container my-3">
-  <div class="row">
+<div class="row">
 
-    <!--検索フォーム-->
-    <div class="col-3 d-none d-xl-block">
+  <!--検索フォーム-->
+  <div class="col-xl-3">
 
-      <!--キーワード検索-->
-      <div class="m-2">
-        <%= form_with url: foods_path, method: :get, local: true do |f|%>
-          <%= render "layouts/search", f: f, keyword: @keyword %>
-        <% end %>
-      </div>
-
-      <!--ジャンル検索：ブレークポイントxl以上-->
-      <div class="my-3 d-none d-xl-block">
-        <%= render 'genre', food_genres: @food_genres %>
-      </div>
+    <!--キーワード検索-->
+    <div class="m-2">
+      <%= form_with url: foods_path, method: :get, local: true do |f|%>
+        <%= render "layouts/search", f: f, keyword: @keyword %>
+      <% end %>
     </div>
 
-    <!--食材詳細-->
-    <div class="col-xl-9">
+    <!--ジャンル検索：ブレークポイントxl以上-->
+    <div class="my-3 d-none d-xl-block">
+      <%= render 'genre', food_genres: @food_genres %>
+    </div>
+  </div>
 
-      <!--食材名-->
-      <h1 class="text-center my-3"><%= @food.name %></h1>
+  <!--食材詳細-->
+  <div class="col-xl-9">
 
-      <div class="row">
-        <div class="col-lg-5">
+    <!--食材名-->
+    <h1 class="text-center my-3"><%= @food.name %></h1>
 
-          <!--食材データ-->
-          <table class="table table-sm border border-3 border-success my-3 mx-auto" style="width: 270px">
-            <thead>
-              <tr><th class="text-center border-bottom border-success", colspan="3">食材情報(100gあたり)</th></tr>
-            </thead>
+    <div class="row">
+      <div class="col-lg-5">
 
-            <tbody>
-              <tr>
-                <td class="border border-success">エネルギー</td>
-                <td class="border-bottom border-success text-right"><%= @food.energy %></td>
-                <td class="border-bottom border-success">kcal</td>
-              </tr>
+        <!--食材データ・更新ボタン-->
+        <table class="table table-sm border border-3 border-success my-3 mx-auto" style="width: 270px">
+          <thead>
+            <tr><th class="text-center border-bottom border-success", colspan="3">食材情報(100gあたり)</th></tr>
+          </thead>
 
-              <tr>
-                <td class="border border-success">たんぱく質</td>
-                <td class="border-bottom border-success text-right"><%= @food.protein %></td>
-                <td class="border-bottom border-success">g</td>
-              </tr>
+          <tbody>
+            <tr>
+              <td class="border border-success">エネルギー</td>
+              <td class="border-bottom border-success text-right"><%= @food.energy %></td>
+              <td class="border-bottom border-success">kcal</td>
+            </tr>
 
-              <tr>
-                <td class="border border-success">脂質</td>
-                <td class="border-bottom border-success text-right"><%= @food.fat %></td>
-                <td class="border-bottom border-success">g</td>
-              </tr>
+            <tr>
+              <td class="border border-success">たんぱく質</td>
+              <td class="border-bottom border-success text-right"><%= @food.protein %></td>
+              <td class="border-bottom border-success">g</td>
+            </tr>
 
-              <tr>
-                <td class="border border-success">炭水化物</td>
-                <td class="border-bottom border-success text-right"><%= @food.carb %></td>
-                <td class="border-bottom border-success">g</td>
-              </tr>
+            <tr>
+              <td class="border border-success">脂質</td>
+              <td class="border-bottom border-success text-right"><%= @food.fat %></td>
+              <td class="border-bottom border-success">g</td>
+            </tr>
 
-              <tr>
-                <td class="border border-success">食塩相当量</td>
-                <td class="border-bottom border-success text-right"><%= @food.salt_equivalent %></td>
-                <td class="border-bottom border-success">g</td>
-              </tr>
+            <tr>
+              <td class="border border-success">炭水化物</td>
+              <td class="border-bottom border-success text-right"><%= @food.carb %></td>
+              <td class="border-bottom border-success">g</td>
+            </tr>
 
-              <tr>
-                <!--値段登録済→値を表示：値段未登録→未登録表示-->
-                <td class="border border-success">値段</td>
-                <% if @price %>
-                  <td class="text-right"><%= @price.food_price %></td>
-                  <td>円</td>
-                <% else %>
-                  <td class="text-center" colspan="2">登録されていません</td>
-                <% end %>
-              </tr>
-            </tbody>
-          </table>
+            <tr>
+              <td class="border border-success">食塩相当量</td>
+              <td class="border-bottom border-success text-right"><%= @food.salt_equivalent %></td>
+              <td class="border-bottom border-success">g</td>
+            </tr>
 
-          <!--フォーム-->
-          <div class="justify-content-center">
+            <tr>
+              <!--値段登録済→値を表示：値段未登録→未登録表示-->
+              <td class="border border-success">値段</td>
+              <% if @price %>
+                <td class="border-bottom border-success text-right"><%= @price.food_price %></td>
+                <td class="border-bottom border-success">円</td>
+              <% else %>
+                <td class="border-bottom border-success text-center" colspan="2">登録されていません</td>
+              <% end %>
+            </tr>
 
-            <!--値段の登録-->
-            <div class="border border-success rounded-lg mb-3 mx-auto" style="width: 250px">
+            <tr>
+              <td class="text-center" colspan="3">
+                <%= link_to "追加・訂正", edit_food_path(params[:id]), class: 'btn btn-sm btn-success mx-2 px-2' %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!--フォーム-->
+        <div class="justify-content-center">
+
+          <!--値段の登録-->
+          <div class="border border-success rounded-lg mb-3 mx-auto" style="width: 250px">
               <div class="text-center border-bottom border-success my-1">
                 <strong>値段を登録・更新する</strong>
               </div>
@@ -110,8 +115,8 @@
               </div>
             </div>
 
-            <!--レシピ作成：まな板に食材を追加-->
-            <div class="border border-warning rounded-lg mb-3 mx-auto" style="width: 250px">
+          <!--レシピ作成：まな板に食材を追加-->
+          <div class="border border-warning rounded-lg mb-3 mx-auto" style="width: 250px">
               <div class="text-center border-bottom border-warning my-1">
                 <strong>料理に使う</strong>
               </div>
@@ -127,68 +132,68 @@
               </div>
             </div>
 
-            <!--食事記録：日記に食事記録を追加-->
-            <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 250px">
-              <div class="text-center border-bottom border-danger my-1">
-                <strong>食事を記録する</strong>
-              </div>
-              <div class="my-3">
-                <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
-                  <!--自動送信項目-->
-                  <div>
-                    <%= f.hidden_field :food_id, :value => @food.id %>
-                    <%= f.hidden_field :energy, :value => @food.energy %>
-                    <%= f.hidden_field :protein, :value => @food.protein %>
-                    <%= f.hidden_field :fat, :value => @food.fat %>
-                    <%= f.hidden_field :carb, :value => @food.carb %>
-                    <%= f.hidden_field :salt_equivalent, :value => @food.salt_equivalent %>
+          <!--食事記録：日記に食事記録を追加-->
+          <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 250px">
+            <div class="text-center border-bottom border-danger my-1">
+              <strong>食事を記録する</strong>
+            </div>
+            <div class="my-3">
+              <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
+                <!--自動送信項目-->
+                <div>
+                  <%= f.hidden_field :food_id, :value => @food.id %>
+                  <%= f.hidden_field :energy, :value => @food.energy %>
+                  <%= f.hidden_field :protein, :value => @food.protein %>
+                  <%= f.hidden_field :fat, :value => @food.fat %>
+                  <%= f.hidden_field :carb, :value => @food.carb %>
+                  <%= f.hidden_field :salt_equivalent, :value => @food.salt_equivalent %>
+                </div>
+
+                <!--入力・送信-->
+                <div>
+                  <!--日時入力-->
+                  <div class="d-flex align-items-center text-middle mx-2 mb-2">
+                    <!--日付初期値＝当日-->
+                    <%= f.date_field :date, value: Date.today, class: 'form-control form-control-sm mr-2' %>
+                    <%= f.select :time, options_for_select([[Meal.times_i18n[:breakfast], "breakfast"], [Meal.times_i18n[:lunch], "lunch"], [Meal.times_i18n[:dinner], "dinner"], [Meal.times_i18n[:others], "others"]], selected: ""), {}, class: 'form-control form-control-sm ml-auto' %>
                   </div>
 
-                  <!--入力・送信-->
-                  <div>
-                    <!--日時入力-->
-                    <div class="d-flex align-items-center text-middle mx-2 mb-2">
-                      <!--日付初期値＝当日-->
-                      <%= f.date_field :date, value: Date.today, class: 'form-control form-control-sm mr-2' %>
-                      <%= f.select :time, options_for_select([[Meal.times_i18n[:breakfast], "breakfast"], [Meal.times_i18n[:lunch], "lunch"], [Meal.times_i18n[:dinner], "dinner"], [Meal.times_i18n[:others], "others"]], selected: ""), {}, class: 'form-control form-control-sm ml-auto' %>
-                    </div>
-
-                    <!--食事量入力・送信-->
-                    <div class="d-inline-flex align-items-center">
-                      <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '食事量' %>
-                      <div class="">g</div>
-                      <%= f.submit "記録する", class: 'btn btn-danger btn-sm mx-2 px-2 ml-auto' %>
-                    </div>
+                  <!--食事量入力・送信-->
+                  <div class="d-inline-flex align-items-center">
+                    <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '食事量' %>
+                    <div class="">g</div>
+                    <%= f.submit "記録する", class: 'btn btn-danger btn-sm mx-2 px-2 ml-auto' %>
                   </div>
-                <% end %>
-              </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+
+          <!--コメント追加-->
+          <div class="border border-primary rounded-lg mb-3 mx-auto" style="width: 250px">
+            <div class="text-center border-bottom border-primary my-1">
+              <div><strong>食材の情報を共有する</strong></div>
             </div>
 
-            <!--コメント追加-->
-            <div class="border border-primary rounded-lg mb-3 mx-auto" style="width: 250px">
-              <div class="text-center border-bottom border-primary my-1">
-                <div><strong>食材の情報を共有する</strong></div>
-              </div>
-
-              <!--コメントジャンル選択・本文入力・送信-->
-              <div class="text-center my-3 mx-2">
-                <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
-                  <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :name), {}, class: 'form-control form-control-sm my-2' %>
-                  <div><%= f.text_area :comment, placeholder: "コメント", class: 'form-control form-control-sm my-2' %></div>
-                  <div><%= f.submit 'コメントする', class: 'btn btn-primary px-3' %></div>
-                <% end %>
-              </div>
+            <!--コメントジャンル選択・本文入力・送信-->
+            <div class="text-center my-3 mx-2">
+              <%= form_with model: [@food, @comment], url: food_comments_path(params[:id]) do |f| %>
+                <%= f.select :comment_genre_id, options_from_collection_for_select(CommentGenre.all, :id, :name), {}, class: 'form-control form-control-sm my-2' %>
+                <div><%= f.text_area :comment, placeholder: "コメント", class: 'form-control form-control-sm my-2' %></div>
+                <div><%= f.submit 'コメントする', class: 'btn btn-primary mx-2 px-2' %></div>
+              <% end %>
             </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-lg-7">
+      <div class="col-lg-7">
 
-          <!--食材画像-->
-          <div class="mx-auto" style="width: 380px;"><%= image_tag @food.get_image(380,380) %></div>
+        <!--食材画像-->
+        <div class="mx-auto" style="width: 380px;"><%= image_tag @food.get_image(380,380) %></div>
 
-          <!--コメント一覧-->
-          <div class="row justify-content-center">
+        <!--コメント一覧-->
+        <div class="row justify-content-center">
             <div class="d-flex flex-wrap justify-content-center">
               <% @comments.each do |comment| %>
 
@@ -210,13 +215,12 @@
               <% end %>
             </div>
           </div>
-        </div>
       </div>
+    </div>
 
-      <!--ジャンル検索：ブレークポイントxl以下-->
-      <div class="my-3 w-75 mx-auto d-xl-none ">
-        <%= render 'genre', food_genres: @food_genres %>
-      </div>
+    <!--ジャンル検索：ブレークポイントxl以下-->
+    <div class="my-3 w-75 mx-auto d-xl-none ">
+      <%= render 'genre', food_genres: @food_genres %>
     </div>
   </div>
 </div>

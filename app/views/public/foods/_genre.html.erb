@@ -5,13 +5,20 @@
       <% @food_genres.each do |food_genre|%>
         <tr>
           <td>
-            <%= link_to foods_genre_path(food_genre.id), class: "text-dark" do %>
-              <% if params[:food_genreid] ==  food_genre.id %>
-                <div>
+            <!--選択中ジャンルかどうか-->
+            <% if params[:food_genre_id].to_i ==  food_genre.id %>
+
+              <!--選択中→強調表示-->
+              <h6 class="text-dark my-auto">
                 <strong><%= food_genre.name %></strong>
+              </h6>
+            <% else %>
+
+              <!--非選択中→ジャンル選択-->
+              <%= link_to foods_genre_path(food_genre.id), class: "" do %>
+                <div class="">
+                  <%= food_genre.name %>
                 </div>
-              <% else %>
-                <%= food_genre.name %>
               <% end %>
             <% end %>
           </td>

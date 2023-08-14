@@ -1,36 +1,33 @@
-<div class="container">
-  <%= flash[:notice] %>
-  <div class="row">
+<%= flash[:notice] %>
+<div class="row">
 
   <!--日記-->
   <div class="col-sm-4">
 
-  <!--ユーザーデータ-->
-  <div>
-    <div class="d-flex">
-      <div>登録情報</div>
-      <%= link_to "変更", customers_edit_path %>
+    <!--ユーザーデータ-->
+    <div>
+      <div class="d-flex">
+        <div>登録情報</div>
+        <%= link_to "変更", customers_edit_path %>
+      </div>
+
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <th>名前</th>
+            <td><%= current_customer.name %></td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><%= current_customer.email %></td>
+          </tr><tr>
+            <th>公開ステータス</th>
+            <td><%= current_customer.is_published ? '公開' : '非公開' %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-    <table class="table table-bordered">
-      <tbody>
-        <tr>
-          <th>名前</th>
-          <td><%= current_customer.name %></td>
-        </tr>
-        <tr>
-          <th>メールアドレス</th>
-          <td><%= current_customer.email %></td>
-        </tr><tr>
-          <th>公開ステータス</th>
-          <td><%= current_customer.is_published ? '公開' : '非公開' %></td>
-        </tr>
-      </tbody>
-    </table>
-
-
-
-  </div>
+    
     <!--日記-->
     <div>
       <%= @date %>
@@ -206,11 +203,6 @@ var myChart = new Chart(ctx, {
           <% end %>
         </tbody>
       </table>
-
-
     </div>
-
-
-  </div>
   </div>
 </div>

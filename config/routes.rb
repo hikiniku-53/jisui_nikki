@@ -34,7 +34,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
       resource :prices, only: [:create, :update]
     end
-    get '/foods/genre/:genre_id' => 'foods#genre', as: 'foods_genre'
+    get '/foods/genre/:food_genre_id' => 'foods#genre', as: 'foods_genre'
     # get 'foods/search' => 'foods#search'
 
     # cutting_board_foods_action
