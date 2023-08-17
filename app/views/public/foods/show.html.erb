@@ -137,8 +137,10 @@
             <div class="text-center border-bottom border-danger my-1">
               <strong>食事を記録する</strong>
             </div>
+
             <div class="my-3">
               <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
+
                 <!--自動送信項目-->
                 <div>
                   <%= f.hidden_field :food_id, :value => @food.id %>
@@ -160,7 +162,7 @@
 
                   <!--食事量入力・送信-->
                   <div class="d-inline-flex align-items-center">
-                    <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2 w-50', placeholder: '食事量' %>
+                    <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2', style: "width: 40%", placeholder: '食事量' %>
                     <div class="">g</div>
                     <%= f.submit "記録する", class: 'btn btn-danger btn-sm mx-2 px-2 ml-auto' %>
                   </div>
@@ -190,7 +192,7 @@
       <div class="col-lg-7">
 
         <!--食材画像-->
-        <div class="mx-auto" style="width: 380px;"><%= image_tag @food.get_image(380,380) %></div>
+        <%= image_tag @food.get_image(380,380), class: 'd-block mx-auto' %>
 
         <!--コメント一覧-->
         <div class="row justify-content-center">

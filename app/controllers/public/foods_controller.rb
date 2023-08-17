@@ -58,7 +58,7 @@ class Public::FoodsController < ApplicationController
   private
 
   def food_params
-    params.require(:food).permit(:name, :energy, :protein, :fat, :carb, :salt_equivalent, :food_genre_id)
+    params.require(:food).permit(:name, :energy, :protein, :fat, :carb, :salt_equivalent, :food_genre_id, :image)
   end
 
 

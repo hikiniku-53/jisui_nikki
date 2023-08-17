@@ -1,28 +1,37 @@
-<div>
+<div class="d-flex mx-auto my-2">
   <!--いいね数の表示-->
-  <%= recipe.favorites.count %>
+  <div><%= recipe.favorites.count %> いいね</div>
 
-  <!--自分の投稿かどうか(自分の投稿にはいいね数のみを表示)-->
-  
-  <% if customer_signed_in? %>
-    <%unless recipe.customer_id == current_customer.id %>
-      <!--自分がいいねをしているかどうか-->
-      <% if current_customer.favorited?(recipe.id) %>
-        <!--いいねをしている-->
-        <%= link_to recipe_favorites_path(recipe.id), method: :delete, remote: true do %>
-          <span style="color:red;">❤︎</span>
-        <% end %>
+  <!--いいね操作ボタン(❤)の表示-->
+  <div>
+    <!--ユーザーログイン済みか？-->
+    <% if customer_signed_in? %>
+
+      <!--ログイン済み→自分の投稿かどうか？-->
+      <%if recipe.customer_id == current_customer.id %>
+
+        <!--自分の投稿→緑❤(リンクなし)表示-->
+        <span style="color:green;">❤︎</span>
       <% else %>
-        <!--いいねをしていない-->
-        <%= link_to recipe_favorites_path(recipe.id), method: :post, remote: true do %>
-          <span>❤︎</span>
+
+        <!--自分の投稿→いいねしているかどうか？-->
+        <% if current_customer.favorited?(recipe.id) %>
+
+          <!--いいね済み→いいねキャンセルボタン(赤❤)-->
+          <%= link_to recipe_favorites_path(recipe.id), method: :delete, remote: true do %>
+            <span style="color:red;">❤︎</span>
+          <% end %>
+        <% else %>
+
+          <!--いいねしていない→いいねボタン(青❤)-->
+          <%= link_to recipe_favorites_path(recipe.id), method: :post, remote: true do %>
+            <span style="">❤︎</span>
+          <% end %>
         <% end %>
       <% end %>
     <% else %>
-      <span style="color:green;">❤︎</span>
-    <% end %>
-  <% else %>
-    <span style="color:red;">❤︎</span>
-  <% end %>
-</div>
 
+      <!--ログイン前→❤︎非表示-->
+    <% end %>
+  </div>
+</div>

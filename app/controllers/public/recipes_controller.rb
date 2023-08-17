@@ -1,22 +1,42 @@
 class Public::RecipesController < ApplicationController
     before_action :authenticate_customer!
+    
+  def index
+    @recipes = Recipe.all.where(is_published: 'true')
+    @tag_list = Tag.all
+
+    # キーワード検索時に@recipes更新
+    if params[:keyword]
+      @recipes = @recipes.search(params[:keyword])
+    end
+
+    @keyword= params[:keyword]
+  end
+  
+  def show
+    @recipe = Recipe.find(params[:id])
+    @recipe_foods = @recipe.recipe_details
+    @tag_list = Tag.all
+    @total_energy = 0
+    @total_protein = 0
+    @total_fat = 0
+    @total_carb = 0
+    @total_salt_equivalent = 0
+    @total_price = 0
+    @price_calc = true
+  end
+
+  
   def new
+    @cutting_board_foods = current_customer.cutting_board_foods
     @recipe = Recipe.new
     @total_energy = 0
     @total_protein = 0
     @total_fat = 0
     @total_carb = 0
     @total_salt_equivalent = 0
-  end
-
-  def confirmation
-    @cutting_board_foods = current_customer.cutting_board_foods
-    @recipe = Recipe.new(recipe_params)
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
+    @total_price = 0
+    @price_calc = true
   end
 
   def create
@@ -48,34 +68,12 @@ class Public::RecipesController < ApplicationController
     end
   end
 
-  def index
-    @recipes = Recipe.all.where(is_published: 'true')
-    @tag_list = Tag.all
-
-    # キーワード検索時に@recipes更新
-    if params[:keyword]
-      @recipes = @recipes.search(params[:keyword])
-    end
-
-    @keyword= params[:keyword]
-  end
 
   def search_tag
     @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @recipes = @tag.recipes.where(is_published: 'true')
     @keyword= params[:keyword]
-  end
-
-  def show
-    @recipe = Recipe.find(params[:id])
-    @tag_list = Tag.all
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
-    @total_price = 0
   end
 
   def search_favorite

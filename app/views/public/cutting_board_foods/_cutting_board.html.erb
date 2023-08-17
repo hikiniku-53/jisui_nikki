@@ -1,48 +1,68 @@
-  <h2 class="text-center">まな板</h2>
-  <!--まな板-->
-  <table class="table  table-sm">
-    <thead>
+<h2 class="text-center">まな板</h2>
+
+<div class="table-responsive">
+
+  <!--使用食材一覧-->
+  <table class="table-sm border-top border-bottom border-dark mx-auto text-center" style="width: 516px;">
+    <thead class="border-bottom border-dark">
       <tr>
         <th>食材</th>
-        <th>エネルギー</th>
-        <th>分量</th>
+        <th colspan="2">エネルギー</th>
+        <th>使用量</th>
       </tr>
     </thead>
     <tbody>
-      <% cutting_board_foods.each do |cutting_board_food| %>
-      <!--食材-->
-      <tr>
-        <td class=""><%= cutting_board_food.food.name %></td>
-        <td class=""><%= cutting_board_food.subtotal_energy %> kcal</td>
-        <td class="col-5">
-          <%= form_with model: cutting_board_food, url: cutting_board_food_path(cutting_board_food.id), method: :patch do |f| %>
-            <div class="d-flex">
-              <%= f.number_field :amount, class: 'form-control border-dark w-25', placeholder: '1000' %>
-              <h5 class="">g</h5>
 
-              <!--変更、削除ボタン-->
-              <div class="">
-                <%= f.submit '変更', class: 'btn px-3 btn-success' %>
+      <!--まな板に食材が乗っているか？-->
+      <% if cutting_board_foods.exists? %>
 
-                <%= link_to "削除", cutting_board_food_path(cutting_board_food.id), method: :delete, data: { confirm: "本当に削除しますか？"}, class: 'btn btn-danger px-3' %>
-              </div>
-            </div>
-          <% end %>
-        </td>
-      </tr>
-    <% end %>
+        <!--まな板に食材あり→食材一覧-->
+        <% cutting_board_foods.each do |cutting_board_food| %>
+          <tr class="border-top">
+            <td class="align-middle"><%= cutting_board_food.food.name %></td>
+            <td class="align-middle text-right"><%= cutting_board_food.subtotal_energy %></td>
+            <td class="align-middle">kcal</td>
+            <td class="align-middle" style="width: 240px;">
+              <%= form_with model: cutting_board_food, url: cutting_board_food_path(cutting_board_food.id), method: :patch do |f| %>
+                <div class="d-flex align-items-center">
+
+                  <!--使用量表示・入力-->
+                  <%= f.number_field :amount, class: 'form-control form-control-sm text-right m-2', style: 'width: 80px;', placeholder: '1000' %>
+                  <div class="">g</div>
+
+                  <!--変更、削除ボタン-->
+                  <div class="">
+                    <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
+                    <%= link_to "削除", cutting_board_food_path(cutting_board_food.id), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
+                  </div>
+                </div>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% else %>
+
+        <!--まな板に食材なし→メッセージ-->
+        <tr>
+          <td class="text-center text-secondary py-5" colspan="4"><h4>食材が乗っていません</h4></td>
+        </tr>
+      <% end %>
     </tbody>
-
   </table>
+</div>
 
-  <div class="d-flex">
-    <!--まな板全削除-->
-    <div class="mx-2">
-      <%= link_to "削除する", cutting_board_foods_destroy_all_path, method: :delete, data: { confirm: "本当にすべて削除しますか？"}, class: 'btn btn-danger px-3' %>
-    </div>
+<div class="d-flex justify-content-center my-3">
 
+  <% if cutting_board_foods.exists? %>
     <!--確認画面に進む-->
     <div class="mx-2">
-      <%= link_to "食材を決定する", new_recipe_path, class: 'btn btn-primary px-3' %>
+      <%= link_to "レシピを作る", new_recipe_path, class: 'btn btn-sm btn-warning px-3' %>
     </div>
-  </div>
+
+    <!--まな板全削除-->
+    <div class="mx-2">
+      <%= link_to "食材をすべて削除する", cutting_board_foods_destroy_all_path, method: :delete, data: { confirm: "本当にすべて削除しますか？"}, class: 'btn btn-sm btn-danger px-3' %>
+    </div>
+  <% else %>
+  <% end %>
+</div>

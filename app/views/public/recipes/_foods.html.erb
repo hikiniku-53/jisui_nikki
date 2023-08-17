@@ -1,0 +1,16 @@
+        <table class="table table-sm border border-3 border-success my-3 mx-auto" style="width: 270px">
+          <tbody>
+            <tr class="text-center">
+              <th class="border border-success">使用食材</th>
+              <th class="border-bottom border-success"colspan="2">分量</th>
+            </tr>
+
+            <% recipe_foods.each do |recipe_detail| %>
+              <tr>
+                <td class="border border-success"> <%= recipe_detail.food.name %></td>
+                <td class="border-bottom border-success text-right"><%= recipe_detail.amount.round(1) %></td>
+                <td class="border-bottom border-success">g</td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>

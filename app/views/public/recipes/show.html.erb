@@ -18,126 +18,91 @@
 
   <!--レシピ詳細-->
   <div class="col-xl-9">
-    <h1 class="text-center my-3">
-      <%= @recipe.name %>
-    </h1>
 
-    <div class="d-flex">
-      <div class="col-4">
-        <!--recipe_image-->
-        <%= image_tag @recipe.get_image(280,250) %>
+    <!--レシピ名-->
+    <h1 class="text-center my-3"><%= @recipe.name %></h1>
+
+    <div class="row">
+      <div class="col-lg-5">
+
+        <!--使用食材一覧-->
+        <%= render "public/recipes/foods", recipe_foods: @recipe_foods %>
+
+        <!--レシピデータ-->
+        <div>
+          <!--合計値計算-->
+          <% @recipe_foods.each do |recipe_detail| %>
+              <% @total_energy += recipe_detail.subtotal_energy %>
+              <% @total_protein += recipe_detail.subtotal_protein %>
+              <% @total_fat += recipe_detail.subtotal_fat %>
+              <% @total_carb += recipe_detail.subtotal_carb %>
+              <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+              <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+              <% if @price %>
+                <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+              <% else %>
+                <% @price_calc = false %>
+              <% end %>
+          <% end %>
+
+          <!--データ一覧-->
+          <%= render "public/recipes/data", total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price, price_calc: @price_calc %>
+        </div>
+
+        <!--食事記録：日記に食事記録を追加-->
+        <div class="border border-danger rounded-lg mb-3 mx-auto" style="width: 250px">
+          <div class="text-center border-bottom border-danger my-1">
+            <strong>食事を記録する</strong>
+          </div>
+          <div class="my-3">
+            <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
+              <!--自動送信項目-->
+              <div>
+                <%= f.hidden_field :recipe_id, :value => @recipe.id %>
+                <%= f.hidden_field :energy, :value => @total_energy %>
+                <%= f.hidden_field :protein, :value => @total_protein %>
+                <%= f.hidden_field :fat, :value => @total_fat %>
+                <%= f.hidden_field :carb, :value => @total_carb %>
+                <%= f.hidden_field :salt_equivalent, :value => @total_salt_equivalent %>
+              </div>
+
+              <!--入力・送信-->
+              <div>
+                <!--日時入力-->
+                <div class="d-flex align-items-center text-middle mx-2 mb-2">
+                  <%= f.date_field :date, value: Date.today, class: 'form-control form-control-sm mr-2' %>
+                  <%= f.select :time, options_for_select([[Meal.times_i18n[:breakfast], "breakfast"], [Meal.times_i18n[:lunch], "lunch"], [Meal.times_i18n[:dinner], "dinner"], [Meal.times_i18n[:others], "others"]], selected: ""), {}, class: 'form-control form-control-sm ml-auto' %>
+                </div>
+
+                <!--食事量入力・送信-->
+                <div class="d-inline-flex align-items-center">
+                  <%= f.number_field :amount, class: 'form-control form-control-sm text-center mx-2', style: "width: 40%", placeholder: '食事量' %>
+                  <div class="">人前</div>
+                  <%= f.submit "記録する", class: 'btn btn-danger btn-sm mx-2 px-2 ml-auto' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+
+        <!--食材画像-->
+        <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
 
         <!--いいね機能-->
         <div id="favorite_<%= @recipe.id %>">
           <%= render "favorite", recipe: @recipe %>
         </div>
 
-        <!--食事登録-->
-        <div>
-          <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
-            <%= f.hidden_field :recipe_id, :value => @recipe.id %>
-            <%= f.hidden_field :energy, :value => @total_energy %>
-            <%= f.hidden_field :protein, :value => @total_protein %>
-            <%= f.hidden_field :fat, :value => @total_fat %>
-            <%= f.hidden_field :carb, :value => @total_carb %>
-            <%= f.hidden_field :salt_equivalent, :value => @total_salt_equivalent %>
+        <!--タグ一覧-->
+        <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
 
-            <div>
-              <%= f.date_field :date, class: '' %>
-            </div>
-
-            <div>
-              <%= f.label :time %>
-              <%= f.select :time, Meal.times_i18n.keys.map {|k| [t("meals.times_i18n.#{k}"), k] },class: "mb-3 sm:mb-0 mr-9 border border-line-200 rounded-[3px] rounded-[3px] py-3 pl-6 w-52 h-12 font-bold" %>
-            </div>
-
-            <div class="d-inline-flex align-items-center">
-              <h4><%= f.label :amount, "分量" %></h4>
-              <%= f.number_field :amount, class: 'form-control border-dark w-75', placeholder: '使用量を入力' %>
-              <h4 class="">人前</h4>
-            </div>
-            <div>
-              <%= f.submit "食事記録をつける", class: 'btn btn-success px-3' %>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="col-8">
-        <!--レシピデータ-->
-        <div class="d-flex">
-          <!--食材・分量-->
-          <div class="col-6">
-            <table class="table table-bordered table-sm">
-              <tbody>
-                <tr>
-                  <th class="col-6">食材</th>
-                  <th class="col-6">分量</th>
-                </tr>
-
-                <% @recipe.recipe_details.each do |recipe_detail| %>
-                  <tr>
-                    <th> <%= recipe_detail.food.name %></th>
-                    <td><%= recipe_detail.amount.round(1) %> g</td>
-                  </tr>
-
-                  <% @total_energy += recipe_detail.subtotal_energy %>
-                  <% @total_protein += recipe_detail.subtotal_protein %>
-                  <% @total_fat += recipe_detail.subtotal_fat %>
-                  <% @total_carb += recipe_detail.subtotal_carb %>
-                  <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
-                  <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
-                  <% if @price %>
-                    <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
-                  <% end %>
-                <% end %>
-              </tbody>
-            </table>
-
-            <div>
-              <h5>調理手順</h5>
-              <div class="border border-radius"><%= @recipe.process%></div>
-            </div>
-          </div>
-          <!--栄養素-->
-          <div class="col-6">
-          <table class="table table-bordered table-sm">
-            <tr>
-              <th class="col-6">エネルギー</th>
-              <td class="col-6"><%= @total_energy.round(1) %></td>
-            </tr>
-
-            <tr>
-              <th>たんぱく質</th>
-              <td><%= @total_protein.round(1) %></td>
-            </tr>
-
-            <tr>
-              <th>脂質</th>
-              <td><%= @total_fat.round(1) %></td>
-            </tr>
-
-            <tr>
-              <th>炭水化物</th>
-              <td><%= @total_carb.round(1) %></td>
-            </tr>
-
-            <tr>
-              <th>食塩相当量</th>
-              <td><%= @total_salt_equivalent.round(1) %></td>
-            </tr>
-
-            <tr>
-              <th>値段</th>
-              <% if @price %>
-                <td><%= @total_price %></td>
-              <% else %>
-                <td>食材の値段を登録してください</td>
-              <% end %>
-
-            </tr>
-          </table>
-        </div>
+        <!--調理手順-->
+        <div class="border border-warning rounded-lg mb-3 mx-auto">
+          <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
+          <div class="my-3 mx-2"><%= @recipe.process%></div>
         </div>
       </div>
     </div>

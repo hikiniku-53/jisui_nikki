@@ -1,31 +1,67 @@
 <% recipes.each do |recipe| %>
-  <div class="card p-1 m-2 bg-recipe" style="width: 16rem;, height: 80rem;">
-    <%= link_to recipe_path(recipe.id), class: 'text-decoration-none' do %>
-    <!--写真表示-->
-    <%= image_tag recipe.get_image(385,290), class: 'card-img-top' %>
-    <div class="card-body">
-      <!--レシピ名-->
-      <h5 class="card-title">
-        <%= recipe.name %>
-      </h5>
-    <% end %>
-      <div>
-        <% if recipe.customer.is_published == true %>
-          <%= recipe.customer.name %>
-        <% else %>
-          名無し
-        <% end %>
-        さんの投稿
-      </div>
-      <i class="fas fa-tag"><%= recipe.tags.map(&:tag_name).join(', ') %></i>
+  <%= link_to recipe_path(recipe.id), class: 'text-decoration-none' do %>
+    <div class="card p-2 m-2 bg-recipe" style="width: 16rem;, height: 80rem;">
+      <!--写真表示-->
+      <%= image_tag recipe.get_image(246,184), class: 'card-img-top' %>
+
+      <div class="card-body text-dark">
+        <!--レシピ名-->
+        <h6 class="card-title text-dark">
+          <b><%= recipe.name %></b>
+        </h6>
+
+        <!--投稿者表示-->
+        <div>
+          <!--投稿者が公開設定のアカウントか？-->
+          <% if recipe.customer.is_published == true %>
+
+            <!--公開設定→ユーザー名表示-->
+            <b><%= recipe.customer.name %></b>
+          <% else %>
+
+            <!--非公開設定→「名無し」表示-->
+            <b>名無し</b>
+          <% end %>
+          さんの投稿
+        </div>
+
         <!--いいね表示-->
         <div id="favorite_<%= recipe.id %>">
-          <%= render "public/recipes/favorite", recipe: recipe %>
-        </div>
-        <!--レシピ本文-->
-        <p class="card-text">
+          <div class="d-flex mx-auto my-2">
+            <!--いいね数の表示-->
+            <div><%= recipe.favorites.count %> いいね</div>
 
-        </p>
+            <!--いいね操作ボタン(❤)の表示-->
+            <div>
+              <!--ユーザーログイン済みか？-->
+              <% if customer_signed_in? %>
+
+                <!--ログイン済み→自分の投稿かどうか？-->
+                <%if recipe.customer_id == current_customer.id %>
+
+                  <!--自分の投稿→緑❤(リンクなし)表示-->
+                  <span style="color:green;">❤︎</span>
+                <% else %>
+
+                  <!--自分の投稿→いいねしているかどうか？-->
+                  <% if current_customer.favorited?(recipe.id) %>
+
+                    <!--いいね済み→いいねキャンセルボタン(赤❤)-->
+                    <span style="color:red;">❤︎</span>
+                  <% else %>
+
+                    <!--いいねしていない→いいねボタン(青❤)-->
+                      <span style="color:blue;">❤︎</span>
+                  <% end %>
+                <% end %>
+              <% else %>
+
+                <!--ログイン前→❤︎非表示-->
+              <% end %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   <% end %>
+<% end %>

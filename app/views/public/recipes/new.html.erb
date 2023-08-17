@@ -1,89 +1,98 @@
-<div class="container">
-  <!--headline-->
-  <div><h2>まな板</h2></div>
+<h2 class="text-center">レシピ作成</h2>
+<div class="row">
+  <div class="col-lg-5">
 
-  <!--message-->
-  <div>さあ、あなただけの料理を作りましょう！</div>
+    <!--まな板-->
+    <%= render "public/recipes/foods", recipe_foods: @cutting_board_foods %>
 
-  <!--まな板-->
-  <table class="table">
-    <% current_customer.cutting_board_foods.each do |cutting_board_food| %>
-      <!--食材-->
-      <tr>
-        <!--食材名-->
-        <td class="col-2"><%= cutting_board_food.food.name %></td>
-
-        <!--分量-->
-        <td class="col-8"><%= cutting_board_food.amount %> g</td>
-      </tr>
-
-      <!--栄養価計算-->
-      <div>
-        <% @total_energy += cutting_board_food.subtotal_energy %>
-        <% @total_protein += cutting_board_food.subtotal_protein %>
-        <% @total_fat += cutting_board_food.subtotal_fat %>
-        <% @total_carb += cutting_board_food.subtotal_carb %>
-        <% @total_salt_equivalent += cutting_board_food.subtotal_salt_equivalent %>
-      </div>
-    <% end %>
-  </table>
-
-  <!--栄養価-->
-  <table>
-    <tr>
-      <th>カロリー</th>
-      <td><%= @total_energy %> kcal</td>
-    </tr>
-
-    <tr>
-      <th>たんぱく質</th>
-      <td><%= @total_protein %> g</td>
-    </tr>
-
-    <tr>
-      <th>脂質</th>
-      <td><%= @total_fat %> g</td>
-    </tr>
-
-    <tr>
-      <th>炭水化物</th>
-      <td><%= @total_carb %> g</td>
-    </tr>
-
-    <tr>
-      <th>塩分相当量</th>
-      <td><%= @total_salt_equivalent %> g</td>
-    </tr>
-  </table>
-
-  <!--レシピ情報入力-->
-
-  <%= form_with model: @recipe, url: recipes_confirmation_path do |f| %>
+    <!--レシピデータ-->
     <div>
-      <!--レシピ名-->
-      <div>
-        <%= f.label :name, "レシピ名" %>
-        <%= f.text_field :name, class: '' %>
-      </div>
+      <!--合計値計算-->
+      <% @cutting_board_foods.each do |recipe_detail| %>
+        <% @total_energy += recipe_detail.subtotal_energy %>
+        <% @total_protein += recipe_detail.subtotal_protein %>
+        <% @total_fat += recipe_detail.subtotal_fat %>
+        <% @total_carb += recipe_detail.subtotal_carb %>
+        <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
+        <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+        <% if @price %>
+          <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+        <% else %>
+          <% @price_calc = false %>
+        <% end %>
+      <% end %>
 
-      <!--調理手順-->
-      <div>
-        <%= f.label :process, "調理手順" %>
-        <%= f.text_area :process, class: '' %>
-      </div>
-
-      <!--コメント-->
-      <div>
-        <%= f.label :comment, "コメント" %>
-        <%= f.text_area :comment, class: '' %>
-      </div>
-
-
-      <!--送信-->
-      <div>
-        <%= f.submit '変更', class: 'btn px-3 btn-success' %>
-      </div>
+      <!--データ一覧-->
+      <%= render "public/recipes/data", recipe_foods: @cutting_board_foods, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price, price_calc: @price_calc %>
     </div>
-  <% end %>
+  </div>
+
+  <div class="col-lg-7">
+  <!--レシピ情報入力フォーム-->
+  <div class="">
+    <%= form_with model: @recipe, url: recipes_path do |f| %>
+      <table class="table-sm mx-auto">
+        <thead></thead>
+        <tbody>
+          <tr>
+            <td style="width: 560px;">
+              <h5 class="m-2">レシピ名</h5>
+              <%= f.text_field :name, class: 'form-control border-dark w-75 mx-2' %>
+            </td>
+          </tr>
+
+          <tr>
+            <!--タグ情報入力-->
+            <td>
+              <h5 class="m-2">タグ設定</h5>
+              <%= f.text_field :tag_name, class: 'form-control border-dark w-75 mx-2', placeholder: 'タグＡ、タグＢ、・・・' %>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <h5 class="m-2">調理手順</h5>
+              <%= f.text_area :process, class: 'form-control border-dark w-100 mx-2', rows: '5' %>
+            </td>
+          </tr>
+
+          <tr>
+            <td rows="3">
+              <h5 class="m-2">コメント</h5>
+              <%= f.text_area :comment, class: 'form-control border-dark w-100 mx-2', rows: '3' %>
+            </td>
+          </tr>
+
+          <tr class="align-items-center">
+            <td>
+              <!--公開or非公開-->
+              <h5 class="m-2">公開設定</h5>
+              <div class="d-flex">
+                <h5 class="mx-3">
+                  <%= f.radio_button :is_published, :true %>
+                  <%= f.label :is_published, "公開" %>
+                </h5>
+
+                <h5 class="mx-3">
+                  <%= f.radio_button :is_published, :false, checked: true %>
+                  <%= f.label :is_published, "非公開" %>
+                </h5>
+              </div>
+            </td>
+          </tr>
+
+          <trr class="text-center">
+            <td><%= f.submit 'レシピを登録する', class: 'btn px-3 btn-warning' %></td>
+          </tr>
+        </tbody>
+      </table>
+    <% end %>
+  </div>
+
+  </div>
+</div>
+
+<div class="row">
+
 
 </div>

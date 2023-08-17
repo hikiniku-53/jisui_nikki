@@ -1,0 +1,47 @@
+<table class="table table-sm border border-3 border-warning my-3 mx-auto" style="width: 270px">
+  <thead>
+    <tr><th class="text-center border-bottom border-warning", colspan="3">レシピ情報(一人前)</th></tr>
+  </thead>
+
+  <tbody>
+    <tr>
+      <td class="border border-warning">エネルギー</th>
+      <td class="border-bottom border-warning text-right"><%= total_energy.round(1) %></td>
+      <td class="border-bottom border-warning">kcal</td>
+    </tr>
+
+    <tr>
+      <td class="border border-warning">たんぱく質</th>
+      <td class="border-bottom border-warning text-right"><%= total_protein.round(1) %></td>
+      <td class="border-bottom border-warning">g</td>
+    </tr>
+
+    <tr>
+      <td class="border border-warning">脂質</th>
+      <td class="border-bottom border-warning text-right"><%= total_fat.round(1) %></td>
+      <td class="border-bottom border-warning">g</td>
+    </tr>
+
+    <tr>
+      <td class="border border-warning">炭水化物</th>
+      <td class="border-bottom border-warning text-right"><%= total_carb.round(1) %></td>
+      <td class="border-bottom border-warning">g</td>
+    </tr>
+
+    <tr>
+      <td class="border border-warning">食塩相当量</th>
+      <td class="border-bottom border-warning text-right"><%= total_salt_equivalent.round(1) %></td>
+      <td class="border-bottom border-warning">g</td>
+    </tr>
+
+    <tr>
+      <td class="border border-warning">値段</th>
+      <% if @price_calc %>
+        <td class="border-bottom border-warning text-right"><%= total_price.round(0) %></td>
+        <td class="border-bottom border-warning">円</td>
+      <% else %>
+        <td class="border-bottom border-warning text-center" colspan="2">値段未登録の食材があります</td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>

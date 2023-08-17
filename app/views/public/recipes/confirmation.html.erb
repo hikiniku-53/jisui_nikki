@@ -74,7 +74,6 @@
       <%= f.hidden_field :name, :value => @recipe.name %>
       <%= f.hidden_field :process, :value => @recipe.process %>
       <%= f.hidden_field :comment, :value => @recipe.comment %>
-      <%= f.hidden_field :is_published, :value =>  @recipe.is_published %>
 
     </div>
 
@@ -97,7 +96,7 @@
       </div>
 
       <div class="my-3 text-center">
-      <%= f.submit 'レシピをを登録する' , class: 'btn  btn-success px-3' %>
+      <%= f.submit 'レシピを登録する' , class: 'btn  btn-success px-3' %>
       </div>
 
     <% end %>

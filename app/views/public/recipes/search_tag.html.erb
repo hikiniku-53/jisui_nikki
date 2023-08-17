@@ -1,13 +1,35 @@
-<div class="container my-3">
-  <div class="row">
-    <div class="col-sm-3">
-      <%= render "search", tag_list: @tag_list, keyword: @keyword %>
+<div class="row">
+
+  <!--検索フォーム-->
+  <div class="col-xl-3">
+
+    <!--キーワード検索-->
+    <div class="m-2">
+      <%= form_with url: recipes_path, method: :get, local: true do |f|%>
+        <%= render "layouts/search", f: f, keyword: @keyword %>
+      <% end %>
     </div>
-    <!--レシピ一覧-->
-    <div class="col-sm-9">
-      <div class="d-flex justify-content-center flex-wrap">
-        <%= render 'recipe', recipes: @recipes %>
-      </div>
+
+    <!--タグ検索：ブレークポイントxl以上-->
+    <div class="my-3 d-none d-xl-block">
+      <%= render "tag", tag_list: @tag_list, keyword: @keyword %>
     </div>
+  </div>
+
+  <!--レシピ一覧-->
+  <div class="col-xl-9">
+
+    <div class="text-center m-2">
+      <h2>食材一覧</h2>
+    </div>
+
+    <div class="d-flex justify-content-center flex-wrap">
+      <%= render 'recipe', recipes: @recipes %>
+    </div>
+  </div>
+
+  <!--タグ検索：ブレークポイントxl以上-->
+  <div class="my-3 mx-auto d-xl-none ">
+    <%= render "tag", tag_list: @tag_list, keyword: @keyword %>
   </div>
 </div>

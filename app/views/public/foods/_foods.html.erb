@@ -1,11 +1,11 @@
 <% foods.each do |food| %>
   <%= link_to food_path(food.id), class: 'text-decoration-none' do %>
-    <div class="card p-1 m-2 bg-food" style="width: 16rem;, height: 80rem;">
-      <%= image_tag food.get_image(385,290), class: 'card-img-top ' %>
+    <div class="card p-2 m-2 bg-food" style="width: 16rem;, height: 80rem;">
+      <%= image_tag food.get_image(246,184), class: 'card-img-top' %>
       <div class="card-body text-dark">
-        <h5 class="card-title h-2rem">
+        <h6 class="card-title h-2rem">
           <b><%= food.name %></b>
-        </h5>
+        </h6>
         <p class="card-text">
           E: <%= food.energy %>kcal<br>
           P: <%= food.protein %>g
