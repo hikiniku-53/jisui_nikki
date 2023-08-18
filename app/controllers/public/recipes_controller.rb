@@ -4,12 +4,10 @@ class Public::RecipesController < ApplicationController
   def index
     @recipes = Recipe.all.where(is_published: 'true')
     @tag_list = Tag.all
-
     # キーワード検索時に@recipes更新
     if params[:keyword]
       @recipes = @recipes.search(params[:keyword])
     end
-
     @keyword= params[:keyword]
   end
   
@@ -67,7 +65,6 @@ class Public::RecipesController < ApplicationController
       flash[:notice] = "レシピを投稿しました！"
     end
   end
-
 
   def search_tag
     @tag_list = Tag.all

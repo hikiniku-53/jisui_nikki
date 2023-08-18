@@ -20,6 +20,12 @@ class Public::MealsController < ApplicationController
 
     redirect_to customer_path
   end
+  
+  def destroy
+    meal = Meal.find(params[:id])
+    meal.destroy
+    redirect_to customer_path
+  end
 
   private
 

@@ -62,6 +62,9 @@
                 <%= f.hidden_field :fat, :value => @total_fat %>
                 <%= f.hidden_field :carb, :value => @total_carb %>
                 <%= f.hidden_field :salt_equivalent, :value => @total_salt_equivalent %>
+                <% if @price_calc %>
+                  <%= f.hidden_field :price, :value => @food.price.food_price %>
+                <% end %>
               </div>
 
               <!--入力・送信-->

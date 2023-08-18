@@ -2,12 +2,11 @@
 <h2 class="text-center mb-3">マイページ</h2>
 <div class="row">
 
-<div class="col-xl-8">
+  <div class="col-xl-9">
 
-  <!--ユーザーデータ-->
-
-  <div class="row">
-    <table class="table table-sm table-borderless border border-dark mx-auto" style="width: 360px">
+    <!--ユーザーデータ-->
+    <div class="row">
+      <table class="table table-sm table-borderless border border-dark mx-auto" style="width: 360px">
       <thead></thead>
       <tbody>
 
@@ -35,134 +34,151 @@
         </tr>
       </tbody>
     </table>
-  </div>
+    </div>
 
   <div class="border border-dark rounded-lg mx-auto pb-2">
-  <h3 class="text-center border-bottom border-dark py-2">日記</h3>
-  <div class="row mx-1">
-  <div class="col-md-6 border-right">
+    <h3 class="text-center border-bottom border-dark py-2">日記</h3>
+      <div class="row mx-1">
+        <div class="col-md-6 border-right">
 
-  <div style="width: 225px;">
-    <%= form_with url: customer_path, method: :get, local: true do |f|%>
-      <div class="input-group  mx-auto" style="max-width: 810px">
-        <%= f.date_field :date, value: @date, class: 'form-control' %>
-        <span class="input-group-btn input-group-append">
-          <%= button_tag type: "submit", class: "btn btn-secondary search-btn" do %>
-            <i class="fas fa-search"></i>表示</submit>
-          <% end %>
-        </span>
-      </div>
-    <% end %>
-  </div>
+          <div style="width: 225px;">
+            <%= form_with url: customer_path, method: :get, local: true do |f|%>
+              <div class="input-group  mx-auto" style="max-width: 810px">
+                <%= f.date_field :date, value: @date, class: 'form-control' %>
+                <span class="input-group-btn input-group-append">
+                  <%= button_tag type: "submit", class: "btn btn-secondary search-btn" do %>
+                    <i class="fas fa-search"></i>表示</submit>
+                  <% end %>
+                </span>
+              </div>
+            <% end %>
+          </div>
 
-    <!--朝食-->
-    <div>
-      朝食
-      <!--<%= Settings.customer[:required_energy] %>-->
-      <%= render "public/diaries/meals", meals: @breakfasts %>
-    </div>
+          <!--朝食-->
+          <div>
+            朝食
+            <%= render "public/diaries/meals", meals: @breakfasts, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+          </div>
 
-    <!--昼食-->
-    <div>
-      昼食
-      <%= render "public/diaries/meals", meals: @lunches %>
-    </div>
+          <!--昼食-->
+          <div>
+            昼食
+            <%= render "public/diaries/meals", meals: @lunches, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+          </div>
 
-    <!--夕食-->
-    <div>
-      夕食
-      <%= render "public/diaries/meals", meals: @dinners %>
-    </div>
+          <!--夕食-->
+          <div>
+            夕食
+            <%= render "public/diaries/meals", meals: @dinners, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+          </div>
 
-    <!--間食・その他-->
-    <div>
-      間食・その他
-      <%= render "public/diaries/meals", meals: @others %>
-    </div>
+          <!--間食・その他-->
+          <div>
+            間食・その他
+            <%= render "public/diaries/meals", meals: @others, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+          </div>
 
-    <!--栄養グラフ-->
-    <div>
+          <!--栄養グラフ-->
+          <div>
 
-      <% @chart_energy = @total_energy / Settings.customer[:required_energy] %><br>
-      <% @chart_protein = @total_protein / Settings.customer[:required_protein] %><br>
-      <% @chart_fat = @total_fat / Settings.customer[:required_fat] %><br>
-      <% @chart_carb = @total_carb / Settings.customer[:required_carb] %><br>
-      <% @chart_salt_equivalent = @total_salt_equivalent / Settings.customer[:required_salt_equivalent] %><br>
+            <% @chart_energy = @total_energy / Settings.customer[:required_energy] %><br>
+            <% @chart_protein = @total_protein / Settings.customer[:required_protein] %><br>
+            <% @chart_fat = @total_fat / Settings.customer[:required_fat] %><br>
+            <% @chart_carb = @total_carb / Settings.customer[:required_carb] %><br>
+            <% @chart_salt_equivalent = @total_salt_equivalent / Settings.customer[:required_salt_equivalent] %><br>
 
 
-      <canvas id="myChart"></canvas>
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-      <script>
-      var ctx = document.getElementById('myChart');
-      var myChart = new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['カロリー', 'たんぱく質', '脂質', '炭水化物', '塩分'],
-            datasets: [{
-              label: '# of Votes',
-              data: [<%= @chart_energy %>, <%= @chart_protein %>, <%= @chart_fat %>, <%= @chart_carb %>, <%= @chart_salt_equivalent %>],
-              backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)'
-              ],
-              borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)'
-              ],
-              borderWidth: 1
-              }]
-            },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true
+            <canvas id="myChart"></canvas>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+              var ctx = document.getElementById('myChart');
+              var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                  labels: ['カロリー', 'たんぱく質', '脂質', '炭水化物', '塩分'],
+                  datasets: [{
+                    label: '# of Votes',
+                    data: [<%= @chart_energy %>, <%= @chart_protein %>, <%= @chart_fat %>, <%= @chart_carb %>, <%= @chart_salt_equivalent %>],
+                    backgroundColor: [
+                      'rgba(255, 99, 132, 0.2)',
+                      'rgba(54, 162, 235, 0.2)',
+                      'rgba(255, 206, 86, 0.2)',
+                      'rgba(75, 192, 192, 0.2)',
+                      'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                      'rgba(255, 99, 132, 1)',
+                      'rgba(54, 162, 235, 1)',
+                      'rgba(255, 206, 86, 1)',
+                      'rgba(75, 192, 192, 1)',
+                      'rgba(153, 102, 255, 1)'
+                    ],
+                      borderWidth: 1
+                  }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
                 }
-              }
-            }
-          });
-</script>
+              });
+            </script>
+          </div>
+        </div>
 
+        <div class="col-md-6">
+          <% if @diary %>
+            <%= form_with model: @diary, url: diary_path(@diary.id), method: :patch do |f| %>
+              <div class="mx-2">
+                体重記録
+              </div>
+
+              <div class="d-flex align-items-center">
+                <%= f.text_field :body_weight, value: @diary.body_weight, class: 'text-right mx-2', style: 'width: 60px' %>
+                <div>kg</div>
+              </div>
+
+              <div class="mx-2">
+                メモ
+              </div>
+
+              <%= f.text_area :body, class: 'mx-2', style: 'width: 328px' %>
+
+              <div>
+                <%= f.submit "変更する", class: 'btn btn-secondary btn-sm mx-2 px-2', style: 'width: 80px' %>
+              </div>
+            <% end %>
+          <% else %>
+            <%= form_with model: Diary.new, url: diaries_path do |f| %>
+              <%= f.hidden_field :date, :value => @date %>
+              <div>
+                体重記録
+              </div>
+
+              <div class="d-flex align-items-center">
+                <%= f.text_field :body_weight, placeholder: "体重を記録しましょう", class: 'text-right mx-2', style: 'width: 80px' %>
+                <div>kg</div>
+              </div>
+
+              <div>
+                メモ
+              </div>
+
+              <%= f.text_area :body, class: 'mx-2', style: 'width: 328px' %>
+
+              <div>
+                <%= f.submit "日記をつける", class: 'btn btn-secondary btn-sm mx-2 px-2', style: 'width: 80px' %>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="col-md-6">
-    <% if @diary %>
-      <%= form_with model: @diary, url: diary_path(@diary.id), method: :patch do |f| %>
-      <div>
-        体重記録
-        </div>
-          <%= f.text_field :body_weight, value: @diary.body_weight %>
-      <div>
-        メモ
-        </div>
-      <%= f.text_area :body %>
-      <%= f.submit "使う", class: 'btn btn-secondary btn-sm mx-2 px-2' %>
-      <% end %>
-    <% else %>
-      <%= form_with model: Diary.new, url: diaries_path do |f| %>
-        <%= f.hidden_field :date, :value => @date %>
-           <div>
-        体重記録
-        </div>
-          <%= f.text_field :body_weight, placeholder: "体重を記録しましょう" %>
-      <div>
-        メモ
-        </div>
-      <%= f.text_area :body %>
-      <%= f.submit "使う", class: 'btn btn-secondary btn-sm mx-2 px-2' %>
-    <% end %>
-      <% end %>
-    </div>
-  </div>
-  </div>
-</div>
 
-  <div class="col-xl-4">
+  <div class="col-xl-3">
     <div>
       <!--自身の投稿一覧-->
       <table class="table">
