@@ -3,6 +3,10 @@ class Public::CustomersController < ApplicationController
 
   def show
     @date = Date.today
+    if params[:date]
+      @date = params[:date]
+    end
+    @diary = current_customer.diaries.find_by(date: @date)
     @breakfasts = current_customer.meals.where(date: @date, time: 0)
     @lunches = current_customer.meals.where(date: @date, time: 1)
     @dinners = current_customer.meals.where(date: @date, time: 2)
@@ -14,9 +18,13 @@ class Public::CustomersController < ApplicationController
     @total_carb = 0
     @total_salt_equivalent = 0
     @total_price = 0
+    
 
     favorites = Favorite.where(customer_id: current_customer.id).pluck(:recipe_id)
     @favorite_recipes = Recipe.find(favorites)
+
+
+
   end
 
   def edit
@@ -25,5 +33,10 @@ class Public::CustomersController < ApplicationController
   def update
   end
 
+  private
+
+  def diary_params
+    params.require(:diary).permit(:body_weight, :body)
+  end
 
 end

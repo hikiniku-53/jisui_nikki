@@ -1,3 +1,5 @@
+<h2 class="text-center mb-2">「<%= @tag.tag_name %>」のレシピ一覧</h2>
+
 <div class="row">
 
   <!--検索フォーム-->
@@ -18,11 +20,6 @@
 
   <!--レシピ一覧-->
   <div class="col-xl-9">
-
-    <div class="text-center m-2">
-      <h2>食材一覧</h2>
-    </div>
-
     <div class="d-flex justify-content-center flex-wrap">
       <%= render 'recipe', recipes: @recipes %>
     </div>

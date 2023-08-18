@@ -1,4 +1,4 @@
-<table class="table table-bordered">
+<table class="table table-sm table-borderless border">
   <tbody>
     <% if meals == [] %>
       <tr><td>まだ記録されていません</td></tr>
@@ -7,7 +7,8 @@
         <tr class="">
           <% if meal.food_id %>
             <td><%= meal.food.name %></td>
-            <td><%= meal.amount %>g</td>
+            <td class="text-right" style="width: 50px"><%= meal.amount %></td>
+            <td style="width: 50px">g</td>
 
             <% @total_energy += meal.subtotal_energy / 100 %>
             <% @total_protein += meal.subtotal_protein / 100 %>
@@ -20,7 +21,8 @@
 
           <% else %>
             <td><%= meal.recipe.name %></td>
-            <td><%= meal.amount %>人前</td>
+            <td class="text-right" style="width: 50px"><%= meal.amount %></td>
+            <td style="width: 50px">人前</td>
 
             <% @total_energy += meal.subtotal_energy %>
             <% @total_protein += meal.subtotal_protein %>

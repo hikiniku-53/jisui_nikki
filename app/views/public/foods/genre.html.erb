@@ -1,4 +1,6 @@
- <div class="row">
+<h2 class="text-center mb-2"><%= @food_genre.name %>の食材一覧</h2>
+
+<div class="row">
 
   <!--検索フォーム-->
   <div class="col-xl-3">
@@ -19,7 +21,6 @@
   <!--食材一覧-->
   <div class="col-xl-9">
     <div class="text-center m-2">
-      <h2><%= @food_genre.name %>の食材一覧</h2>
     </div>
     <div class="d-flex justify-content-center flex-wrap">
       <%= render "foods", foods: @foods %>

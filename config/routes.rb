@@ -1,15 +1,14 @@
 Rails.application.routes.draw do
 
-
   # root_path
   root to: 'public/homes#top'
-
 
   # devise関連
   devise_for :customers,skip: [:passwords], controllers: {
     registrations: 'public/registrations',
     sessions: 'public/sessions'
   }
+
   #ゲストログイン用のルーティング
   devise_scope :customer do
     post '/guest_sign_in', to: 'public/sessions#new_guest'
@@ -47,7 +46,6 @@ Rails.application.routes.draw do
     resources :recipes, only: [:new, :index, :show, :create] do
       resource :favorites, only: [:create, :destroy]
     end
-    post '/recipes/confirmation' => 'recipes#confirmation'
     get 'recipe/search_tag' => 'recipes#search_tag'
     get '/recipe/search_favorite' => 'recipes#search_favorite'
 
