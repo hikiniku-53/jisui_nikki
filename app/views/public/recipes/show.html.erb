@@ -92,10 +92,17 @@
         <!--食材画像-->
         <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
 
-        <!--いいね機能-->
-        <div id="favorite_<%= @recipe.id %>">
-          <%= render "favorite", recipe: @recipe %>
-        </div>
+        <div>
+          <!--いいね機能-->
+          <div id="favorite_<%= @recipe.id %>">
+            <%= render "favorite", recipe: @recipe %>
+          </div>
+          
+          <% if @recipe.customer_id == current_customer.id %>
+            
+            <%= link_to "削除", recipe_path(params[:id]), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
+          <% end %>
+          </div>
 
         <!--タグ一覧-->
         <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>

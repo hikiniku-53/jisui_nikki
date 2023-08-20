@@ -2,10 +2,10 @@ class Public::MealsController < ApplicationController
   before_action :authenticate_customer!
 
   def create
-    meal_food = current_customer.meals.where(date: meal_params[:date], time: meal_params[:time], food_id: meal_params[:food_id], recipe_id: nil)
-    meal_recipe = current_customer.meals.where(date: meal_params[:date], time: meal_params[:time], food_id: nil, recipe_id: meal_params[:recipe_id])
+    @meal_food = current_customer.meals.where(date: meal_params[:date], time: meal_params[:time], food_id: meal_params[:food_id], recipe_id: nil)
+    @meal_recipe = current_customer.meals.where(date: meal_params[:date], time: meal_params[:time], food_id: nil, recipe_id: meal_params[:recipe_id])
     # 既に記録されていないか確認
-    if meal_food.exists?
+    if @meal_food.exists?
       flash[:notice] = "その食材は既に記録されています"
     elsif meal_recipe.exists?
       flash[:notice] = "そのレシピは既に記録されています"
@@ -22,8 +22,8 @@ class Public::MealsController < ApplicationController
   end
   
   def destroy
-    meal = Meal.find(params[:id])
-    meal.destroy
+    @meal = Meal.find(params[:id])
+    @meal.destroy
     redirect_to customer_path
   end
 

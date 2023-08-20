@@ -43,7 +43,7 @@ Rails.application.routes.draw do
 
 
     # recipes_action
-    resources :recipes, only: [:new, :index, :show, :create] do
+    resources :recipes, only: [:new, :index, :show, :create, :update, :destroy] do
       resource :favorites, only: [:create, :destroy]
     end
     get 'recipe/search_tag' => 'recipes#search_tag'

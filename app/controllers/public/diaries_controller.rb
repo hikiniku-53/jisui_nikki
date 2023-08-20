@@ -13,7 +13,7 @@ class Public::DiariesController < ApplicationController
     if @diary.save
       redirect_to customer_path
     else
-      render :new
+      render 'customers/new'
     end
   end
 
@@ -26,7 +26,7 @@ class Public::DiariesController < ApplicationController
     if @diary.update(diary_params)
       redirect_to customer_path
     else
-      render :new
+      render :'customers/edit'
     end
   end
 
