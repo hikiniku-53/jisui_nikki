@@ -73,11 +73,6 @@ class Public::RecipesController < ApplicationController
     @keyword= params[:keyword]
   end
 
-  def search_favorite
-    @tag_list = Tag.all
-
-    @recipes = current_customer.favorites.recipes
-  end
 
   private
 

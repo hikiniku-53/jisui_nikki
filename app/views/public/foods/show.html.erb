@@ -148,7 +148,7 @@
                   <%= f.hidden_field :carb, :value => @food.carb %>
                   <%= f.hidden_field :salt_equivalent, :value => @food.salt_equivalent %>
                   <% if @price %>
-                    <%= f.hidden_field :price, :value => @price %>
+                    <%= f.hidden_field :price, :value => @price.food_price %>
                   <% end %>
                 </div>
 

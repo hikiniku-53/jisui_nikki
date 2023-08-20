@@ -7,27 +7,51 @@ class Meal < ApplicationRecord
   enum time: { breakfast: 0, lunch: 1, dinner: 2, others: 3 }
 
   def subtotal_energy
-    energy * amount
+    if self.food_id
+      energy * amount / 100
+    else
+      energy * amount
+    end
   end
 
   def subtotal_protein
-    protein * amount
+    if self.food_id
+      protein * amount / 100
+    else
+      protein * amount
+    end
   end
 
   def subtotal_fat
-    fat * amount
+    if self.food_id
+      fat * amount / 100
+    else
+      fat * amount
+    end
   end
 
   def subtotal_carb
-    carb * amount
+    if self.food_id
+      carb * amount / 100
+    else
+      carb * amount
+    end
   end
 
   def subtotal_salt_equivalent
-    salt_equivalent * amount
+    if self.food_id
+      salt_equivalent * amount / 100
+    else
+      salt_equivalent * amount
+    end
   end
 
   def subtotal_price
-    price * amount
+    if self.food_id
+      price * amount / 100
+    else
+      price * amount
+    end
   end
 
 end

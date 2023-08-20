@@ -1,7 +1,7 @@
 <h2 class="text-center">食材情報更新</h2>
 
 <div>
-  <% if@food.errors.any? %>
+  <% if @food.errors.any? %>
     <ul class="mx-auto">
       <%@food.errors.full_messages.each do |message| %>
         <li><%= message %></li>

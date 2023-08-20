@@ -1,36 +1,43 @@
   <div class="row d-flex">
-    <!--Greeting-->
-    <div class="col-sm-4">
+
+    <div class="col-xl-5">
       <div class="p-3 text-center border rounded">
         <h4>
           <strong>みんなの自炊日記</strong><br>へようこそ！
         </h4>
         <% if customer_signed_in? %>
+
           <!--朝食-->
-          <div>
+          <div class="mx-auto" style="max-width: 385px;">
             今日の朝食
-            <%= render "public/diaries/meals", meals: @breakfasts %>
+            <%= render "public/diaries/meals", meals: @breakfasts, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
+
           <!--昼食-->
-          <div>
+          <div class="mx-auto" style="max-width: 385px;">
             今日の昼食
-            <%= render "public/diaries/meals", meals: @lunches %>
+            <%= render "public/diaries/meals", meals: @lunches, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
+
           <!--夕食-->
-          <div>
+          <div class="mx-auto" style="max-width: 385px;">
             今日の夕食
-            <%= render "public/diaries/meals", meals: @dinners %>
+            <%= render "public/diaries/meals", meals: @dinners, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
+
           <!--間食・その他-->
-          <div>
+          <div class="mx-auto" style="max-width: 385px;">
             間食・その他
-            <%= render "public/diaries/meals", meals: @others %>
+            <%= render "public/diaries/meals", meals: @others, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
         <% else %>
+
           <div class="my-2">
-            <div class="my-2">
-              <%= link_to "自炊日記って？", about_path, class: "btn btn-info" %>
-            </div>
+
+
+            <!--<div class="my-2">-->
+            <!--  <%= link_to "自炊日記って？", about_path, class: "btn btn-info" %>-->
+            <!--</div>-->
 
             <div class="border border-dark rounded p-2">
               <div class="text-center my-2">
@@ -48,32 +55,36 @@
             </div>
           </div>
           <div>
-            <%= link_to "新規登録", new_customer_registration_path, class: "btn btn-primary" %>
+            <%= link_to "会員登録", new_customer_registration_path, class: "btn btn-primary" %>
             して、<br>楽しい自炊ライフを始めましょう！
           </div>
         <% end %>
       </div>
     </div>
 
-    <!--ピックアップ食材-->
-    <div class="col-sm-4">
-      <h4 class="text-center m-3">新しい食材</h4>
-      <div class="d-flex justify-content-center flex-wrap">
-          <%= render '/public/foods/foods', foods: @foods %>
+  <div class="col-xl-7">
+    <div class="row">
+      <!--新着食材-->
+      <div class="col-sm-6">
+        <h4 class="text-center m-3">新しい食材</h4>
+        <div class="d-flex justify-content-center flex-wrap">
+            <%= render '/public/foods/foods', foods: @foods %>
+        </div>
+        <div class="mx-auto text-center", style="width: 200px;">
+          <%= link_to "もっと食材を見る", foods_path, class: 'btn btn-primary px-3 text-center'%>
+        </div>
       </div>
-      <div class="mx-auto text-center", style="width: 200px;">
-        <%= link_to "もっと食材を見る", foods_path, class: 'btn btn-primary px-3 text-center'%>
-      </div>
-    </div>
 
-    <!--recipe pick up-->
-    <div class="col-sm-4">
-      <h4 class="text-center m-3">人気のレシピ</h4>
-      <div class="d-flex justify-content-center flex-wrap">
-        <%= render '/public/recipes/recipe', recipes: @recipes %>
-      </div>
-      <div class="mx-auto text-center", style="width: 200px;">
-        <%= link_to "もっとレシピを見る", recipes_path, class: 'btn btn-primary px-3' %>
+      <!--新着レシピ-->
+      <div class="col-sm-6">
+        <h4 class="text-center m-3">新しいレシピ</h4>
+        <div class="d-flex justify-content-center flex-wrap">
+          <%= render '/public/recipes/recipe', recipes: @recipes %>
+        </div>
+        <div class="mx-auto text-center", style="width: 200px;">
+          <%= link_to "もっとレシピを見る", recipes_path, class: 'btn btn-primary px-3' %>
+        </div>
       </div>
     </div>
   </div>
+</div>
