@@ -1,6 +1,6 @@
 class Public::RecipesController < ApplicationController
     before_action :authenticate_customer!
-    
+
   def index
     @recipes = Recipe.all.where(is_published: 'true')
     @tag_list = Tag.all
@@ -10,7 +10,7 @@ class Public::RecipesController < ApplicationController
     end
     @keyword= params[:keyword]
   end
-  
+
   def show
     @recipe = Recipe.find(params[:id])
     @recipe_foods = @recipe.recipe_details
@@ -24,7 +24,7 @@ class Public::RecipesController < ApplicationController
     @price_calc = true
   end
 
-  
+
   def new
     @cutting_board_foods = current_customer.cutting_board_foods
     @recipe = Recipe.new

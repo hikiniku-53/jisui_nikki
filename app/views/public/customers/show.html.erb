@@ -39,7 +39,7 @@
   <div class="border border-dark rounded-lg mx-auto pb-2">
     <h3 class="text-center border-bottom border-dark py-2">日記</h3>
       <div class="row mx-1">
-        <div class="col-md-6">
+        <div class="col-lg-6">
 
           <div class="mx-auto" style="width: 225px;">
             <%= form_with url: customer_path, method: :get, local: true do |f|%>
@@ -128,7 +128,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-lg-6 mx-auto">
           <% if @diary %>
             <%= form_with model: @diary, url: diary_path(@diary.id), method: :patch do |f| %>
               <div class="mx-2">
@@ -182,27 +182,38 @@
     <div>
 
       <!--自身の投稿一覧-->
-      <table class="table">
+      <table class="table table-sm border-bottom my-3">
         <thead>
-          <tr><th>マイレシピ</th></tr>
+          <tr><th colspan="2">マイレシピ</th></tr>
         </thead>
         <tbody>
           <% @recipes.each do |recipe| %>
 
-            <!--1列目=>レシピ名、エネルギー量-->
+
             <tr>
               <td>
                 <%= link_to recipe_path(recipe.id), class: '' do %>
                   <%= recipe.name %>
                 <% end %>
-              <br>
+              </td>
+
+              <td>
+                <div>
+                  <%= recipe.favorites.count %>
+                  <span style="color:green;">❤︎</span>
+                </div>
+              </td>
+            </tr>
+
+            <tr>
+
             </tr>
           <% end %>
         </tbody>
       </table>
 
       <!--お気に入りのレシピ-->
-      <table class="table">
+      <table class="table table-sm border-bottom my-3">
         <thead>
           <tr><th>お気に入りのレシピ</th></tr>
         </thead>
