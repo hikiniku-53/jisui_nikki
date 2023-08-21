@@ -1,35 +1,63 @@
-<h2>Sign up</h2>
+<h2 class="text-center">会員登録</h2>
 
 <%= form_with model: @customer, url: customer_registration_path do |f| %>
 
   <%= render "public/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
-  </div>
+  <table class="table-sm mx-auto">
+    <tbody>
+      <tr>
+        <th>名前</th>
+        <td><%= f.text_field :name, autofocus: true, autocomplete: "name" %></td>
+      </tr>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <tr>
+        <th>メールアドレス</th>
+        <td>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+            <div>
+              Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+            </div>
+          <% end %>
+        </td>
+      </tr>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+      <tr>
+        <th>ユーザー公開設定</th>
+        <td>
+          <div>
+            <%= f.radio_button :is_published, :true %>
+            <%= f.label :is_published, "公開" %>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+            <%= f.radio_button :is_published, :false, checked: true %>
+            <%= f.label :is_published, "非公開" %>
+          </div>
+        </td>
+      </tr>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
+      <tr>
+        <th>
+          パスワード
+        </th>
+        <td>
+          <%= f.password_field :password, autocomplete: "new-password" %>
+          <% if @minimum_password_length %>
+            <br>
+            <em>※<%= @minimum_password_length %> 文字以上</em>
+          <% end %>
+        </td>
+      </tr>
+
+      <tr>
+        <td class="text-center" colspan="2">
+          <%= f.submit "登録", class: 'btn btn-sm btn-primary' %>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 <% end %>
-
-<%= render "public/shared/links" %>
+<div class="text-center mt-5">
+  すでに登録済みの方→
+  <%= render "public/shared/links" %>
+</div>
