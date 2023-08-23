@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_18_071114) do
+ActiveRecord::Schema.define(version: 2023_08_23_140528) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -175,7 +175,7 @@ ActiveRecord::Schema.define(version: 2023_08_18_071114) do
     t.index ["tag_id"], name: "index_recipe_tags_on_tag_id"
   end
 
-  create_table "recipes", force: :cascade do |t|
+  create_table "recipes", id: :bigint, default: nil, force: :cascade do |t|
     t.integer "customer_id", null: false
     t.string "name", null: false
     t.text "process"
