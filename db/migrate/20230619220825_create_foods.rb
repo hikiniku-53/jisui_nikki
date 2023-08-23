@@ -2,7 +2,7 @@ class CreateFoods < ActiveRecord::Migration[6.1]
   def change
     create_table :foods do |t|
 
-      t.integer :food_genre_id, null: false
+      t.bigint :food_genre_id, null: false
       t.string :name, null: false
       t.integer :energy, null: false
       t.integer :protein
