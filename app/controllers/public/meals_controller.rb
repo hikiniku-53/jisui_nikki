@@ -7,7 +7,7 @@ class Public::MealsController < ApplicationController
     # 既に記録されていないか確認
     if @meal_food.exists?
       flash[:notice] = "その食材は既に記録されています"
-    elsif meal_recipe.exists?
+    elsif @meal_recipe.exists?
       flash[:notice] = "そのレシピは既に記録されています"
     else
       ## 記録されている => 食事を追加する
@@ -20,7 +20,7 @@ class Public::MealsController < ApplicationController
 
     redirect_to customer_path
   end
-  
+
   def destroy
     @meal = Meal.find(params[:id])
     @meal.destroy

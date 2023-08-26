@@ -31,9 +31,6 @@ class Public::CustomersController < ApplicationController
 
     favorites = Favorite.where(customer_id: current_customer.id).pluck(:recipe_id)
     @favorite_recipes = Recipe.find(favorites)
-
-
-
   end
 
   def edit
@@ -45,7 +42,7 @@ class Public::CustomersController < ApplicationController
   private
 
   def diary_params
-    params.require(:diary).permit(:body_weight, :body)
+    params.require(:diary).permit(:date, :body_weight, :body)
   end
 
 end
