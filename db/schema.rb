@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_23_141359) do
+ActiveRecord::Schema.define(version: 2023_08_18_071114) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.integer "record_id", null: false
-    t.integer "blob_id", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2023_08_23_141359) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.integer "blob_id", null: false
+    t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -59,9 +59,9 @@ ActiveRecord::Schema.define(version: 2023_08_23_141359) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "comment_genre_id", null: false
-    t.integer "food_id", null: false
+    t.bigint "customer_id", null: false
+    t.bigint "comment_genre_id", null: false
+    t.bigint "food_id", null: false
     t.text "comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(version: 2023_08_23_141359) do
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "recipe_id", null: false
+    t.bigint "customer_id", null: false
+    t.bigint "recipe_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["customer_id"], name: "index_favorites_on_customer_id"
@@ -148,8 +148,8 @@ ActiveRecord::Schema.define(version: 2023_08_23_141359) do
   end
 
   create_table "prices", force: :cascade do |t|
-    t.integer "customer_id", null: false
-    t.integer "food_id", null: false
+    t.bigint "customer_id", null: false
+    t.bigint "food_id", null: false
     t.integer "food_price", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -166,8 +166,8 @@ ActiveRecord::Schema.define(version: 2023_08_23_141359) do
   end
 
   create_table "recipe_tags", force: :cascade do |t|
-    t.integer "recipe_id"
-    t.integer "tag_id"
+    t.bigint "recipe_id"
+    t.bigint "tag_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["recipe_id", "tag_id"], name: "index_recipe_tags_on_recipe_id_and_tag_id", unique: true
@@ -175,8 +175,8 @@ ActiveRecord::Schema.define(version: 2023_08_23_141359) do
     t.index ["tag_id"], name: "index_recipe_tags_on_tag_id"
   end
 
-  create_table "recipes", id: :bigint, default: nil, force: :cascade do |t|
-    t.integer "customer_id", null: false
+  create_table "recipes", force: :cascade do |t|
+    t.bigint "customer_id", null: false
     t.string "name", null: false
     t.text "process"
     t.text "comment"

@@ -15,6 +15,11 @@
         <% @total_carb += recipe_detail.subtotal_carb %>
         <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
         <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
+        <% if @price %>
+          <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
+        <% else %>
+          <% @price_calc = false %>
+        <% end %>
       <% end %>
 
       <!--データ一覧-->

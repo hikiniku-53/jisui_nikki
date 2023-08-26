@@ -32,5 +32,4 @@ class Public::MealsController < ApplicationController
   def meal_params
     params.require(:meal).permit(:food_id, :recipe_id, :date, :time, :price, :energy, :protein, :fat, :carb, :salt_equivalent, :amount)
   end
-
 end
