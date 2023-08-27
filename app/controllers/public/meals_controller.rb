@@ -2,13 +2,11 @@ class Public::MealsController < ApplicationController
   before_action :authenticate_customer!
 
   def create
-    @meal_food = current_customer.meals.where(date: meal_params[:date], time: meal_params[:time], food_id: meal_params[:food_id], recipe_id: nil)
-    @meal_recipe = current_customer.meals.where(date: meal_params[:date], time: meal_params[:time], food_id: nil, recipe_id: meal_params[:recipe_id])
+    @meal = current_customer.meals.find_by(date: meal_params[:date], time: meal_params[:time], name: meal_params[:name])
+
     # 既に記録されていないか確認
-    if @meal_food.exists?
-      flash[:notice] = "その食材は既に記録されています"
-    elsif @meal_recipe.exists?
-      flash[:notice] = "そのレシピは既に記録されています"
+    if @meal
+      flash[:notice] = "既に記録されています"
     else
       ## 記録されている => 食事を追加する
       @meal = Meal.new(meal_params)
@@ -30,6 +28,6 @@ class Public::MealsController < ApplicationController
   private
 
   def meal_params
-    params.require(:meal).permit(:food_id, :recipe_id, :name, :date, :time, :price, :energy, :protein, :fat, :carb, :salt_equivalent, :amount)
+    params.require(:meal).permit(:name, :date, :time, :price, :energy, :protein, :fat, :carb, :salt_equivalent, :amount)
   end
 end
