@@ -5,58 +5,34 @@
     <% else %>
       <% meals.each do |meal| %>
         <tr class="">
-          <% if meal.food_id %>
-            <% total_energy += meal.subtotal_energy %>
-            <% total_protein += meal.subtotal_protein %>
-            <% total_fat += meal.subtotal_fat %>
-            <% total_carb += meal.subtotal_carb %>
-            <% total_salt_equivalent += meal.subtotal_salt_equivalent %>
-            <% if meal.price %>
-              <% price = meal.subtotal_price %>
-              <% total_price += (meal.subtotal_price) %>
-            <% end %>
-            <td style="width: 145px"><%= meal.food.name %></td>
-            <td class="text-right" style="width: 50px"><%= meal.amount %></td>
-            <td style="width: 45px">g</td>
-            <td class="text-right" style="width: 50px">
-              <% if price %>
-                <%= meal.subtotal_price %>
-              <% else %>
-                －
-              <% end %>
-            </td>
-            <td style="width: 20px">円</td>
-             <td style="width: 56px">
-              <%= link_to "削除", meal_path(meal.id), method: :delete, class: 'btn btn-sm btn-danger' %>
-            </td>
-          <% else %>
-            <% total_energy += meal.subtotal_energy %>
-            <% total_protein += meal.subtotal_protein %>
-            <% total_fat += meal.subtotal_fat %>
-            <% total_carb += meal.subtotal_carb %>
-            <% total_salt_equivalent += meal.subtotal_salt_equivalent %>
-            <% if meal.price %>
-              <% price = meal.subtotal_price %>
-              <% total_price += meal.subtotal_price %>
-            <% end %>
-            <td style="width: 145px"><%= meal.recipe.name %></td>
-            <td class="text-right" style="width: 50px"><%= meal.amount %></td>
-            <td style="width: 45px">人前</td>
-            <td class="text-right" style="width: 50px">
-              <% if price %>
-                <%= meal.subtotal_price %>
-              <% else %>
-                －
-              <% end %>
-            </td>
-            <td style="width: 20px">円</td>
-            <td style="width: 56px">
-              <%= link_to "削除", meal_path(meal.id), method: :delete, class: 'btn btn-sm btn-danger' %>
-            </td>
+          <% total_energy += meal.subtotal_energy %>
+          <% total_protein += meal.subtotal_protein %>
+          <% total_fat += meal.subtotal_fat %>
+          <% total_carb += meal.subtotal_carb %>
+          <% total_salt_equivalent += meal.subtotal_salt_equivalent %>
+          <% if meal.price %>
+            <% price = meal.subtotal_price %>
+            <% total_price += (meal.subtotal_price) %>
           <% end %>
+          <td style="width: 145px"><%= meal.name %></td>
+          <td class="text-right" style="width: 50px"><%= meal.amount %></td>
+          <% if meal.is_food %>
+          <td style="width: 45px">g</td>
+          <% else %>
+            <td style="width: 45px">人前</td>
+          <% end %>
+          <td class="text-right" style="width: 50px">
+            <% if price %>
+              <%= meal.subtotal_price %>
+            <% else %>
+              －
+            <% end %>
+          </td>
+          <td style="width: 20px">円</td>
+          <td style="width: 56px">
+            <%= link_to "削除", meal_path(meal.id), method: :delete, class: 'btn btn-sm btn-danger' %>
+          </td>
         </tr>
-        <div>
-        </div>
       <% end %>
     <% end %>
   </tbody>

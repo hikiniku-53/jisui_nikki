@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_27_012127) do
+ActiveRecord::Schema.define(version: 2023_08_27_073959) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -129,8 +129,6 @@ ActiveRecord::Schema.define(version: 2023_08_27_012127) do
 
   create_table "meals", force: :cascade do |t|
     t.integer "customer_id", null: false
-    t.integer "food_id"
-    t.integer "recipe_id"
     t.date "date", null: false
     t.integer "time", null: false
     t.integer "price"
@@ -142,10 +140,9 @@ ActiveRecord::Schema.define(version: 2023_08_27_012127) do
     t.float "amount", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "Name"
+    t.string "name"
+    t.boolean "IsRecipe"
     t.index ["customer_id"], name: "index_meals_on_customer_id"
-    t.index ["food_id"], name: "index_meals_on_food_id"
-    t.index ["recipe_id"], name: "index_meals_on_recipe_id"
   end
 
   create_table "prices", force: :cascade do |t|
@@ -198,8 +195,6 @@ ActiveRecord::Schema.define(version: 2023_08_27_012127) do
   add_foreign_key "favorites", "customers"
   add_foreign_key "favorites", "recipes"
   add_foreign_key "meals", "customers"
-  add_foreign_key "meals", "foods"
-  add_foreign_key "meals", "recipes"
   add_foreign_key "prices", "customers"
   add_foreign_key "prices", "foods"
   add_foreign_key "recipe_tags", "recipes"

@@ -1,13 +1,11 @@
 class Meal < ApplicationRecord
 
   belongs_to :customer
-  belongs_to :food, optional: true
-  belongs_to :recipe, optional: true
 
   enum time: { breakfast: 0, lunch: 1, dinner: 2, others: 3 }
 
   def subtotal_energy
-    if self.food_id
+    if self.is_food
       energy * amount / 100
     else
       energy * amount
@@ -15,7 +13,7 @@ class Meal < ApplicationRecord
   end
 
   def subtotal_protein
-    if self.food_id
+    if self.is_food
       protein * amount / 100
     else
       protein * amount
@@ -23,7 +21,7 @@ class Meal < ApplicationRecord
   end
 
   def subtotal_fat
-    if self.food_id
+    if self.is_food
       fat * amount / 100
     else
       fat * amount
@@ -31,7 +29,7 @@ class Meal < ApplicationRecord
   end
 
   def subtotal_carb
-    if self.food_id
+    if self.is_food
       carb * amount / 100
     else
       carb * amount
@@ -39,7 +37,7 @@ class Meal < ApplicationRecord
   end
 
   def subtotal_salt_equivalent
-    if self.food_id
+    if self.is_food
       salt_equivalent * amount / 100
     else
       salt_equivalent * amount
@@ -47,7 +45,7 @@ class Meal < ApplicationRecord
   end
 
   def subtotal_price
-    if self.food_id
+    if self.is_food
       price * amount / 100
     else
       price * amount

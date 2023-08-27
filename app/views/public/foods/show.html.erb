@@ -141,7 +141,7 @@
 
                 <!--自動送信項目-->
                 <div>
-                  <%= f.hidden_field :food_id, :value => @food.id %>
+                  <%= f.hidden_field :is_food, :value => :true %>
                   <%= f.hidden_field :name, :value => @food.name %>
                   <%= f.hidden_field :energy, :value => @food.energy %>
                   <%= f.hidden_field :protein, :value => @food.protein %>

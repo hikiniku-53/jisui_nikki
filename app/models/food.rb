@@ -1,6 +1,5 @@
 class Food < ApplicationRecord
   has_one_attached :image
-  has_many :meals
   has_many :prices, dependent: :destroy
   has_many :cutting_board_foods, dependent: :destroy
   has_many :comments, dependent: :destroy
