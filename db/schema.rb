@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_08_27_073959) do
+ActiveRecord::Schema.define(version: 2023_08_27_135442) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 2023_08_27_073959) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
-    t.boolean "IsRecipe"
+    t.boolean "is_recipe"
     t.index ["customer_id"], name: "index_meals_on_customer_id"
   end
 
