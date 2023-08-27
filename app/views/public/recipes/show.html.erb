@@ -59,6 +59,7 @@
                 <%= f.hidden_field :recipe_id, :value => @recipe.id %>
                 <%= f.hidden_field :energy, :value => @total_energy %>
                 <%= f.hidden_field :protein, :value => @total_protein %>
+                <%= f.hidden_field :name, :value => @recipe.name %>
                 <%= f.hidden_field :fat, :value => @total_fat %>
                 <%= f.hidden_field :carb, :value => @total_carb %>
                 <%= f.hidden_field :salt_equivalent, :value => @total_salt_equivalent %>
@@ -97,9 +98,9 @@
           <div id="favorite_<%= @recipe.id %>">
             <%= render "favorite", recipe: @recipe %>
           </div>
-          
+
           <% if @recipe.customer_id == current_customer.id %>
-            
+
             <%= link_to "削除", recipe_path(params[:id]), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
           <% end %>
           </div>

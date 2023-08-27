@@ -142,6 +142,7 @@
                 <!--自動送信項目-->
                 <div>
                   <%= f.hidden_field :food_id, :value => @food.id %>
+                  <%= f.hidden_field :name, :value => @food.name %>
                   <%= f.hidden_field :energy, :value => @food.energy %>
                   <%= f.hidden_field :protein, :value => @food.protein %>
                   <%= f.hidden_field :fat, :value => @food.fat %>
@@ -194,8 +195,8 @@
 
         <!--食材画像-->
         <%= image_tag @food.get_image(380,380), class: 'd-block mx-auto' %>
-        
-        
+
+
 
         <!--コメント一覧-->
         <div class="row justify-content-center">
