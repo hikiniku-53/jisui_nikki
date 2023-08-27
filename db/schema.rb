@@ -141,7 +141,7 @@ ActiveRecord::Schema.define(version: 2023_08_27_135442) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "name"
-    t.boolean "is_recipe"
+    t.boolean "is_food"
     t.index ["customer_id"], name: "index_meals_on_customer_id"
   end
 
