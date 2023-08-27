@@ -108,10 +108,14 @@
         <!--タグ一覧-->
         <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
 
-        <!--調理手順-->
+        <!--調理手順・コメント-->
         <div class="border border-warning rounded-lg mb-3 mx-auto">
           <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
           <div class="my-3 mx-2"><%= @recipe.process%></div>
+        </div>
+        <div class="border border-warning rounded-lg mb-3 mx-auto">
+          <h5 class="text-center border-bottom border-warning my-1">コメント</h5>
+          <div class="my-3 mx-2"><%= @recipe.comment%></div>
         </div>
       </div>
     </div>

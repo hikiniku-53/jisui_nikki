@@ -52,19 +52,6 @@ class Public::RecipesController < ApplicationController
       @recipe_detail.save!
     end
 
-    def update
-      @recipe = Recipe.find(params[:id])
-      @recipe.update(recipe_params)
-      redirect_to recipe_path(params[:id])
-    end
-
-    def destroy
-      @recipe = Recipe.find(params[:id])
-      @recipe.destroy
-      redirect_to recipes_path
-    end
-
-
     tag_list = params[:recipe][:tag_name].split('、')
 
     if @recipe.save
@@ -77,6 +64,18 @@ class Public::RecipesController < ApplicationController
       redirect_to customer_path
       flash[:notice] = "レシピを投稿しました！"
     end
+  end
+
+  def update
+    @recipe = Recipe.find(params[:id])
+    @recipe.update(recipe_params)
+    redirect_to recipe_path(params[:id])
+  end
+
+  def destroy
+    @recipe = Recipe.find(params[:id])
+    @recipe.destroy
+    redirect_to recipes_path
   end
 
   def search_tag
