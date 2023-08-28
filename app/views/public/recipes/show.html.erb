@@ -56,7 +56,7 @@
             <%= form_with model: Meal.new, url: meals_path, method: :post do |f| %>
               <!--自動送信項目-->
               <div>
-                <%= f.hidden_field :is_food, :value => true %>
+                <%= f.hidden_field :is_food, :value => :true %>
                 <%= f.hidden_field :energy, :value => @total_energy %>
                 <%= f.hidden_field :protein, :value => @total_protein %>
                 <%= f.hidden_field :name, :value => @recipe.name %>
