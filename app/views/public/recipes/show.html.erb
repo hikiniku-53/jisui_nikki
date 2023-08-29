@@ -21,6 +21,8 @@
   <!--レシピ詳細-->
   <div class="col-xl-9">
     <div class="row">
+
+      <!--レシピデータ・フォーム-->
       <div class="col-lg-5">
 
         <!--使用食材一覧-->
@@ -88,10 +90,25 @@
         </div>
       </div>
 
+      <!--写真・ユーザー情報-->
       <div class="col-lg-7">
 
         <!--食材画像-->
         <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
+
+        <!--投稿者表示-->
+        <div>
+          <!--投稿者が公開設定のアカウントか？-->
+          <% if @recipe.customer.is_published == true %>
+
+            <!--公開設定→ユーザー名表示-->
+            <b>投稿者:<%= @recipe.customer.name %></b>
+          <% else %>
+
+            <!--非公開設定→「名無し」表示-->
+            <b>投稿者:名無し</b>
+          <% end %>
+        </div>
 
         <div>
           <!--いいね機能-->

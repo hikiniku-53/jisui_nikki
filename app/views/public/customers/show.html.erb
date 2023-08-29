@@ -7,37 +7,37 @@
     <!--ユーザーデータ-->
     <div class="row">
       <table class="table table-sm table-borderless border border-dark mx-auto" style="width: 360px">
-      <thead></thead>
-      <tbody>
+        <thead></thead>
+        <tbody>
 
-        <tr class="border-bottom border-dark">
-          <th class="text-center" colspan="2">ユーザー情報</th>
-        </tr>
+          <tr class="border-bottom border-dark">
+            <th class="text-center" colspan="2">ユーザー情報</th>
+          </tr>
 
-        <tr>
-          <td>名前</td>
-          <td><%= current_customer.name %></td>
-        </tr>
+          <tr>
+            <td>名前</td>
+            <td><%= current_customer.name %></td>
+          </tr>
 
-        <tr>
-          <td>メールアドレス</td>
-          <td><%= current_customer.email %></td>
-        </tr>
+          <tr>
+            <td>メールアドレス</td>
+            <td><%= current_customer.email %></td>
+          </tr>
 
-        <tr>
-          <td>公開ステータス</td>
-          <td><%= current_customer.is_published ? '公開' : '非公開' %></td>
-        </tr>
+          <tr>
+            <td>公開ステータス</td>
+            <td><%= current_customer.is_published ? '公開' : '非公開' %></td>
+          </tr>
 
-        <tr>
-          <td class="text-center" colspan="2"><%= link_to "変更", customers_edit_path, class: 'btn btn-sm btn-success mx-2 px-2' %></td>
-        </tr>
-      </tbody>
-    </table>
+          <tr>
+            <td class="text-center" colspan="2"><%= link_to "変更", customers_edit_path, class: 'btn btn-sm btn-success mx-2 px-2' %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-  <div class="border border-dark rounded-lg mx-auto pb-2">
-    <h3 class="text-center border-bottom border-dark py-2">日記</h3>
+    <div class="border border-dark rounded-lg mx-auto pb-2">
+      <h3 class="text-center border-bottom border-dark py-2">日記</h3>
       <div class="row mx-1">
         <div class="col-lg-6">
 
@@ -53,6 +53,7 @@
               </div>
             <% end %>
           </div>
+
 
           <!--朝食-->
           <div class="mx-auto" style="max-width: 385px;">
@@ -78,54 +79,115 @@
             <%= render "public/diaries/meals", meals: @others, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
 
+
           <!--栄養グラフ-->
+          <!--栄養価計算-->
           <div>
+            <!--全食事の摂取量合算-->
+            <% @meals.each do |meal| %>
+              <% @total_energy += meal.subtotal_energy %>
+              <% @total_protein += meal.subtotal_protein %>
+              <% @total_fat += meal.subtotal_fat %>
+              <% @total_carb += meal.subtotal_carb %>
+              <% @total_salt_equivalent += meal.subtotal_salt_equivalent %>
+            <% end %>
 
-            <% @chart_energy = @total_energy / Settings.customer[:required_energy] %><br>
-            <% @chart_protein = @total_protein / Settings.customer[:required_protein] %><br>
-            <% @chart_fat = @total_fat / Settings.customer[:required_fat] %><br>
-            <% @chart_carb = @total_carb / Settings.customer[:required_carb] %><br>
-            <% @chart_salt_equivalent = @total_salt_equivalent / Settings.customer[:required_salt_equivalent] %><br>
-
-
-            <canvas id="myChart"></canvas>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-              var ctx = document.getElementById('myChart');
-              var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                  labels: ['カロリー', 'たんぱく質', '脂質', '炭水化物', '塩分'],
-                  datasets: [{
-                    label: '# of Votes',
-                    data: [<%= @chart_energy %>, <%= @chart_protein %>, <%= @chart_fat %>, <%= @chart_carb %>, <%= @chart_salt_equivalent %>],
-                    backgroundColor: [
-                      'rgba(255, 99, 132, 0.2)',
-                      'rgba(54, 162, 235, 0.2)',
-                      'rgba(255, 206, 86, 0.2)',
-                      'rgba(75, 192, 192, 0.2)',
-                      'rgba(153, 102, 255, 0.2)'
-                    ],
-                    borderColor: [
-                      'rgba(255, 99, 132, 1)',
-                      'rgba(54, 162, 235, 1)',
-                      'rgba(255, 206, 86, 1)',
-                      'rgba(75, 192, 192, 1)',
-                      'rgba(153, 102, 255, 1)'
-                    ],
-                      borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    y: {
-                      beginAtZero: true
-                    }
-                  }
-                }
-              });
-            </script>
+            <!--グラフ代入値の決定→各栄養素の一日の必要量に対する摂取割合(摂取量/必要量)-->
+            <% @chart_energy = @total_energy / Settings.requirement[:energy] %>
+            <% @chart_protein = @total_protein / Settings.requirement[:protein] %>
+            <% @chart_fat = @total_fat / Settings.requirement[:fat] %>
+            <% @chart_carb = @total_carb / Settings.requirement[:carb] %>
+            <% @chart_salt_equivalent = @total_salt_equivalent / Settings.requirement[:salt] %>
           </div>
+
+          <canvas id="myChart"></canvas>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            var ctx = document.getElementById('myChart');
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: [
+                  'カロリー',
+                  'たんぱく質',
+                  '脂質',
+                  '炭水化物',
+                  '塩分'
+                ],
+                datasets: [{
+                  label: '<%= @date %>の摂取量 / 一日の必要',
+                  data: [
+                    <%= @chart_energy %>,
+                    <%= @chart_protein %>,
+                    <%= @chart_fat %>,
+                    <%= @chart_carb %>,
+                    <%= @chart_salt_equivalent %>
+                  ],
+                  backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                  ],
+                  clip: {left: 0, top: false, right: -2, bottom: 0},
+                  borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                  ],
+                    borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  x: {
+                    id: 'nutrition'
+                  },
+                  y: {
+                    id: 'ratio',
+                    beginAtZero: true,
+                    suggestedMax: 1
+                  }
+                },
+
+
+                annotation: {
+                  annotations: [{
+                    type: 'line', // 線分を指定
+                    drawTime: 'afterDatasetsDraw',
+                    id: 'a-line-1', // 線のid名を指定（他の線と区別するため）
+                    mode: 'horizontal', // 水平を指定
+                    scaleID: 'ratio', // 基準とする軸のid名
+                    value: 1, // 引きたい線の数値（始点）
+                    endValue: 1, // 引きたい線の数値（終点）
+                    borderColor: 'red', // 線の色
+                    borderWidth: 3, // 線の幅（太さ）
+                    borderDash: [2, 2],
+                    borderDashOffset: 1,
+                    label: { // ラベルの設定
+                      backgroundColor: 'rgba(255,255,255,0.8)',
+                      bordercolor: 'rgba(200,60,60,0.8)',
+                      borderwidth: 2,
+                      fontSize: 10,
+                      fontStyle: 'bold',
+                      fontColor: 'rgba(200,60,60,0.8)',
+                      xPadding: 10,
+                      yPadding: 10,
+                      cornerRadius: 3,
+                      position: 'left',
+                      xAdjust: 0,
+                      yAdjust: 0,
+                      enabled: true,
+                      content: '必要値'
+                    }
+                  }]
+                }
+              }
+            });
+          </script>
         </div>
 
         <div class="col-lg-6 mx-auto">

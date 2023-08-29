@@ -5,16 +5,14 @@
     <% else %>
       <% meals.each do |meal| %>
         <tr class="">
-          <% total_energy += meal.subtotal_energy %>
-          <% total_protein += meal.subtotal_protein %>
-          <% total_fat += meal.subtotal_fat %>
-          <% total_carb += meal.subtotal_carb %>
-          <% total_salt_equivalent += meal.subtotal_salt_equivalent %>
+
           <% if meal.price %>
             <% price = meal.subtotal_price %>
             <% total_price += (meal.subtotal_price) %>
           <% end %>
-          <td style="width: 145px"><%= meal.name %></td>
+          <td style="width: 145px">
+            <%= meal.name %>
+          </td>
           <td class="text-right" style="width: 50px"><%= meal.amount %></td>
           <% if meal.is_food == true %>
             <td style="width: 45px">g</td>
