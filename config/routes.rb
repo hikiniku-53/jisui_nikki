@@ -18,10 +18,6 @@ Rails.application.routes.draw do
   #public_action
   scope module: :public do
 
-    # homes_action
-    get '/about' => 'homes#about', as: 'about'
-
-
     # customers_action
     get '/customers' => 'customers#show', as: 'customer'
     get '/customers/edit' => 'customers#edit'

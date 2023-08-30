@@ -8,7 +8,6 @@
 
           <% if meal.price %>
             <% price = meal.subtotal_price %>
-            <% total_price += (meal.subtotal_price) %>
           <% end %>
           <td style="width: 145px">
             <%= meal.name %>
@@ -21,7 +20,7 @@
           <% end %>
           <td class="text-right" style="width: 50px">
             <% if price %>
-              <%= meal.subtotal_price %>
+              <%= meal.subtotal_price.round(0) %>
             <% else %>
               －
             <% end %>
