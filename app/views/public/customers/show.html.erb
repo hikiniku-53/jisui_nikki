@@ -36,14 +36,21 @@
       </table>
     </div>
 
+    <!--日記表示枠-->
     <div class="border border-dark rounded-lg mx-auto pb-2">
       <h3 class="text-center border-bottom border-dark py-2">日記</h3>
+
       <div class="row mx-1">
         <div class="col-lg-6">
 
+          <!--日付表示・変更フォーム-->
           <div class="mx-auto" style="width: 225px;">
+
+            <!--日付入力-->
             <%= form_with url: customer_path, method: :get, local: true do |f|%>
               <div class="input-group  mx-auto" style="max-width: 810px">
+
+                <!--表示したい日付を入力(デフォルト値→当日)-->
                 <%= f.date_field :date, value: @date, class: 'form-control' %>
                 <span class="input-group-btn input-group-append">
                   <%= button_tag type: "submit", class: "btn btn-secondary search-btn" do %>
@@ -54,36 +61,34 @@
             <% end %>
           </div>
 
-
-          <!--朝食-->
+          <!--朝食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             朝食
             <%= render "public/diaries/meals", meals: @breakfasts, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
 
-          <!--昼食-->
+          <!--昼食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             昼食
             <%= render "public/diaries/meals", meals: @lunches, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
 
-          <!--夕食-->
+          <!--夕食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             夕食
             <%= render "public/diaries/meals", meals: @dinners, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
 
-          <!--間食・その他-->
+          <!--間食・その他一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             間食・その他
             <%= render "public/diaries/meals", meals: @others, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
 
 
-          <!--栄養グラフ-->
-          <!--栄養価計算-->
+          <!--栄養摂取量グラフ-->
           <div>
-            <!--全食事の摂取量合算-->
+            <!--一日の全食事の栄養摂取量合算-->
             <% @meals.each do |meal| %>
               <% @total_energy += meal.subtotal_energy %>
               <% @total_protein += meal.subtotal_protein %>
@@ -100,6 +105,7 @@
             <% @chart_salt_equivalent = @total_salt_equivalent / Settings.requirement[:salt] %>
           </div>
 
+          <!--グラフの表示-->
           <canvas id="myChart"></canvas>
           <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
           <script>
@@ -191,6 +197,7 @@
         </div>
 
         <div class="col-lg-6 mx-auto">
+
           <% if @diary %>
             <%= form_with model: @diary, url: diary_path(@diary.id), method: :patch do |f| %>
               <div class="mx-2">
@@ -235,6 +242,50 @@
               </div>
             <% end %>
           <% end %>
+
+          <canvas id="myChart1"></canvas>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            var ctx = document.getElementById('myChart1');
+            var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: [
+                  <%= @day1.strftime("%m%d") %>,
+                  <%= @day2.strftime("%m%d") %>,
+                  <%= @day3.strftime("%m%d") %>,
+                  <%= @day4.strftime("%m%d") %>,
+                  <%= @day5.strftime("%m%d") %>,
+                  <%= @day6.strftime("%m%d") %>,
+                  <%= @day7.strftime("%m%d") %>
+                ],
+                datasets: [{
+                  label: '一週間の体重変化',
+                  data: [
+                    <%= @weight1 %>,
+                    <%= @weight2 %>,
+                    <%= @weight3 %>,
+                    <%= @weight4 %>,
+                    <%= @weight5 %>,
+                    <%= @weight6 %>,
+                    <%= @weight7 %>
+                  ],
+                }]
+              },
+              options: {
+                scales: {
+                  x: {
+                    id: 'nutrition'
+                  },
+                  y: {
+                    id: 'ratio',
+
+                  }
+                },
+              }
+            });
+          </script>
+
         </div>
       </div>
     </div>
