@@ -1,30 +1,42 @@
 class Public::RecipesController < ApplicationController
     before_action :authenticate_customer!
 
+  # レシピ一覧
   def index
     @recipes = Recipe.all.where(is_published: 'true')
     @tag_list = Tag.all
-    # キーワード検索時に@recipes更新
+
+    # ワード検索機能
+    ##キーワードを受け取った場合、そのワードを含む食材データを取得する
     if params[:keyword]
       @recipes = @recipes.search(params[:keyword])
     end
     @keyword= params[:keyword]
   end
 
+  # レシピ詳細
   def show
     @recipe = Recipe.find(params[:id])
+
+    # 使用食材を取得
     @recipe_foods = @recipe.recipe_details
+
+    # つけられたタグを取得
     @tag_list = Tag.all
+
+    # 栄養素の合算用インスタンス変数
     @total_energy = 0
     @total_protein = 0
     @total_fat = 0
     @total_carb = 0
     @total_salt_equivalent = 0
     @total_price = 0
+
+    # 値段の登録有無の判断用インスタンス変数
     @price_calc = true
   end
 
-
+  # レシピ作成画面
   def new
     @cutting_board_foods = current_customer.cutting_board_foods
     @recipe = Recipe.new
@@ -37,6 +49,7 @@ class Public::RecipesController < ApplicationController
     @price_calc = true
   end
 
+  # レシピ作成
   def create
     @recipe = Recipe.new(recipe_params)
     @recipe.customer_id = current_customer.id
@@ -52,9 +65,12 @@ class Public::RecipesController < ApplicationController
       @recipe_detail.save!
     end
 
+    # タグ欄に入力された内容を"、"で区切り、リスト化
     tag_list = params[:recipe][:tag_name].split('、')
 
+
     if @recipe.save
+      # リスト化したタグをそれぞれ保存
       @recipe.save_tag(tag_list)
 
       # まな板の食材を削除する
@@ -62,24 +78,21 @@ class Public::RecipesController < ApplicationController
 
       # マイページへ飛ぶ
       redirect_to customer_path
-      flash[:notice] = "レシピを投稿しました！"
     end
   end
 
-  def update
-    @recipe = Recipe.find(params[:id])
-    @recipe.update(recipe_params)
-    redirect_to recipe_path(params[:id])
-  end
-
+  # レシピ削除
   def destroy
     @recipe = Recipe.find(params[:id])
     @recipe.destroy
     redirect_to recipes_path
   end
-
+  
+  # タグ検索
   def search_tag
     @tag_list = Tag.all
+    
+    # 選択したタグを持つレシピを取得
     @tag = Tag.find(params[:tag_id])
     @recipes = @tag.recipes.where(is_published: 'true')
     @keyword= params[:keyword]

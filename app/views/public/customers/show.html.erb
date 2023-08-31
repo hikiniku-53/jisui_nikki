@@ -1,4 +1,3 @@
-<%= flash[:notice] %>
 <h2 class="text-center mb-3">マイページ</h2>
 <div class="row">
 
@@ -251,13 +250,13 @@
               type: 'line',
               data: {
                 labels: [
-                  <%= @day1.strftime("%m%d") %>,
-                  <%= @day2.strftime("%m%d") %>,
-                  <%= @day3.strftime("%m%d") %>,
-                  <%= @day4.strftime("%m%d") %>,
-                  <%= @day5.strftime("%m%d") %>,
-                  <%= @day6.strftime("%m%d") %>,
-                  <%= @day7.strftime("%m%d") %>
+                  "<%= @day1.strftime('%m/%d').to_s %>",
+                  "<%= @day2.strftime('%m/%d').to_s %>",
+                  "<%= @day3.strftime('%m/%d').to_s %>",
+                  "<%= @day4.strftime('%m/%d').to_s %>",
+                  "<%= @day5.strftime('%m/%d').to_s %>",
+                  "<%= @day6.strftime('%m/%d').to_s %>",
+                  "<%= @day7.strftime('%m/%d').to_s %>"
                 ],
                 datasets: [{
                   label: '一週間の体重変化',

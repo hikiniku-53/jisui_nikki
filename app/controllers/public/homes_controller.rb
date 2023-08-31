@@ -29,10 +29,6 @@ class Public::HomesController < ApplicationController
         @dinners = []
         @others = []
       end
-
     end
-  end
-
-  def about
   end
 end
