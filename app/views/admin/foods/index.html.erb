@@ -1,42 +1,53 @@
-<div class="row">
+<h2 class="text-center mb-2">食材一覧</h2>
+  <table class="table table-sm table-bordered mx-auto">
+    <tbody>
+      <tr class="text-center">
+        <th>食材名</th>
 
-  <div class="col-sm">
-    <h3>食材一覧</h3>
-    <table class="table table-bordered">
-      <tbody>
+        <th>分類</th>
+
+        <th>エネルギー</th>
+
+        <th>たんぱく質</th>
+
+        <th>脂質</th>
+
+        <th>炭水化物</th>
+
+        <th>塩分</th>
+
+        <th style="width: 170px;"></th>
+      </tr>
+
+      <% @foods.each do |food| %>
         <tr>
-          <th>食材名</th>
-          <th>分類</th>
-          <th>エネルギー</th>
-          <th>たんぱく質</th>
-          <th>脂質</th>
-          <th>炭水化物</th>
-          <th>塩分</th>
+
+          <!--食材詳細へのリンク-->
+          <td class="text-center">
+            <%= link_to admin_food_path(food.id) do %>
+              <%= food.name %>
+            <% end %>
+          </td>
+
+          <td><%= food.food_genre.name %></td>
+
+          <td class="text-right"><%= food.energy %> kcal</td>
+
+          <td class="text-right"><%= food.protein %> g</td>
+
+          <td class="text-right"><%= food.fat %> g</td>
+
+          <td class="text-right"><%= food.carb %> g</td>
+
+          <td class="text-right"><%= food.salt_equivalent %> g</td>
+
+          <!--食材更新・削除-->
+          <td class="text-center">
+            <%= link_to "更新", edit_admin_food_path(food.id), class: 'btn btn-success px-3 mx-1' %>
+            <%= link_to "削除", admin_food_path(food.id), method: :delete, class: 'btn btn-danger px-3 mx-1' %>
+          </td>
         </tr>
-
-        <% @foods.each do |food| %>
-
-          <tr>
-            <td>
-              <%= link_to admin_food_path(food.id) do %>
-                <%= food.name %>
-              <% end %>
-            </td>
-            <td><%= food.food_genre.name %></td>
-            <td><%= food.energy %> kcal</td>
-            <td><%= food.protein %> g</td>
-            <td><%= food.fat %> g</td>
-            <td><%= food.carb %> g</td>
-            <td><%= food.salt_equivalent %> g</td>
-            <td>
-              <%= link_to "更新", edit_admin_food_path(food.id), class: 'btn btn-success px-3' %>
-              <%= link_to "削除", admin_food_path(food.id), method: :delete, class: 'btn btn-danger px-3' %>
-            </td>
-          </tr>
-
-        <% end %>
-      </tbody>
-    </table>
-
-  </div>
+      <% end %>
+    </tbody>
+  </table>
 </div>

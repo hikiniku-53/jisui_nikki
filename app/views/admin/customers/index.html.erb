@@ -1,32 +1,33 @@
-<div class="row">
+<h2 class="text-center mb-2">ユーザー一覧</h3>
+<table class="table table-sm table-bordered mx-auto" style="width: 440px;">
+  <tbody>
+    <tr class="text-center">
+      <th style="width: 150px;">ユーザー</th>
+      <th style="width: 110px;">レシピ投稿数</th>
+      <th style="width: 100px;">コメント数</th>
+      <th style="width: 80px;"></th>
+    </tr>
 
-  <div class="col-sm">
-    <h3>ユーザー一覧</h3>
-    <table>
-      <tbody>
-        <tr>
-          <th>ユーザー</th>
-          <th>レシピ投稿数</th>
-          <th>コメント数</th>
-        </tr>
+    <!--ユーザー一覧-->
+    <% @customers.each do |customer| %>
+      <tr>
 
-        <% @customers.each do |customer| %>
-          <tr>
-            <td>
-              <%= link_to admin_customer_path(customer.id) do %>
-                <%= customer.name %>
-              <% end %>
-            </td>
-            <td><%= customer.recipes.count %></td>
-            <td><%= customer.comments.count %></td>
-            <td>
-              <%= link_to "削除", admin_customer_path(customer.id), method: :delete, class: 'btn btn-danger px-3' %>
-            </td>
-          </tr>
+        <!--ユーザー詳細(コメント一覧)へのリンク-->
+        <td class="text-center">
+          <%= link_to admin_customer_path(customer.id) do %>
+            <%= customer.name %>
+          <% end %>
+        </td>
 
-        <% end %>
-      </tbody>
-    </table>
+        <td><%= customer.recipes.count %></td>
 
-  </div>
-</div>
+        <td><%= customer.comments.count %></td>
+
+        <!--ユーザー削除-->
+        <td class="text-center">
+          <%= link_to "削除", admin_customer_path(customer.id), method: :delete, class: 'btn btn-danger px-3' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

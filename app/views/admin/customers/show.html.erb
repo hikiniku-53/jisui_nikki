@@ -1,38 +1,39 @@
-<div class="container">
-  <h1>
-    <%= @customer.name %>
-  </h1>
+<h2 class="text-center mb-2"><%= @customer.name %></h2>
 
-  <%= link_to "削除", admin_customer_path(params[:id]), method: :delete, class: 'btn btn-danger px-3' %>
-  <div class="row">
+<!--コメント一覧-->
+<table class="table table-sm table-bordered">
+  <tbody>
+    <tr class="text-center">
+      <th colspan="3">コメント一覧</th>
+    </tr>
 
+    <tr class="text-center">
+      <th>コメントジャンル</th>
 
+      <th>コメント</th>
 
+      <th></th>
+    </tr>
 
-  <!--コメント一覧-->
-  <div>
-    <table>
-      <tbody>
-        <% @customer.comments.each do |comment| %>
-          <tr>
-            <td>
-              <%= comment.comment_genre.name %>
-            </td>
+    <% @customer.comments.each do |comment| %>
+      <tr>
+        <td>
+          <%= comment.comment_genre.name %>
+        </td>
 
-            <td>
-              <%= comment.customer.name %>
-            </td>
+        <td>
+          <%= comment.comment %>
+        </td>
 
-            <td>
-              <%= comment.comment %>
-            </td>
+        <td>
+          <%= link_to "削除", admin_comment_path(comment.id), method: :delete, class: 'btn btn-danger px-3' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
-            <td>
-              <%= link_to "削除", admin_comment_path(comment.id), method: :delete, class: 'btn btn-danger px-3' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+<!--ユーザー削除-->
+<div class="text-center">
+  <%= link_to "このユーザーを削除する", admin_customer_path(params[:id]), method: :delete, class: 'btn btn-danger px-3' %>
 </div>

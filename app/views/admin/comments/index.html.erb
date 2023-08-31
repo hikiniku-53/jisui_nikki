@@ -1,34 +1,28 @@
-<div class="row">
+<h2 class="text-center mb-2">コメント一覧</h3>
+<table class="table table-sm table-bordered">
+  <tbody>
+    <tr class="text-center">
+      <th style="width: 150px;">投稿者</th>
+      <th style="width: 200px;">食材</th>
+      <th style="width: 180px;">コメントジャンル</th>
+      <th>コメント</th>
+      <th style="width: 80px;"></th>
+    </tr>
 
-  <div class="col-sm">
-    <h3>コメント一覧</h3>
-    <table>
-      <tbody>
-        <tr>
-          <th>投稿者</th>
-          <th>食材</th>
-          <th>コメントジャンル</th>
-          <th>コメント</th>
-        </tr>
-
-        <% @comments.each do |comment| %>
-          <tr>
-            <td>
-              <%= link_to admin_customer_path(comment.customer.id) do %>
-                <%= comment.customer.name %>
-              <% end %>
-            </td>
-            <td><%= comment.food.name %></td>
-            <td><%= comment.comment_genre.name %></td>
-            <td><%= comment.comment %></td>
-            <td>
-              <%= link_to "削除", admin_comment_path(comment.id), method: :delete, class: 'btn btn-danger px-3' %>
-            </td>
-          </tr>
-
-        <% end %>
-      </tbody>
-    </table>
-
-  </div>
-</div>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td class="text-center">
+          <%= link_to admin_customer_path(comment.customer.id) do %>
+            <%= comment.customer.name %>
+          <% end %>
+        </td>
+        <td class="text-center"><%= comment.food.name %></td>
+        <td class="text-center"><%= comment.comment_genre.name %></td>
+        <td><%= comment.comment %></td>
+        <td class="text-center">
+          <%= link_to "削除", admin_comment_path(comment.id), method: :delete, class: 'btn btn-danger px-3' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

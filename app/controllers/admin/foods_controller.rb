@@ -2,28 +2,34 @@ class Admin::FoodsController < ApplicationController
   before_action :authenticate_admin!
   before_action :make_instance, except: [:index]
 
+  # 登録食材一覧
   def index
     @foods = Food.all
   end
 
+  # 食材詳細
   def show
+    # 食材についたコメント取得
     @comments = @food.comments
   end
 
+  # 食材情報更新画面
   def edit
-    @genres = FoodGenre.all
+    @food_genres = FoodGenre.all
   end
 
+  # 食材情報更新
   def update
-    @food = Food.find(params[:id])
     @food.update(food_params)
     redirect_to admin_food_path(params[:id])
   end
 
+  # 食材削除
   def destroy
     @food.destroy
     redirect_to admin_foods_path
   end
+
 
   private
 
