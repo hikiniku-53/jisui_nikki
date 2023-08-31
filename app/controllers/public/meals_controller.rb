@@ -7,14 +7,15 @@ class Public::MealsController < ApplicationController
 
     # 送られた食材・レシピが既に記録されていないか確認
     if @meal
+
       flash[:notice] = "既に記録されています"
     else
       ## 記録されている => 食事を追加する
       @meal = Meal.new(meal_params)
       @meal.customer_id = current_customer.id
-      @meal.save!
-      flash[:notice] = "食事を追加しました"
+      @meal.save
     end
+
 
     # 追加した日の日記に飛ぶ
     redirect_to customer_path
