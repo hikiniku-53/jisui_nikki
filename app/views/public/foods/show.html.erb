@@ -210,7 +210,7 @@
                     </h5>
 
                     <h6 class="card-subtitle mb-2 text-muted">
-                      <%= if comment.customer.is_published %>
+                      <% if comment.customer.is_published == true %>
                         by <%= comment.customer.name%>
                       <% else %>
                         by 名無し
