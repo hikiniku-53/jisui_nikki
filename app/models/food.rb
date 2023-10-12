@@ -9,6 +9,9 @@ class Food < ApplicationRecord
 
   validates :name, presence: true
   validates :energy, presence: true
+  validates :protein, presence: true
+  validates :fat, presence: true
+  validates :carb, presence: true
 
 
   def get_image(width, height)

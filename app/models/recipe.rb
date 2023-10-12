@@ -6,6 +6,8 @@ class Recipe < ApplicationRecord
   has_many :favorites, dependent: :destroy
   belongs_to :customer
 
+  validates :name, presence: true
+
   def get_image(width, height)
     unless image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')

@@ -3,6 +3,8 @@ class RecipeDetail < ApplicationRecord
   belongs_to :recipe
   belongs_to :food
 
+  validates :amount, presence: true
+
   def subtotal_energy
     food.energy * amount / 100
   end
