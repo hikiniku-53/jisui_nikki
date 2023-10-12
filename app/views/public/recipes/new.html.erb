@@ -1,5 +1,12 @@
 <h2 class="text-center">レシピ作成</h2>
 <div class="row">
+  <% if @post_image.errors.any? %>
+    <ul>
+      <% @post_image.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
   <div class="col-lg-5">
 
     <!--まな板-->

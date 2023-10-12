@@ -78,6 +78,8 @@ class Public::RecipesController < ApplicationController
 
       # マイページへ飛ぶ
       redirect_to customer_path
+    else
+      render :new
     end
   end
 
