@@ -14,6 +14,7 @@ class Public::FoodsController < ApplicationController
     @keyword= params[:keyword]
   end
 
+
   # ジャンル検索
   def genre
     @food_genre = FoodGenre.find(params[:food_genre_id])

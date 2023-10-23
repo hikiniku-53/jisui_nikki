@@ -53,7 +53,10 @@ class Public::RecipesController < ApplicationController
   def create
     @recipe = Recipe.new(recipe_params)
     @recipe.customer_id = current_customer.id
-    @recipe.save
+    unless @recipe.save
+      render :new
+    end
+
 
     # まな板の食材をレシピに保存する
     current_customer.cutting_board_foods.each do |cutting_board_food|
@@ -61,8 +64,9 @@ class Public::RecipesController < ApplicationController
       @recipe_detail.recipe_id = @recipe.id
       @recipe_detail.food_id = cutting_board_food.food_id
       @recipe_detail.amount = cutting_board_food.amount
-      # 異常発生時にロールバックする
-      @recipe_detail.save!
+
+      @recipe_detail.save
+
     end
 
     # タグ欄に入力された内容を"、"で区切り、リスト化
@@ -89,11 +93,11 @@ class Public::RecipesController < ApplicationController
     @recipe.destroy
     redirect_to recipes_path
   end
-  
+
   # タグ検索
   def search_tag
     @tag_list = Tag.all
-    
+
     # 選択したタグを持つレシピを取得
     @tag = Tag.find(params[:tag_id])
     @recipes = @tag.recipes.where(is_published: 'true')
