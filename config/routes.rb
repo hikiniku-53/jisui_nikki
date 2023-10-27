@@ -39,12 +39,14 @@ Rails.application.routes.draw do
 
 
     # recipes_action
-    resources :recipes, only: [:new, :index, :show, :create, :update, :destroy] do
+    resources :recipes, only: [:new, :index, :show, :edit, :create, :update, :destroy] do
       resource :favorites, only: [:create, :destroy]
     end
     get 'recipe/search_tag' => 'recipes#search_tag'
     get '/recipe/search_favorite' => 'recipes#search_favorite'
 
+    patch 'recipe/:id/update_recipe_details/' => 'recipes#update_recipe_details', as: 'update_recipe_details'
+    patch 'recipe/:id/update_recipes' => 'recipes#update_recipes', as: 'update_recipes'
     # meal_action
     resources :meals, only: [:show, :create, :update, :destroy]
 
