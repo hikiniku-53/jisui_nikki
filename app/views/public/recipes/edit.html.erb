@@ -50,6 +50,7 @@
                       <!--変更、削除ボタン-->
                       <div class="">
                         <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
+                        <%= link_to "削除", destroy_recipe_detail_path(recipe_detail.id), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
                       </div>
                     </div>
                   <% end %>
@@ -104,11 +105,11 @@
               <td class="align-middle text-right"><%= food.salt_equivalent %></td>
               <td class="align-middle">g</td>
               <td class="text-center">
-                <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
+                <%= form_with model: RecipeDetail.new, url: create_recipe_detail_path do |f| %>
                   <%= f.hidden_field :food_id, :value => food.id %>
                   <div class="d-inline-flex align-items-center">
                     <%= f.number_field :amount, class: 'form-control form-control-sm text-center m-2', style: 'width: 100px', placeholder: '使用量' %>g
-                    <%= f.submit "使う", class: 'btn btn-success btn-sm mx-2' %>
+                    <%= f.submit "追加", class: 'btn btn-success btn-sm mx-2' %>
                   </div>
                 <% end %>
               </td>

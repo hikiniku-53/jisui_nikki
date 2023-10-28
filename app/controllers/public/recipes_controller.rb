@@ -117,6 +117,39 @@ class Public::RecipesController < ApplicationController
     redirect_to recipe_path(params[:id])
   end
 
+  def create_recipe_detail
+      recipe_detail = Recipe.find(params[:id]).recipe_details.find_by(food_id: recipe_detail_params[:food_id])
+
+    if recipe_detail
+      # ある→すでに乗っていた分量に送った分量を追加
+      amount = recipe_detail_params[:amount].to_i
+      recipe_detail.amount += amount
+      if recipe_detail.update(amount: recipe_detail.amount)
+        flash[:notice] = "食材を追加しました"
+        redirect_to edit_recipe_path(params[:id])
+      else
+        render :edit
+      end
+    else
+
+      @recipe_detail = RecipeDetail.new(recipe_detail_params)
+      @recipe_detail.recipe_id = params[:id]
+      if @recipe_detail.save
+        flash[:notice] = "食材を追加しました"
+        redirect_to edit_recipe_path(params[:id])
+      else
+        render :edit
+      end
+    end
+  end
+
+  def destroy_recipe_detail
+    recipe_detail = RecipeDetail.find(params[:id])
+    recipe_detail.destroy
+    redirect_to edit_recipe_path(recipe_detail.recipe_id)
+    flash[:notice] = "食材をを削除しました"
+  end
+
   # レシピ削除
   def destroy
     @recipe = Recipe.find(params[:id])
@@ -142,7 +175,7 @@ class Public::RecipesController < ApplicationController
   end
 
   def recipe_detail_params
-    params.require(:recipe_detail).permit(:amount)
+    params.require(:recipe_detail).permit(:food_id, :amount)
   end
 
   def tags_params

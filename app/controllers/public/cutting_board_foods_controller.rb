@@ -41,7 +41,7 @@ class Public::CuttingBoardFoodsController < ApplicationController
 
       # ある→すでに乗っていた分量に送った分量を追加
       amount = cutting_board_food_params[:amount].to_i
-      cutting_board_food.amount = amount += cutting_board_food.amount
+      cutting_board_food.amount += amount
       cutting_board_food.update(amount: cutting_board_food.amount)
     else
 
