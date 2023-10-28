@@ -1,5 +1,5 @@
 <h2 class="text-center mb-2"><%= @recipe.name %></h2>
-
+<%= link_to "削除", recipe_path(params[:id]), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
 <div class="row">
 
   <!--検索フォーム-->
@@ -27,6 +27,11 @@
 
         <!--使用食材一覧-->
         <%= render "public/recipes/foods", recipe_foods: @recipe_foods %>
+
+        <!--マイレシピの時表示-->
+        <% if @recipe.customer_id == current_customer.id %>
+          <%= link_to "食材変更", edit_recipe_path(params[:id]), class: 'btn btn-sm btn-success px-2 mx-auto' %>
+        <% end %>
 
         <!--レシピデータ-->
         <div>
@@ -92,53 +97,77 @@
 
       <!--写真・ユーザー情報-->
       <div class="col-lg-7">
+        <% if @recipe.customer_id == current_customer.id %>
+          <%= form_with model: @recipe, url: update_recipes_path(params[:id]), method: :patch do |f| %>
+            <!--食材画像-->
+            <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
+            <%= f.label :image, "写真変更" %>
+            <%= f.file_field :image, accept: "image/*", class:"w-100"  %>
 
-        <!--食材画像-->
-        <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
+            <!--タグ一覧-->
+            <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
 
-        <!--投稿者表示-->
-        <div>
-          <!--投稿者が公開設定のアカウントか？-->
-          <% if @recipe.customer.is_published == true %>
+            <!--調理手順・コメント-->
+            <div class="border border-warning rounded-lg mb-3 mx-auto">
+              <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
+              <div class="m-1">
+                <%= f.text_area :process, class: 'w-100' %>
+              </div>
+            </div>
 
-            <!--公開設定→ユーザー名表示-->
-            <b>投稿者:<%= @recipe.customer.name %></b>
-          <% else %>
-
-            <!--非公開設定→「名無し」表示-->
-            <b>投稿者:名無し</b>
+            <div class="border border-warning rounded-lg mb-3 mx-auto">
+              <h5 class="text-center border-bottom border-warning my-1">コメント</h5>
+              <div class="m-1">
+                <%= f.text_area :comment, class: 'w-100' %>
+              </div>
+            </div>
+            <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
+            
           <% end %>
-        </div>
 
-        <div>
-          <!--いいね機能-->
-          <div id="favorite_<%= @recipe.id %>">
-            <%= render "favorite", recipe: @recipe %>
+        <% else %>
+          <!--食材画像-->
+          <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
+
+          <!--投稿者表示-->
+          <div>
+            <!--投稿者が公開設定のアカウントか？-->
+            <% if @recipe.customer.is_published == true %>
+
+              <!--公開設定→ユーザー名表示-->
+              <b>投稿者:<%= @recipe.customer.name %></b>
+            <% else %>
+
+              <!--非公開設定→「名無し」表示-->
+              <b>投稿者:名無し</b>
+            <% end %>
           </div>
 
-          <% if @recipe.customer_id == current_customer.id %>
-            <%= link_to "変更", edit_recipe_path(params[:id]), class: 'btn btn-sm btn-success px-2 mx-2' %>
-            <%= link_to "削除", recipe_path(params[:id]), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
-          <% end %>
+          <div>
+            <!--いいね機能-->
+            <div id="favorite_<%= @recipe.id %>">
+              <%= render "favorite", recipe: @recipe %>
+            </div>
+
           </div>
 
-        <!--タグ一覧-->
-        <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
+          <!--タグ一覧-->
+          <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
 
-        <!--調理手順・コメント-->
-        <div class="border border-warning rounded-lg mb-3 mx-auto">
-          <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
+          <!--調理手順・コメント-->
+          <div class="border border-warning rounded-lg mb-3 mx-auto">
+            <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
 
-
-          <div class="my-3 mx-2">
-            <!--\nの区切りにbrタグを追加→改行の反映-->
-            <%= safe_join(@recipe.process.split("\n"),tag(:br)) %>
+            <div class="my-3 mx-2">
+              <!--\nの区切りにbrタグを追加→改行の反映-->
+              <%= safe_join(@recipe.process.split("\n"),tag(:br)) %>
+            </div>
           </div>
-        </div>
-        <div class="border border-warning rounded-lg mb-3 mx-auto">
-          <h5 class="text-center border-bottom border-warning my-1">コメント</h5>
-          <div class="my-3 mx-2"><%= safe_join(@recipe.comment.split("\n"),tag(:br)) %></div>
-        </div>
+          <div class="border border-warning rounded-lg mb-3 mx-auto">
+            <h5 class="text-center border-bottom border-warning my-1">コメント</h5>
+            <div class="my-3 mx-2"><%= safe_join(@recipe.comment.split("\n"),tag(:br)) %></div>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

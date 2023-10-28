@@ -1,94 +1,123 @@
-<h2 class="text-center mb-2"><%= @recipe.name %></h2>
-
-<!--レシピ詳細-->
 <div class="row">
 
-  <!--レシピデータ・フォーム-->
-  <div class="col-lg-5">
+  <!--検索フォーム-->
+  <div class="col-xl-3">
 
-    <!--使用食材一覧-->
-    <table class="table table-sm border border-3 border-success my-3 mx-auto" style="width: 380px">
-      <tbody>
-        <tr class="text-center">
-          <th class="border border-success">使用食材</th>
-          <th class="border-bottom border-success"colspan="2">分量</th>
-        </tr>
-
-        <% @recipe_foods.each do |recipe_detail| %>
-          <tr>
-            <td class="border border-success"> <%= recipe_detail.food.name %></td>
-            <td class="border-success">
-               <%= form_with model: recipe_detail, url: update_recipe_details_path(recipe_detail.id), method: :patch do |f| %>
-                <div class="d-flex align-items-center">
-
-                  <!--使用量表示・入力-->
-                  <%= f.number_field :amount, class: 'form-control form-control-sm text-right m-2', style: 'width: 80px;' %>
-                  <%= f.hidden_field :id, :value => recipe_detail.id %>
-                  <div class="">g</div>
-
-                  <!--変更ボタン-->
-                  <div class="">
-                    <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
-                  </div>
-                </div>
-              <% end %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-
-    <!--レシピデータ-->
-    <div>
-      <!--合計値計算-->
-      <% @recipe_foods.each do |recipe_detail| %>
-        <% @total_energy += recipe_detail.subtotal_energy %>
-        <% @total_protein += recipe_detail.subtotal_protein %>
-        <% @total_fat += recipe_detail.subtotal_fat %>
-        <% @total_carb += recipe_detail.subtotal_carb %>
-        <% @total_salt_equivalent += recipe_detail.subtotal_salt_equivalent %>
-        <% @price = recipe_detail.food.prices.find_by(customer_id: current_customer.id) %>
-        <% if @price %>
-          <% @total_price += @price.food_price * recipe_detail.amount / 100 %>
-        <% else %>
-          <% @price_calc = false %>
-        <% end %>
+    <!--キーワード検索-->
+    <div class="m-2">
+      <%= form_with url: edit_recipe_path, method: :get, local: true do |f|%>
+        <%= render "layouts/search", f: f, keyword: @keyword %>
       <% end %>
+    </div>
 
-      <!--データ一覧-->
-      <%= render "public/recipes/data", total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price, price_calc: @price_calc %>
+  </div>
+
+  <!--まな板-->
+  <div class="col-xl-9">
+
+          <!--まな板-->
+    <div class="border border-dark">
+      <h2 class="text-center mb-2"><%= @recipe.name %></h2>
+
+      <h3 class="text-center mb-2">使用食材</h3>
+
+      <div class="table-responsive">
+
+        <!--使用食材一覧-->
+        <table class="table-sm border-top border-bottom border-dark mx-auto text-center" style="width: 516px;">
+          <thead class="border-bottom border-dark">
+            <tr>
+              <th>食材</th>
+              <th colspan="2">エネルギー</th>
+              <th>使用量</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!---->
+            <% @recipe_foods.each do |recipe_detail| %>
+              <tr class="border-top">
+                <td class="align-middle"><%= recipe_detail.food.name %></td>
+                <td class="align-middle text-right"><%= recipe_detail.subtotal_energy %></td>
+                <td class="align-middle">kcal</td>
+                <td class="align-middle" style="width: 240px;">
+                  <%= form_with model: recipe_detail, url: update_recipe_details_path(recipe_detail.id), method: :patch do |f| %>
+                    <div class="d-flex align-items-center">
+
+                      <!--使用量表示・入力-->
+                      <%= f.number_field :amount, class: 'form-control form-control-sm text-right m-2', style: 'width: 80px;', placeholder: '1000' %>
+                      <div class="">g</div>
+
+                      <!--変更、削除ボタン-->
+                      <div class="">
+                        <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
+                      </div>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="d-flex justify-content-center my-3">
+        <!--詳細画面に戻る-->
+        <div class="mx-2">
+          <%= link_to "変更を終了する", recipe_path(params[:id]), class: 'btn btn-sm btn-primary px-3' %>
+        </div>
+      </div>
+
+    </div>
+
+    <!--食材一覧-->
+    <h3 class="text-center">食材一覧</h3>
+    <div class="table-responsive">
+      <table class="table table-sm text-center mx-auto" style="width: 825px;">
+        <thead class="">
+          <tr>
+            <th class="">食材名</th>
+            <th class="" colspan="2">エネルギー</th>
+            <th class="" colspan="2">たんぱく質</th>
+            <th class="" colspan="2">脂質</th>
+            <th class="" colspan="2">炭水化物</th>
+            <th class="" colspan="2">塩分</th>
+            <th class=""></th>
+          </tr>
+        </thead>
+
+        <tbody class="text-truncate">
+          <% @foods.each do |food| %>
+            <tr class="border-top">
+              <td class="align-middle">
+                <%= link_to food_path(food.id) do %>
+                  <%= food.name %>
+                <% end %>
+              </td>
+              <td class="align-middle text-right"><%= food.energy %></td>
+              <td class="align-middle">kcal</td>
+              <td class="align-middle text-right"><%= food.protein %></td>
+              <td class="align-middle">g</td>
+              <td class="align-middle text-right"><%= food.fat %></td>
+              <td class="align-middle">g</td>
+              <td class="align-middle text-right"><%= food.carb %></td>
+              <td class="align-middle">g</td>
+              <td class="align-middle text-right"><%= food.salt_equivalent %></td>
+              <td class="align-middle">g</td>
+              <td class="text-center">
+                <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
+                  <%= f.hidden_field :food_id, :value => food.id %>
+                  <div class="d-inline-flex align-items-center">
+                    <%= f.number_field :amount, class: 'form-control form-control-sm text-center m-2', style: 'width: 100px', placeholder: '使用量' %>g
+                    <%= f.submit "使う", class: 'btn btn-success btn-sm mx-2' %>
+                  </div>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
     </div>
   </div>
-
-  <!--写真・ユーザー情報-->
-  <div class="col-lg-7">
-
-    <%= form_with model: @recipe, url: update_recipes_path(params[:id]), method: :patch do |f| %>
-      <!--食材画像-->
-      <%= image_tag @recipe.get_image(380,380), class: 'd-block mx-auto' %>
-
-      <!--タグ一覧-->
-      <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
-
-      <!--調理手順・コメント-->
-      <div class="border border-warning rounded-lg mb-3 mx-auto">
-        <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
-        <div class="m-1">
-          <%= f.text_area :process, class: 'w-100' %>
-        </div>
-      </div>
-
-      <div class="border border-warning rounded-lg mb-3 mx-auto">
-        <h5 class="text-center border-bottom border-warning my-1">コメント</h5>
-        <div class="m-1">
-          <%= f.text_area :comment, class: 'w-100' %>
-        </div>
-      </div>
-      
-      <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
-      <%= link_to "詳細へ戻る", recipe_path(params[:id]), class: 'btn btn-sm btn-primary px-2 mx-2' %>
-    <% end %>
-    
-
-  </div>
 </div>
+
+

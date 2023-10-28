@@ -90,23 +90,17 @@ class Public::RecipesController < ApplicationController
   # レシピ編集
   def edit
     @recipe = Recipe.find(params[:id])
-
+    @foods = Food.all
     # 使用食材を取得
     @recipe_foods = @recipe.recipe_details
 
-    # つけられたタグを取得
-    @tag_list = Tag.all
-
-    # 栄養素の合算用インスタンス変数
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
-    @total_price = 0
-
-    # 値段の登録有無の判断用インスタンス変数
-    @price_calc = true
+    # ワード検索機能
+    @keyword= params[:keyword]
+    ##キーワードを受け取った場合、そのワードを含む食材データを取得する
+    if params[:keyword]
+      @foods = @foods.search(params[:keyword])
+    end
+    @keyword= params[:keyword]
   end
 
   def update_recipe_details
@@ -120,7 +114,7 @@ class Public::RecipesController < ApplicationController
     recipe = Recipe.find(params[:id])
     recipe.update(recipe_params)
     flash[:notice] = "レシピを変更しました"
-    redirect_to edit_recipe_path(params[:id])
+    redirect_to recipe_path(params[:id])
   end
 
   # レシピ削除
@@ -144,7 +138,7 @@ class Public::RecipesController < ApplicationController
   private
 
   def recipe_params
-    params.require(:recipe).permit(:name, :process, :comment, :is_published)
+    params.require(:recipe).permit(:name, :process, :comment, :is_published, :image)
   end
 
   def recipe_detail_params
