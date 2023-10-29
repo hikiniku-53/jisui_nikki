@@ -1,12 +1,15 @@
 <h2 class="text-center">レシピ作成</h2>
+
+<% if @recipe.errors.any? %>
+  <ul>
+    <% @recipe.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+
 <div class="row">
-  <% if @recipe.errors.any? %>
-    <ul>
-      <% @recipe.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  <% end %>
+
   <div class="col-lg-5">
 
     <!--まな板-->

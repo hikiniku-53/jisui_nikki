@@ -1,7 +1,6 @@
 <h2 class="text-center mb-2"><%= @recipe.name %></h2>
-<%= link_to "削除", recipe_path(params[:id]), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
-<div class="row">
 
+<div class="row">
   <!--検索フォーム-->
   <div class="col-xl-3">
 
@@ -95,7 +94,7 @@
         </div>
       </div>
 
-      <!--写真・ユーザー情報-->
+      <!--写真・タグ・コメント-->
       <div class="col-lg-7">
         <% if @recipe.customer_id == current_customer.id %>
           <%= form_with model: @recipe, url: update_recipes_path(params[:id]), method: :patch do |f| %>
@@ -108,21 +107,21 @@
             <i class="fas fa-tag my-3"><%= @recipe.tags.map(&:tag_name).join(', ') %></i>
 
             <!--調理手順・コメント-->
-            <div class="border border-warning rounded-lg mb-3 mx-auto">
-              <h5 class="text-center border-bottom border-warning my-1">調理手順</h5>
+            <div class="mb-3 mx-auto">
+              <h5 class="text-center my-1">調理手順</h5>
               <div class="m-1">
                 <%= f.text_area :process, class: 'w-100' %>
               </div>
             </div>
 
-            <div class="border border-warning rounded-lg mb-3 mx-auto">
-              <h5 class="text-center border-bottom border-warning my-1">コメント</h5>
+            <div class="mb-3 mx-auto">
+              <h5 class="text-center my-1">コメント</h5>
               <div class="m-1">
                 <%= f.text_area :comment, class: 'w-100' %>
               </div>
             </div>
             <%= f.submit '変更', class: 'btn btn-sm px-2 btn-success ml-2' %>
-
+            <%= link_to "削除", recipe_path(params[:id]), method: :delete, class: 'btn btn-sm btn-danger px-2 mx-2' %>
           <% end %>
 
         <% else %>
