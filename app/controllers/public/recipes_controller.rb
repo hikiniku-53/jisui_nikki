@@ -88,7 +88,6 @@ class Public::RecipesController < ApplicationController
         j = i + 1
         while j < tag_num
           if tag_list[i] == tag_list[j]
-            binding.pry
             tag_list.delete_at(j)
             tag_num = tag_list.count
             next
