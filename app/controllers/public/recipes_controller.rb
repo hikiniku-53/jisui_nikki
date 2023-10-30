@@ -75,6 +75,29 @@ class Public::RecipesController < ApplicationController
       # タグ欄に入力された内容を"、"で区切り、リスト化
       tag_list = params[:recipe][:tag_name].split('、')
 
+      # 投稿したタグの数[tag_num]を取得
+      tag_num = tag_list.count
+      i = 0
+
+      # i番目のタグとそれ以降のタグをi番目のタグと一致するか判定
+      #   一致→そのタグを削除し、次のタグへ
+      #   不一致→次のタグへ
+      # iを増加させ、重複タグを全て削除する
+
+      while i < tag_num - 1
+        j = i + 1
+        while j < tag_num
+          if tag_list[i] == tag_list[j]
+            binding.pry
+            tag_list.delete_at(j)
+            tag_num = tag_list.count
+            next
+          end
+          j += 1
+        end
+        i += 1
+      end
+
       # リスト化したタグをそれぞれ保存
       @recipe.save_tag(tag_list)
 
