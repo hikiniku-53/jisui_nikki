@@ -7,13 +7,10 @@ class Public::FoodsController < ApplicationController
     @food_genres = FoodGenre.all
 
     # ワード検索機能
-    ##キーワードを受け取った場合、そのワードを含む食材データを取得する
-    if params[:keyword]
-      @foods = @foods.search(params[:keyword])
-    end
-    @keyword= params[:keyword]
+    # #キーワードを受け取った場合、そのワードを含む食材データを取得する
+    @foods = @foods.search(params[:keyword]) if params[:keyword]
+    @keyword = params[:keyword]
   end
-
 
   # ジャンル検索
   def genre
@@ -22,9 +19,25 @@ class Public::FoodsController < ApplicationController
     @food_genres = FoodGenre.all
   end
 
+  # 食材詳細
+  def show
+    @food = Food.find(params[:id])
+    # ユーザーごとに登録した値段を取得
+    @price = current_customer.prices.find_by(food_id: @food.id)
+    @comment = Comment.new
+    @comments = @food.comments
+    @food_genres = FoodGenre.all
+  end
+
   # 食材登録画面
   def new
     @food = Food.new
+    @food_genres = FoodGenre.all
+  end
+
+  # 食事情報更新画面
+  def edit
+    @food = Food.find(params[:id])
     @food_genres = FoodGenre.all
   end
 
@@ -39,22 +52,6 @@ class Public::FoodsController < ApplicationController
     end
   end
 
-  # 食材詳細
-  def show
-    @food = Food.find(params[:id])
-    # ユーザーごとに登録した値段を取得
-    @price = current_customer.prices.find_by(food_id: @food.id)
-    @comment = Comment.new
-    @comments = @food.comments
-    @food_genres = FoodGenre.all
-  end
-
-  # 食事情報更新画面
-  def edit
-    @food = Food.find(params[:id])
-     @food_genres = FoodGenre.all
-  end
-
   # 食材情報更新
   def update
     @food = Food.find(params[:id])
@@ -65,7 +62,6 @@ class Public::FoodsController < ApplicationController
       render :edit
     end
   end
-
 
   private
 

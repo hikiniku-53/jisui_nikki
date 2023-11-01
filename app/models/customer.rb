@@ -22,10 +22,6 @@ class Customer < ApplicationRecord
   end
 
   def favorited?(recipe_id)
-    favorites.where(recipe_id: recipe_id).exists?
+    favorites.exists?(recipe_id:)
   end
-
-
-
-
 end

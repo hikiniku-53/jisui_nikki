@@ -1,17 +1,15 @@
 class Public::RecipesController < ApplicationController
-    before_action :authenticate_customer!
+  before_action :authenticate_customer!
 
   # レシピ一覧
   def index
-    @recipes = Recipe.all.where(is_published: 'true')
+    @recipes = Recipe.where(is_published: 'true')
     @tag_list = Tag.all
 
     # ワード検索機能
-    ##キーワードを受け取った場合、そのワードを含む食材データを取得する
-    if params[:keyword]
-      @recipes = @recipes.search(params[:keyword])
-    end
-    @keyword= params[:keyword]
+    # #キーワードを受け取った場合、そのワードを含む食材データを取得する
+    @recipes = @recipes.search(params[:keyword]) if params[:keyword]
+    @keyword = params[:keyword]
   end
 
   # レシピ詳細
@@ -47,6 +45,20 @@ class Public::RecipesController < ApplicationController
     @total_salt_equivalent = 0
     @total_price = 0
     @price_calc = true
+  end
+
+  # レシピ編集
+  def edit
+    @recipe = Recipe.find(params[:id])
+    @foods = Food.all
+    # 使用食材を取得
+    @recipe_foods = @recipe.recipe_details
+
+    # ワード検索機能
+    @keyword = params[:keyword]
+    # #キーワードを受け取った場合、そのワードを含む食材データを取得する
+    @foods = @foods.search(params[:keyword]) if params[:keyword]
+    @keyword = params[:keyword]
   end
 
   # レシピ作成
@@ -110,45 +122,29 @@ class Public::RecipesController < ApplicationController
     end
   end
 
-  # レシピ編集
-  def edit
-    @recipe = Recipe.find(params[:id])
-    @foods = Food.all
-    # 使用食材を取得
-    @recipe_foods = @recipe.recipe_details
-
-    # ワード検索機能
-    @keyword= params[:keyword]
-    ##キーワードを受け取った場合、そのワードを含む食材データを取得する
-    if params[:keyword]
-      @foods = @foods.search(params[:keyword])
-    end
-    @keyword= params[:keyword]
-  end
-
   def update_recipe_details
     recipe_detail = RecipeDetail.find(params[:id])
     recipe_detail.update(recipe_detail_params)
-    flash[:notice] = "分量を変更しました"
+    flash[:notice] = '分量を変更しました'
     redirect_to edit_recipe_path(recipe_detail.recipe_id)
   end
 
   def update_recipes
     recipe = Recipe.find(params[:id])
     recipe.update(recipe_params)
-    flash[:notice] = "レシピを変更しました"
+    flash[:notice] = 'レシピを変更しました'
     redirect_to recipe_path(params[:id])
   end
 
   def create_recipe_detail
-      recipe_detail = Recipe.find(params[:id]).recipe_details.find_by(food_id: recipe_detail_params[:food_id])
+    recipe_detail = Recipe.find(params[:id]).recipe_details.find_by(food_id: recipe_detail_params[:food_id])
 
     if recipe_detail
       # ある→すでに乗っていた分量に送った分量を追加
       amount = recipe_detail_params[:amount].to_i
       recipe_detail.amount += amount
       if recipe_detail.update(amount: recipe_detail.amount)
-        flash[:notice] = "食材を追加しました"
+        flash[:notice] = '食材を追加しました'
         redirect_to edit_recipe_path(params[:id])
       else
         render :edit
@@ -158,7 +154,7 @@ class Public::RecipesController < ApplicationController
       @recipe_detail = RecipeDetail.new(recipe_detail_params)
       @recipe_detail.recipe_id = params[:id]
       if @recipe_detail.save
-        flash[:notice] = "食材を追加しました"
+        flash[:notice] = '食材を追加しました'
         redirect_to edit_recipe_path(params[:id])
       else
         render :edit
@@ -169,8 +165,8 @@ class Public::RecipesController < ApplicationController
   def destroy_recipe_detail
     recipe_detail = RecipeDetail.find(params[:id])
     recipe_detail.destroy
+    flash[:notice] = '食材をを削除しました'
     redirect_to edit_recipe_path(recipe_detail.recipe_id)
-    flash[:notice] = "食材をを削除しました"
   end
 
   # レシピ削除
@@ -187,9 +183,8 @@ class Public::RecipesController < ApplicationController
     # 選択したタグを持つレシピを取得
     @tag = Tag.find(params[:tag_id])
     @recipes = @tag.recipes.where(is_published: 'true')
-    @keyword= params[:keyword]
+    @keyword = params[:keyword]
   end
-
 
   private
 
@@ -208,5 +203,4 @@ class Public::RecipesController < ApplicationController
   def price_params
     params.require(:price).permit(:food_price)
   end
-
 end

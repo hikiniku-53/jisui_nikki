@@ -6,13 +6,11 @@ class Food < ApplicationRecord
   has_many :recipe_details, dependent: :destroy
   belongs_to :food_genre
 
-
   validates :name, presence: true
   validates :energy, presence: true
   validates :protein, presence: true
   validates :fat, presence: true
   validates :carb, presence: true
-
 
   def get_image(width, height)
     unless image.attached?
@@ -23,7 +21,6 @@ class Food < ApplicationRecord
   end
 
   def self.search(keyword)
-    where("name LIKE?","%#{keyword}%")
+    where('name LIKE?', "%#{keyword}%")
   end
-
 end

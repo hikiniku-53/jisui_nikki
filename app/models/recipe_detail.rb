@@ -1,5 +1,4 @@
 class RecipeDetail < ApplicationRecord
-
   belongs_to :recipe
   belongs_to :food
 
@@ -28,6 +27,4 @@ class RecipeDetail < ApplicationRecord
   def subtotal_price
     food.price * amount / 100
   end
-
-
 end

@@ -9,12 +9,10 @@ class Public::CuttingBoardFoodsController < ApplicationController
     @food_genres = FoodGenre.all
 
     # ワード検索機能
-    @keyword= params[:keyword]
-    ##キーワードを受け取った場合、そのワードを含む食材データを取得する
-    if params[:keyword]
-      @foods = @foods.search(params[:keyword])
-    end
-    @keyword= params[:keyword]
+    @keyword = params[:keyword]
+    # #キーワードを受け取った場合、そのワードを含む食材データを取得する
+    @foods = @foods.search(params[:keyword]) if params[:keyword]
+    @keyword = params[:keyword]
 
     # 現在のまな板上の食材データを取得
     @cutting_board_foods = current_customer.cutting_board_foods
@@ -34,7 +32,6 @@ class Public::CuttingBoardFoodsController < ApplicationController
 
   # まな板に食材を追加(レシピに使う食材を追加)
   def create
-
     # 送られてきた食材が自分のまな板にすでに乗っているか？
     cutting_board_food = current_customer.cutting_board_foods.find_by(food_id: cutting_board_food_params[:food_id])
     if cutting_board_food
@@ -51,7 +48,7 @@ class Public::CuttingBoardFoodsController < ApplicationController
       @cutting_board_food.save
     end
 
-    flash[:notice] = "まな板に食材を追加しました"
+    flash[:notice] = 'まな板に食材を追加しました'
     redirect_to cutting_board_foods_path
   end
 
@@ -59,7 +56,7 @@ class Public::CuttingBoardFoodsController < ApplicationController
   def update
     cutting_board_food = CuttingBoardFood.find(params[:id])
     cutting_board_food.update(cutting_board_food_params)
-    flash[:notice] = "分量を変更しました"
+    flash[:notice] = '分量を変更しました'
     redirect_to cutting_board_foods_path
   end
 
@@ -67,8 +64,8 @@ class Public::CuttingBoardFoodsController < ApplicationController
   def destroy
     cutting_board_food = CuttingBoardFood.find(params[:id])
     cutting_board_food.destroy
+    flash[:notice] = '食材をを削除しました'
     redirect_to cutting_board_foods_path
-    flash[:notice] = "食材をを削除しました"
   end
 
   # 自分のまな板の食材を全削除する

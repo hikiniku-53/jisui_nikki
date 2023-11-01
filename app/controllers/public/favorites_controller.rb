@@ -12,7 +12,6 @@ class Public::FavoritesController < ApplicationController
     Favorite.find_by(customer_id: current_customer.id, recipe_id: params[:recipe_id]).destroy
   end
 
-
   private
 
   def recipe_params

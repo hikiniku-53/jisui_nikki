@@ -250,24 +250,25 @@
               type: 'line',
               data: {
                 labels: [
-                  "<%= @day1.strftime('%m/%d').to_s %>",
-                  "<%= @day2.strftime('%m/%d').to_s %>",
-                  "<%= @day3.strftime('%m/%d').to_s %>",
-                  "<%= @day4.strftime('%m/%d').to_s %>",
-                  "<%= @day5.strftime('%m/%d').to_s %>",
-                  "<%= @day6.strftime('%m/%d').to_s %>",
-                  "<%= @day7.strftime('%m/%d').to_s %>"
+                  <% i = 0 %>
+                  <%= while i < (@days_num - 1) do %>
+                    "<%= @date.to_date.ago((@days_num - 1 -i).days).strftime('%m/%d').to_s %>",
+                    <% i += 1 %>
+                  <% end %>
+                  "<%= @date.to_date.strftime('%m/%d').to_s %>"
                 ],
                 datasets: [{
-                  label: '一週間の体重変化',
+                  label: '体重の記録',
                   data: [
-                    <%= @weight1 %>,
-                    <%= @weight2 %>,
-                    <%= @weight3 %>,
-                    <%= @weight4 %>,
-                    <%= @weight5 %>,
-                    <%= @weight6 %>,
-                    <%= @weight7 %>
+                    <% i = 0 %>
+                    <%= while i < @days_num do %>
+                      <% if @body_weights[i] == 0 %>
+                        <%= nil %>,
+                      <% else %>
+                        <%= @body_weights[i].to_f %>,
+                      <% end %>
+                      <% i += 1 %>
+                    <% end %>
                   ],
                 }]
               },

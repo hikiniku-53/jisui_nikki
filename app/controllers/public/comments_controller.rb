@@ -10,9 +10,8 @@ class Public::CommentsController < ApplicationController
     redirect_to food_path(params[:food_id])
   end
 
-
   private
-  
+
   def comment_params
     params.require(:comment).permit(:comment, :comment_genre_id)
   end

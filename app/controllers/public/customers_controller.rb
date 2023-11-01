@@ -1,22 +1,14 @@
 class Public::CustomersController < ApplicationController
   before_action :authenticate_customer!
+  before_action :make_instance
 
   def show
-
-    # 表示する日記の日付を指定(デフォルト→当日)
-    @date = Date.today
     # 送られた日付を上書きする
-    if params[:date]
-      @date = params[:date]
-    end
-
-    # 食事の記録
-    ## 一日の食事のエネルギー・栄養素の合計用インスタンス変数
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
+    @date = if params[:date]
+              params[:date].to_date
+            else
+              Time.zone.today
+            end
 
     ## 指定の日付の日記データ・各食事内容の取得
     @diary = current_customer.diaries.find_by(date: @date)
@@ -27,57 +19,21 @@ class Public::CustomersController < ApplicationController
     @others = current_customer.meals.where(date: @date, time: 3)
 
     # 体重変化表示グラフ用のデータ取得
-    ## 日記の日付6日前から当日までの一週間の日付を取得
-    @day1 = @date.to_date.ago(6.days)
-    @day2 = @date.to_date.ago(5.days)
-    @day3 = @date.to_date.ago(4.days)
-    @day4 = @date.to_date.ago(3.days)
-    @day5 = @date.to_date.ago(2.days)
-    @day6 = @date.to_date.ago(1.days)
-    @day7 = @date.to_date
-
     ## 一週間の日記から各日付の体重データを取得(日記データがない場合はnilを代入)
-    @diaries = current_customer.diaries
-    if @diaries.find_by(date: @day1)
-      @weight1 = @diaries.find_by(date: @day1).body_weight
-    else
-      @weight1 = nil
-    end
 
-    if @diaries.find_by(date: @day2)
-      @weight2 = @diaries.find_by(date: @day2).body_weight
-    else
-      @weight2 = nil
-    end
-
-    if @diaries.find_by(date: @day3)
-      @weight3 = @diaries.find_by(date: @day3).body_weight
-    else
-      @weight3 = nil
-    end
-
-    if @diaries.find_by(date: @day4)
-      @weight4 = @diaries.find_by(date: @day4).body_weight
-    else
-      @weight4 = nil
-    end
-
-    if @diaries.find_by(date: @day5)
-      @weight5 = @diaries.find_by(date: @day5).body_weight
-    else
-      @weight5 = nil
-    end
-
-    if @diaries.find_by(date: @day6)
-      @weight6 = @diaries.find_by(date: @day6).body_weight
-    else
-      @weight6 = nil
-    end
-
-    if @diaries.find_by(date: @day7)
-      @weight7 = @diaries.find_by(date: @day7).body_weight
-    else
-      @weight7 = nil
+    @days_num = 10
+    i = 0
+    @body_weights = []
+    while i < @days_num
+      day = @date.ago((@days_num - 1 - i).days)
+      diary = current_customer.diaries.find_by(date: day)
+      @body_weights <<
+        if diary
+          diary.body_weight
+        else
+          0
+        end
+      i += 1
     end
 
     # 自身の投稿レシピデータを取得
@@ -88,11 +44,19 @@ class Public::CustomersController < ApplicationController
     @favorite_recipes = Recipe.find(favorites)
   end
 
-
   private
 
   # マイページでの日記の表示・作成・更新用
   def diary_params
     params.require(:diary).permit(:date, :body_weight, :body)
+  end
+
+  ## 一日の食事のエネルギー・栄養素の合計用インスタンス変数
+  def make_instance
+    @total_energy = 0
+    @total_protein = 0
+    @total_fat = 0
+    @total_carb = 0
+    @total_salt_equivalent = 0
   end
 end

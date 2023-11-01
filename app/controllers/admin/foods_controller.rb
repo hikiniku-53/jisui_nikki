@@ -30,7 +30,6 @@ class Admin::FoodsController < ApplicationController
     redirect_to admin_foods_path
   end
 
-
   private
 
   def food_params
@@ -40,5 +39,4 @@ class Admin::FoodsController < ApplicationController
   def make_instance
     @food = Food.find(params[:id])
   end
-
 end

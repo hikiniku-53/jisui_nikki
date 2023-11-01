@@ -21,7 +21,7 @@ class Public::SessionsController < Devise::SessionsController
   # ゲストログイン
   def new_guest
     customer = Customer.guest
-    #ユーザーログイン
+    # ユーザーログイン
     sign_in customer
     redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
   end

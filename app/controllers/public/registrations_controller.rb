@@ -5,7 +5,7 @@ class Public::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # 登録情報更新後マイページへ飛ぶ
-  def after_update_path_for(resource)
+  def after_update_path_for(_resource)
     customer_path
   end
 
