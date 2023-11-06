@@ -60,6 +60,10 @@
             <% end %>
           </div>
 
+          <% if flash[:notice] %>
+            <p class="alert alert-success"><%= notice %></p>
+          <% end %>
+
           <!--朝食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             朝食

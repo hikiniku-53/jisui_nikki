@@ -10,7 +10,7 @@ class Public::HomesController < ApplicationController
     # ユーザーログインしているか？
     return unless customer_signed_in?
 
-    @date = Time.zone.to_date.today
+    @date = Time.zone.today
 
     # している→当日の食事が一つでも登録されているか？
     if current_customer.meals.exists?

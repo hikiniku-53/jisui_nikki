@@ -1,5 +1,6 @@
 class Public::RecipesController < ApplicationController
   before_action :authenticate_customer!
+  before_action :make_instance
 
   # レシピ一覧
   def index
@@ -22,14 +23,6 @@ class Public::RecipesController < ApplicationController
     # つけられたタグを取得
     @tag_list = Tag.all
 
-    # 栄養素の合算用インスタンス変数
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
-    @total_price = 0
-
     # 値段の登録有無の判断用インスタンス変数
     @price_calc = true
   end
@@ -38,12 +31,6 @@ class Public::RecipesController < ApplicationController
   def new
     @cutting_board_foods = current_customer.cutting_board_foods
     @recipe = Recipe.new
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
-    @total_price = 0
     @price_calc = true
   end
 
@@ -64,12 +51,7 @@ class Public::RecipesController < ApplicationController
   # レシピ作成
   def create
     @cutting_board_foods = current_customer.cutting_board_foods
-    @total_energy = 0
-    @total_protein = 0
-    @total_fat = 0
-    @total_carb = 0
-    @total_salt_equivalent = 0
-    @total_price = 0
+
     @price_calc = true
     @recipe = Recipe.new(recipe_params)
     @recipe.customer_id = current_customer.id
@@ -202,5 +184,14 @@ class Public::RecipesController < ApplicationController
 
   def price_params
     params.require(:price).permit(:food_price)
+  end
+
+  def make_instance
+    @total_energy = 0
+    @total_protein = 0
+    @total_fat = 0
+    @total_carb = 0
+    @total_salt_equivalent = 0
+    @total_price = 0
   end
 end

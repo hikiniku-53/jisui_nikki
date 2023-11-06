@@ -128,6 +128,10 @@ ja:
       prompt: 選択してください
     submit:
       create: 登録する
+      add_cutting_board_food: まな板に食材を追加しました
+      update_cutting_board_food: 分量を変更しました
+      destroy_cutting_board_food: 食材をを削除しました
+      had_ate: 既に記録されています
       submit: 保存する
       update: 更新する
   number:

@@ -5,7 +5,7 @@ class Public::DiariesController < ApplicationController
   def create
     @diary = Diary.new(diary_params)
     @diary.customer_id = current_customer.id
-    @date = Time.zone.to_date.today
+    @date = Time.zone.today
 
     # 指定があれば日付の取得
     @date = params[:date] if params[:date]
