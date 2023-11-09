@@ -3,12 +3,8 @@ class Public::CustomersController < ApplicationController
   before_action :make_instance
 
   def show
-    # 送られた日付を上書きする
-    @date = if params[:date]
-              params[:date].to_date
-            else
-              Time.zone.today
-            end
+    # 日記の日付指定があればその日を、なければ当日を指定
+    @date = (params[:date] ? params[:date].to_date : Time.zone.today)
 
     ## 指定の日付の日記データ・各食事内容の取得
     @diary = current_customer.diaries.find_by(date: @date)
@@ -19,20 +15,15 @@ class Public::CustomersController < ApplicationController
     @others = current_customer.meals.where(date: @date, time: 3)
 
     # 体重変化表示グラフ用のデータ取得
-    ## 一週間の日記から各日付の体重データを取得(日記データがない場合はnilを代入)
+    ## 一週間の日記から各日付の体重データを取得(日記データがない場合は0を代入)
 
-    @days_num = 10
+    @days = 7
     i = 0
     @body_weights = []
-    while i < @days_num
-      day = @date.ago((@days_num - 1 - i).days)
+    while i < @days
+      day = @date.ago((@days - 1 - i).days)
       diary = current_customer.diaries.find_by(date: day)
-      @body_weights <<
-        if diary
-          diary.body_weight
-        else
-          0
-        end
+      @body_weights.push(diary ? diary.body_weight : 0)
       i += 1
     end
 

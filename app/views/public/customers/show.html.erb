@@ -255,8 +255,8 @@
               data: {
                 labels: [
                   <% i = 0 %>
-                  <%= while i < (@days_num - 1) do %>
-                    "<%= @date.to_date.ago((@days_num - 1 -i).days).strftime('%m/%d').to_s %>",
+                  <%= while i < (@days - 1) do %>
+                    "<%= @date.to_date.ago((@days - 1 -i).days).strftime('%m/%d').to_s %>",
                     <% i += 1 %>
                   <% end %>
                   "<%= @date.to_date.strftime('%m/%d').to_s %>"
@@ -265,7 +265,7 @@
                   label: '体重の記録',
                   data: [
                     <% i = 0 %>
-                    <%= while i < @days_num do %>
+                    <%= while i < @days do %>
                       <% if @body_weights[i] == 0 %>
                         <%= nil %>,
                       <% else %>
