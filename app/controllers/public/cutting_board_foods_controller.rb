@@ -64,8 +64,8 @@ class Public::CuttingBoardFoodsController < ApplicationController
   def destroy
     cutting_board_food = CuttingBoardFood.find(params[:id])
     cutting_board_food.destroy
-    redirect_to cutting_board_foods_path
     flash[:notice] = '食材をを削除しました'
+    redirect_to cutting_board_foods_path
   end
 
   # 自分のまな板の食材を全削除する

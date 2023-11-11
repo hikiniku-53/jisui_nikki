@@ -1,0 +1,39 @@
+<canvas id="myChart1"></canvas>
+          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+          <script>
+            var ctx = document.getElementById('myChart1');
+            var myChart = new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: [
+                  <% i = 0 %>
+                  <%= while i < (days - 1) do %>
+                    "<%= date.to_date.ago((days - 1 -i).days).strftime('%m/%d').to_s %>",
+                    <% i += 1 %>
+                  <% end %>
+                  "<%= date.to_date.strftime('%m/%d').to_s %>"
+                ],
+                datasets: [{
+                  label: '体重の記録',
+                  data: [
+                    <% i = 0 %>
+                    <%= while i < days do %>
+                      <%= body_weights[i] == 0 ? nil : body_weights[i].to_f %>,
+                      <% i += 1 %>
+                    <% end %>
+                  ],
+                }]
+              },
+              options: {
+                scales: {
+                  x: {
+                    id: 'nutrition'
+                  },
+                  y: {
+                    id: 'ratio',
+
+                  }
+                },
+              }
+            });
+          </script>

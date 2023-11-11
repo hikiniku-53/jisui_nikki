@@ -22,10 +22,13 @@ class ApplicationController < ActionController::Base
       # はい→トップページへ
       root_path
     elsif resource_or_scope == :admin
-
       # 管理者ログイン画面へ
       new_admin_session_path
     end
+  end
+  
+  def my_data(model)
+    model.where(customer_id: current_customer.id, date: @date)
   end
 
   protected

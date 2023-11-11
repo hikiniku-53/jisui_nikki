@@ -8,11 +8,11 @@ class Public::CustomersController < ApplicationController
 
     ## 指定の日付の日記データ・各食事内容の取得
     @diary = current_customer.diaries.find_by(date: @date)
-    @meals = current_customer.meals.where(date: @date)
-    @breakfasts = current_customer.meals.where(date: @date, time: 0)
-    @lunches = current_customer.meals.where(date: @date, time: 1)
-    @dinners = current_customer.meals.where(date: @date, time: 2)
-    @others = current_customer.meals.where(date: @date, time: 3)
+    @meals = my_data(Meal)
+    @breakfasts = @meals.where(time: 0)
+    @lunches = @meals.where(time: 1)
+    @dinners = @meals.where(time: 2)
+    @others = @meals.where(time: 3)
 
     # 体重変化表示グラフ用のデータ取得
     ## 一週間の日記から各日付の体重データを取得(日記データがない場合は0を代入)

@@ -1,0 +1,88 @@
+          <canvas id="myChart"></canvas>
+         
+          <script>
+            var ctx = document.getElementById('myChart');
+            var myChart = new Chart(ctx, {
+              type: 'bar',
+              data: {
+                labels: [
+                  'カロリー',
+                  'たんぱく質',
+                  '脂質',
+                  '炭水化物',
+                  '塩分'
+                ],
+                datasets: [{
+                  label: '<%= date %>の摂取量 / 一日の必要',
+                  data: [
+                    <%= chart_energy %>,
+                    <%= chart_protein %>,
+                    <%= chart_fat %>,
+                    <%= chart_carb %>,
+                    <%= chart_salt_equivalent %>
+                  ],
+                  backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                  ],
+                  clip: {left: 0, top: false, right: -2, bottom: 0},
+                  borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                  ],
+                    borderWidth: 1
+                }]
+              },
+              options: {
+                scales: {
+                  x: {
+                    id: 'nutrition'
+                  },
+                  y: {
+                    id: 'ratio',
+                    beginAtZero: true,
+                    suggestedMax: 1
+                  }
+                },
+
+
+                annotation: {
+                  annotations: [{
+                    type: 'line', // 線分を指定
+                    drawTime: 'afterDatasetsDraw',
+                    id: 'a-line-1', // 線のid名を指定（他の線と区別するため）
+                    mode: 'horizontal', // 水平を指定
+                    scaleID: 'ratio', // 基準とする軸のid名
+                    value: 1, // 引きたい線の数値（始点）
+                    endValue: 1, // 引きたい線の数値（終点）
+                    borderColor: 'red', // 線の色
+                    borderWidth: 3, // 線の幅（太さ）
+                    borderDash: [2, 2],
+                    borderDashOffset: 1,
+                    label: { // ラベルの設定
+                      backgroundColor: 'rgba(255,255,255,0.8)',
+                      bordercolor: 'rgba(200,60,60,0.8)',
+                      borderwidth: 2,
+                      fontSize: 10,
+                      fontStyle: 'bold',
+                      fontColor: 'rgba(200,60,60,0.8)',
+                      xPadding: 10,
+                      yPadding: 10,
+                      cornerRadius: 3,
+                      position: 'left',
+                      xAdjust: 0,
+                      yAdjust: 0,
+                      enabled: true,
+                      content: '必要値'
+                    }
+                  }]
+                }
+              }
+            });
+          </script>

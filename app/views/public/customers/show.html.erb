@@ -67,25 +67,53 @@
           <!--朝食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             朝食
-            <%= render "public/diaries/meals", meals: @breakfasts, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+            <%= render "public/diaries/meals",
+              meals: @breakfasts,
+              total_energy: @total_energy,
+              total_protein: @total_protein,
+              total_fat: @total_fat,
+              total_carb: @total_carb,
+              total_salt_equivalent: @total_salt_equivalent,
+              total_price: @total_price %>
           </div>
 
           <!--昼食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             昼食
-            <%= render "public/diaries/meals", meals: @lunches, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+            <%= render "public/diaries/meals",
+              meals: @lunches,
+              total_energy: @total_energy,
+              total_protein: @total_protein,
+              total_fat: @total_fat,
+              total_carb: @total_carb,
+              total_salt_equivalent: @total_salt_equivalent,
+              total_price: @total_price %>
           </div>
 
           <!--夕食一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             夕食
-            <%= render "public/diaries/meals", meals: @dinners, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+            <%= render "public/diaries/meals",
+            meals: @dinners,
+            total_energy: @total_energy,
+            total_protein: @total_protein,
+            total_fat: @total_fat,
+            total_carb: @total_carb,
+            total_salt_equivalent: @total_salt_equivalent,
+            total_price: @total_price %>
           </div>
 
           <!--間食・その他一覧-->
           <div class="mx-auto" style="max-width: 385px;">
             間食・その他
-            <%= render "public/diaries/meals", meals: @others, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
+            <%= render "public/diaries/meals",
+              meals: @others,
+              total_energy: @total_energy,
+              total_protein: @total_protein,
+              total_fat: @total_fat,
+              total_carb: @total_carb,
+              total_salt_equivalent: @total_salt_equivalent,
+              total_price: @total_price %>
           </div>
 
 
@@ -109,100 +137,19 @@
           </div>
 
           <!--グラフの表示-->
-          <canvas id="myChart"></canvas>
-         
-          <script>
-            var ctx = document.getElementById('myChart');
-            var myChart = new Chart(ctx, {
-              type: 'bar',
-              data: {
-                labels: [
-                  'カロリー',
-                  'たんぱく質',
-                  '脂質',
-                  '炭水化物',
-                  '塩分'
-                ],
-                datasets: [{
-                  label: '<%= @date %>の摂取量 / 一日の必要',
-                  data: [
-                    <%= @chart_energy %>,
-                    <%= @chart_protein %>,
-                    <%= @chart_fat %>,
-                    <%= @chart_carb %>,
-                    <%= @chart_salt_equivalent %>
-                  ],
-                  backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                  ],
-                  clip: {left: 0, top: false, right: -2, bottom: 0},
-                  borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                  ],
-                    borderWidth: 1
-                }]
-              },
-              options: {
-                scales: {
-                  x: {
-                    id: 'nutrition'
-                  },
-                  y: {
-                    id: 'ratio',
-                    beginAtZero: true,
-                    suggestedMax: 1
-                  }
-                },
-
-
-                annotation: {
-                  annotations: [{
-                    type: 'line', // 線分を指定
-                    drawTime: 'afterDatasetsDraw',
-                    id: 'a-line-1', // 線のid名を指定（他の線と区別するため）
-                    mode: 'horizontal', // 水平を指定
-                    scaleID: 'ratio', // 基準とする軸のid名
-                    value: 1, // 引きたい線の数値（始点）
-                    endValue: 1, // 引きたい線の数値（終点）
-                    borderColor: 'red', // 線の色
-                    borderWidth: 3, // 線の幅（太さ）
-                    borderDash: [2, 2],
-                    borderDashOffset: 1,
-                    label: { // ラベルの設定
-                      backgroundColor: 'rgba(255,255,255,0.8)',
-                      bordercolor: 'rgba(200,60,60,0.8)',
-                      borderwidth: 2,
-                      fontSize: 10,
-                      fontStyle: 'bold',
-                      fontColor: 'rgba(200,60,60,0.8)',
-                      xPadding: 10,
-                      yPadding: 10,
-                      cornerRadius: 3,
-                      position: 'left',
-                      xAdjust: 0,
-                      yAdjust: 0,
-                      enabled: true,
-                      content: '必要値'
-                    }
-                  }]
-                }
-              }
-            });
-          </script>
+          <%= render "layouts/nutrition_graph",
+            date: @date,
+            chart_energy: @chart_energy,
+            chart_protein: @chart_protein,
+            chart_fat: @chart_fat,
+            chart_carb: @chart_carb,
+            chart_salt_equivalent: @chart_salt_equivalent %>
         </div>
 
         <div class="col-lg-6 mx-auto">
 
           <% if @diary %>
-            <%= form_with model: @diary, url: diary_path(@diary.id), method: :patch do |f| %>
+            <%= form_with model: @diary, url: diary_path(@diary.id), class: 'mx-auto', method: :patch do |f| %>
               <div class="mx-2">
                 体重記録
               </div>
@@ -212,11 +159,9 @@
                 <div>kg</div>
               </div>
 
-              <div class="mx-2">
-                日記
-              </div>
+              <div class="mx-2">日記</div>
 
-              <%= f.text_area :body, class: 'mx-2', style: 'width: 310px;', rows: '10' %>
+              <%= f.text_area :body, class: 'mx-2', style: 'width: 100%;', rows: '10' %>
 
               <div>
                 <%= f.submit "変更する", class: 'btn btn-secondary btn-sm mx-2 px-2', style: 'width: 80px' %>
@@ -238,7 +183,7 @@
                 日記
               </div>
 
-              <%= f.text_area :body, class: 'mx-2', style: 'width: 310px;', rows: '10' %>
+              <%= f.text_area :body, class: 'mx-2 h', style: 'width: 310px;', rows: '10' %>
 
               <div>
                 <%= f.submit "日記をつける", class: 'btn btn-secondary btn-sm mx-2 px-2', style: 'width: 100px' %>
@@ -246,49 +191,13 @@
             <% end %>
           <% end %>
 
-          <canvas id="myChart1"></canvas>
-          <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-          <script>
-            var ctx = document.getElementById('myChart1');
-            var myChart = new Chart(ctx, {
-              type: 'line',
-              data: {
-                labels: [
-                  <% i = 0 %>
-                  <%= while i < (@days - 1) do %>
-                    "<%= @date.to_date.ago((@days - 1 -i).days).strftime('%m/%d').to_s %>",
-                    <% i += 1 %>
-                  <% end %>
-                  "<%= @date.to_date.strftime('%m/%d').to_s %>"
-                ],
-                datasets: [{
-                  label: '体重の記録',
-                  data: [
-                    <% i = 0 %>
-                    <%= while i < @days do %>
-                      <% if @body_weights[i] == 0 %>
-                        <%= nil %>,
-                      <% else %>
-                        <%= @body_weights[i].to_f %>,
-                      <% end %>
-                      <% i += 1 %>
-                    <% end %>
-                  ],
-                }]
-              },
-              options: {
-                scales: {
-                  x: {
-                    id: 'nutrition'
-                  },
-                  y: {
-                    id: 'ratio',
-
-                  }
-                },
-              }
-            });
-          </script>
+          <!--グラフの表示-->
+          <div class="mt-auto mb-0">
+            <%= render "layouts/weight_graph",
+              date: @date,
+              days: @days,
+              body_weights: @body_weights %>
+          </div>
 
         </div>
       </div>
