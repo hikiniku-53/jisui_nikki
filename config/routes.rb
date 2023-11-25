@@ -49,7 +49,7 @@ Rails.application.routes.draw do
     patch 'recipe/:id/update_recipe_details/' => 'recipes#update_recipe_details', as: 'update_recipe_details'
     patch 'recipe/:id/update_recipes' => 'recipes#update_recipes', as: 'update_recipes'
     delete 'recipe/:id/update_recipe_detail/' => 'recipes#destroy_recipe_detail', as: 'destroy_recipe_detail'
-    
+
     # meal_action
     resources :meals, only: [:show, :create, :update, :destroy]
 
