@@ -17,7 +17,7 @@ class Public::DiariesController < ApplicationController
 
   # 日記の更新
   def update
-    @date = Time.zone.to_date.today
+    @date = Time.zone.today
     @date = params[:date] if params[:date]
     @diary = current_customer.diaries.find_by(date: @date)
     @diary.update(diary_params)
