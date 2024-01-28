@@ -1,1 +1,2 @@
-document.getElementById('favorite_<%= @recipe.id %>').innerHTML = '<%= j(render partial: "public/recipes/favorite", locals: {recipe: @recipe }) %>'
+document.getElementById('favorite_<%= @recipe.id %>').innerHTML = 
+  '<%= j(render partial: "public/recipes/favorite", locals: {recipe: @recipe }) %>'
