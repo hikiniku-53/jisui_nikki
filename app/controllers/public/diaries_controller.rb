@@ -8,7 +8,7 @@ class Public::DiariesController < ApplicationController
     @date = Time.zone.today
 
     # 指定があれば日付の取得
-    @date = params[:date] if params[:date]
+    @date = params[:date].to_date if params[:date]
 
     @diary.save
     # 当日の日記へ飛ぶ
@@ -17,9 +17,8 @@ class Public::DiariesController < ApplicationController
 
   # 日記の更新
   def update
-    @date = Time.zone.today
-    @date = params[:date] if params[:date]
-    @diary = current_customer.diaries.find_by(date: @date)
+
+    @diary = current_customer.diaries.find_by(params[:date])
     @diary.update(diary_params)
     redirect_to customer_path
   end
@@ -27,6 +26,6 @@ class Public::DiariesController < ApplicationController
   private
 
   def diary_params
-    params.require(:diary).permit(:date, :body_weight, :body)
+    params.require(:diary).permit(:body_weight, :body)
   end
 end
