@@ -35,10 +35,6 @@ class Public::CustomersController < ApplicationController
     @favorite_recipes = Recipe.find(favorites)
   end
 
-  def diary_on_date
-
-  end
-
   private
 
   # マイページでの日記の表示・作成・更新用

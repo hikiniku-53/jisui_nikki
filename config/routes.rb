@@ -22,7 +22,6 @@ Rails.application.routes.draw do
     get '/customers' => 'customers#show', as: 'customer'
     get '/customers/edit' => 'customers#edit'
     patch '/customers' => 'customers#update'
-    get 'diary_on_date' => 'customers#diary_on_date'
 
 
     # foods_action
