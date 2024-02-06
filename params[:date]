@@ -1,0 +1,18 @@
+
+[1mFrom:[0m /home/ec2-user/environment/jisui_nikki/app/controllers/public/diaries_controller.rb:11 Public::DiariesController#create:
+
+     [1;34m5[0m: [32mdef[0m [1;34mcreate[0m
+     [1;34m6[0m:   @diary = [1;34;4mDiary[0m.new(diary_params)
+     [1;34m7[0m:   @diary.customer_id = current_customer.id
+     [1;34m8[0m:   @date = [1;34;4mTime[0m.zone.today.to_date
+     [1;34m9[0m:   binding.pry
+    [1;34m10[0m:   [1;34m# 指定があれば日付の取得[0m
+ => [1;34m11[0m:   @date = params[[33m:date[0m].to_date [32mif[0m params[[33m:date[0m]
+    [1;34m12[0m: 
+    [1;34m13[0m:   @diary.date = @date
+    [1;34m14[0m: 
+    [1;34m15[0m:   @diary.save
+    [1;34m16[0m:   [1;34m# 当日の日記へ飛ぶ[0m
+    [1;34m17[0m:   redirect_to customer_path
+    [1;34m18[0m: [32mend[0m
+
