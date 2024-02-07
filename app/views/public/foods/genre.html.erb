@@ -7,7 +7,7 @@
 
     <!--キーワード検索-->
     <div class="m-2">
-      <%= form_with url: foods_path, method: :get, local: true do |f|%>
+      <%= form_with url: foods_genre_path(params[:food_genre_id]), method: :get, local: true do |f|%>
         <%= render "layouts/search", f: f, keyword: @keyword %>
       <% end %>
     </div>

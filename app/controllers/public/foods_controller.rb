@@ -17,6 +17,10 @@ class Public::FoodsController < ApplicationController
     @food_genre = FoodGenre.find(params[:food_genre_id])
     @foods = @food_genre.foods
     @food_genres = FoodGenre.all
+    # ワード検索機能
+    # #キーワードを受け取った場合、そのワードを含む食材データを取得する
+    @foods = @foods.search(params[:keyword]) if params[:keyword]
+    @keyword = params[:keyword]
   end
 
   # 食材詳細
