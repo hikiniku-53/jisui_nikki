@@ -20,11 +20,10 @@
 
   <!--食材一覧-->
   <div class="col-xl-9">
-    <div class="text-center m-2">
-    </div>
     <div class="d-flex justify-content-center flex-wrap">
       <%= render "foods", foods: @foods %>
     </div>
+    <div class="center-block"><%= paginate @foods %></div>
   </div>
 
   <!--ジャンル検索：ブレークポイントxl以下-->

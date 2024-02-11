@@ -3,7 +3,7 @@ class Public::FoodsController < ApplicationController
 
   # 全食材一覧
   def index
-    @foods = Food.all
+    @foods = Food.all.page(params[:page])
     @food_genres = FoodGenre.all
 
     # ワード検索機能
@@ -15,7 +15,7 @@ class Public::FoodsController < ApplicationController
   # ジャンル検索
   def genre
     @food_genre = FoodGenre.find(params[:food_genre_id])
-    @foods = @food_genre.foods
+    @foods = @food_genre.foods.page(params[:page])
     @food_genres = FoodGenre.all
     # ワード検索機能
     # #キーワードを受け取った場合、そのワードを含む食材データを取得する

@@ -1,7 +1,7 @@
 <% foods.each do |food| %>
  <div class="card p-2 m-2 bg-food" style="width: 16rem;, height: 80rem;">
   <%= link_to food_path(food.id), class: 'text-decoration-none' do %>
-   
+
       <%= image_tag food.get_image(246,184), class: 'card-img-top' %>
       <div class="card-body text-dark">
         <h6 class="card-title h-2rem">
@@ -14,7 +14,6 @@
           C: <%= food.carb %>g
         </p>
       </div>
-    
   <% end %>
   </div>
 <% end %>

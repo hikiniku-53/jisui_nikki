@@ -23,6 +23,7 @@
     <div class="d-flex justify-content-center flex-wrap">
       <%= render "foods", foods: @foods %>
     </div>
+    <div class="center-block"><%= paginate @foods %></div>
   </div>
 
   <!--ジャンル検索：ブレークポイントxl以下-->

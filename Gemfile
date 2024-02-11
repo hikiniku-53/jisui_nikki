@@ -62,6 +62,8 @@ group :test do
 
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+
+  gem 'rspec-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -85,6 +87,8 @@ gem 'chartkick'
 
 gem 'dotenv-rails'
 
+gem 'bootstrap5-kaminari-views'
+
 group :production do
   gem 'mysql2'
 end
@@ -94,5 +98,3 @@ gem 'net-smtp'
 gem 'net-pop'
 
 gem 'net-imap'
-
-gem 'rspec-rails'
