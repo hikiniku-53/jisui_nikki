@@ -17,8 +17,8 @@ class Public::DiariesController < ApplicationController
 
   # 日記の更新
   def update
-
-    @diary = current_customer.diaries.find_by(params[:date])
+    
+    @diary = current_customer.diaries.find(params[:id])
     @diary.update(diary_params)
     redirect_to customer_path
   end

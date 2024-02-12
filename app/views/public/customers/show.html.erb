@@ -149,13 +149,13 @@
         <div class="col-lg-6 mx-auto">
 
           <% if @diary %>
+            <!--表示中の日記データのidをurlに送る→updateアクションでfind(params[:id])で日記データの選択する-->
             <%= form_with model: @diary, url: diary_path(@diary.id), class: 'mx-auto', method: :patch do |f| %>
               <div class="mx-2">
                 体重記録
               </div>
 
               <div class="d-flex align-items-center">
-                <!--<%= f.hidden_field :id, :value => @diary.id %>-->
                 <%= f.text_field :body_weight, value: @diary.body_weight, class: 'text-right mx-2', style: 'width: 60px' %>
                 <div>kg</div>
               </div>
