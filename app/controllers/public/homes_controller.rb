@@ -11,6 +11,7 @@ class Public::HomesController < ApplicationController
     return unless customer_signed_in?
 
     @date = Time.zone.today
+    @diary = current_customer.diaries.find_by(date: @date)
 
     # している→当日の食事が一つでも登録されているか？
     if current_customer.meals.exists?

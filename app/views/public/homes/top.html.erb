@@ -30,6 +30,8 @@
             間食・その他
             <%= render "public/diaries/meals", meals: @others, total_energy: @total_energy, total_protein: @total_protein, total_fat: @total_fat, total_carb: @total_carb, total_salt_equivalent: @total_salt_equivalent, total_price: @total_price %>
           </div>
+
+          <%= link_to  "日記をつける", customer_path, class: 'btn btn-primary' %>
         <% else %>
 
           <div class="my-2">

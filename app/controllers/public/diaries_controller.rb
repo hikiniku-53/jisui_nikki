@@ -11,16 +11,26 @@ class Public::DiariesController < ApplicationController
     @date = params[:date].to_date if params[:date]
 
     @diary.save
+    # binding.pry
     # 当日の日記へ飛ぶ
-    redirect_to customer_path
+    if (controller_path == 'homes' && action_path == 'top' )
+      redirect_to root_path
+    else
+      redirect_to customer_path
+    end
   end
 
   # 日記の更新
   def update
-    
+
     @diary = current_customer.diaries.find(params[:id])
     @diary.update(diary_params)
-    redirect_to customer_path
+    # binding.pry
+    if (controller_path == 'homes' && action_path == 'top' )
+      redirect_to root_path
+    else
+      redirect_to customer_path
+    end
   end
 
   private
