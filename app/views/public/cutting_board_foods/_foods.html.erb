@@ -35,6 +35,11 @@
             <%= form_with model: CuttingBoardFood.new, url: cutting_board_foods_path do |f| %>
               <%= f.hidden_field :food_id, :value => food.id %>
               <div class="d-inline-flex align-items-center">
+
+                <% if flash[:notice] %>
+                  <p class="alert alert-success"><%= notice %></p>
+                <% end %>
+
                 <%= f.number_field :amount, class: 'form-control form-control-sm text-center m-2', style: 'width: 100px', placeholder: '使用量' %>g
                 <%= f.submit "使う", class: 'btn btn-success btn-sm mx-2' %>
               </div>
